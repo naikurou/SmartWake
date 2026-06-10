@@ -25,7 +25,7 @@
 // ============================================================
 // CONFIGURATION — Modifier selon votre environnement
 // ============================================================
-define('SERIAL_PORT',    'COM22');   // Port série (Windows: COM22, Linux: /dev/ttyUSB0)
+define('SERIAL_PORT', '\\\\.\\COM7'); // Port série (Windows: COM22, Linux: /dev/ttyUSB0)
 define('BAUD_RATE',      9600);      // Vitesse de communication
 define('READ_INTERVAL',  1);         // Secondes entre chaque lecture (0 = lecture continue)
 define('MAX_ITERATIONS', 0);         // 0 = infini, sinon nombre de mesures puis arrêt
@@ -71,17 +71,23 @@ function adcToLux(int $rawValue): int {
 }
 
 /**
- * Valide qu'une ligne lue depuis le port série est une donnée numérique valide.
+ * Valide qu'une ligne lue depuis le port série est une donnée numérique valide (entier ou flottant).
  *
  * @param string $line
  * @return int|null Valeur entière ou null si invalide
  */
 function parseSerialLine(string $line): ?int {
     $line = trim($line);
-    if ($line === '' || !ctype_digit(ltrim($line, '-'))) {
+    // Si c'est vide ou pas un nombre valide (ex: texte pur), on ignore
+    if ($line === '' || !is_numeric($line)) {
         return null;
     }
-    $val = (int) $line;
+    
+    // Convertir en float d'abord (car la carte Tiva C envoie des floats)
+    // puis arrondir à l'entier le plus proche pour les lux
+    $val = (int) round((float) $line);
+    
+    // Ignorer les valeurs manifestement aberrantes (hors ADC/Lux réalistes)
     if ($val < 0 || $val > 65535) {
         return null;
     }
@@ -177,9 +183,11 @@ if (USE_DIO) {
 
     // Configurer le port automatiquement (Windows uniquement)
     if (PHP_OS_FAMILY === 'Windows') {
+        // Nettoyer le préfixe \\.\ pour la commande MODE
+        $modePort = str_replace('\\\\.\\', '', SERIAL_PORT);
         $modeCmd = sprintf(
             'MODE %s: BAUD=%d PARITY=N DATA=8 STOP=1 2>&1',
-            SERIAL_PORT,
+            $modePort,
             BAUD_RATE
         );
         $modeOut = shell_exec($modeCmd);
