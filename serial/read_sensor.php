@@ -60,7 +60,13 @@ function logMsg(string $level, string $msg): void {
  */
 function parseSerialLine(string $line): ?int {
     $line = trim($line);
-    // Si c'est vide ou pas un nombre valide (ex: texte pur), on ignore
+    
+    // Gérer le cas 'inf' (infini) renvoyé par le C quand le capteur sature
+    if (strtolower($line) === 'inf') {
+        return LUX_MAX;
+    }
+    
+    // Si c'est vide ou pas un nombre valide, on ignore
     if ($line === '' || !is_numeric($line)) {
         return null;
     }
@@ -163,38 +169,39 @@ if (USE_DIO) {
         logMsg('error', 'Vérifiez : port disponible, XAMPP lancé en administrateur, pilote Tiva C installé.');
         exit(1);
     }
-    // Mode non-bloquant pour éviter les deadlocks
-    stream_set_blocking($handle, false);
-    stream_set_timeout($handle, 3);
+    // Sur Windows, le mode non-bloquant sur les ports COM est très bogué en PHP.
+    // Il faut utiliser le mode bloquant avec un timeout, et lire ligne par ligne (fgets).
+    stream_set_blocking($handle, true);
+    stream_set_timeout($handle, 2);
+
     logMsg('info', 'Port série ouvert (fopen). En attente de données...');
+
     $iteration = 0;
-    $buffer    = '';
     $lastRead  = time();
+
     while (MAX_ITERATIONS === 0 || $iteration < MAX_ITERATIONS) {
-        $chunk = fread($handle, 256);
-        if ($chunk !== false && strlen($chunk) > 0) {
-            $buffer .= $chunk;
+        // fgets lit jusqu'au prochain \n
+        $line = fgets($handle);
+
+        if ($line !== false && trim($line) !== '') {
             $lastRead = time();
-            // Traiter chaque ligne complète
-            while (($pos = strpos($buffer, "\n")) !== false) {
-                $line   = substr($buffer, 0, $pos);
-                $buffer = substr($buffer, $pos + 1);
-                $lux = parseSerialLine($line);
-                if ($lux !== null) {
-                    $status = getDayStatus($lux);
-                    logMsg('info', "Lecture → lux=$lux | statut=$status");
-                    if (insertLightMeasure($lux)) {
-                        logMsg('ok', "✅ Enregistré : {$lux} lux ({$status})");
-                    } else {
-                        logMsg('warn', '⚠️  Échec enregistrement DB.');
-                    }
-                    $iteration++;
-                    if (MAX_ITERATIONS > 0 && $iteration >= MAX_ITERATIONS) break 2;
+            
+            $lux = parseSerialLine($line);
+            if ($lux !== null) {
+                $status = getDayStatus($lux);
+
+                logMsg('info', "Lecture → lux=$lux | statut=$status");
+
+                if (insertLightMeasure($lux)) {
+                    logMsg('ok', "✅ Enregistré : {$lux} lux ({$status})");
                 } else {
-                    if (trim($line) !== '') {
-                        logMsg('debug', 'Ligne ignorée : ' . json_encode(trim($line)));
-                    }
+                    logMsg('warn', '⚠️  Échec enregistrement DB.');
                 }
+
+                $iteration++;
+                if (MAX_ITERATIONS > 0 && $iteration >= MAX_ITERATIONS) break;
+            } else {
+                logMsg('debug', 'Ligne ignorée : ' . json_encode(trim($line)));
             }
         }
         // Watchdog : avertissement si aucune donnée depuis 30s
