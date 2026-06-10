@@ -1,0 +1,21 @@
+[08-Jun-2026 17:26:12 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:26:12 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartwake\register.php(27): registerUser('Nahil', 'nahilgameur@gma...', 'HaLoUf@2023')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[08-Jun-2026 17:26:33 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:26:33 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(107): getDB()
+#1 C:\xampp\htdocs\smartwake\login.php(23): loginUser('Nahilgameur@gma...', '1234')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[08-Jun-2026 17:27:37 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:27:37 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartwake\register.php(27): registerUser('nein', 'nein@gmail.com', 'neinnein')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
