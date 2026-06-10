@@ -149,7 +149,7 @@ if (USE_DIO) {
         // Nettoyer le préfixe \\.\ pour la commande MODE
         $modePort = str_replace('\\\\.\\', '', SERIAL_PORT);
         $modeCmd = sprintf(
-            'MODE %s: BAUD=%d PARITY=N DATA=8 STOP=1 2>&1',
+            'MODE %s: BAUD=%d PARITY=N DATA=8 STOP=1 DTR=ON RTS=ON 2>&1',
             $modePort,
             BAUD_RATE
         );

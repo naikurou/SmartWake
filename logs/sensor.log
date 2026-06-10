@@ -90,3 +90,60 @@
     Circuit DTR :     OFF
     Circuit RTS :     ON
 [2026-06-10 15:13:57] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:16:29] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:16:29] [INFO] Port     : \\.\COM7
+[2026-06-10 15:16:29] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:16:29] [INFO] Mode     : fopen() natif
+[2026-06-10 15:16:29] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:16:29] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:16:29] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:17:02] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:17:02] [INFO] Port     : \\.\COM7
+[2026-06-10 15:17:02] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:17:02] [INFO] Mode     : fopen() natif
+[2026-06-10 15:17:02] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:17:03] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:17:03] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:17:55] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:17:55] [INFO] Port     : \\.\COM7
+[2026-06-10 15:17:55] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:17:55] [INFO] Mode     : fopen() natif
+[2026-06-10 15:17:55] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:17:56] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:17:56] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
