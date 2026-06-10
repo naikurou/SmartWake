@@ -113,12 +113,10 @@ if (USE_DIO) {
             while (($pos = strpos($buffer, "\n")) !== false) {
                 $line   = substr($buffer, 0, $pos);
                 $buffer = substr($buffer, $pos + 1);
-                $rawVal = parseSerialLine($line);
-                if ($rawVal !== null) {
-                    // Convertir ADC → lux si nécessaire
-                    $lux    = ($rawVal <= LUX_MAX) ? $rawVal : adcToLux($rawVal);
+                $lux = parseSerialLine($line);
+                if ($lux !== null) {
                     $status = getDayStatus($lux);
-                    logMsg('info', "Lecture → brut=$rawVal | lux=$lux | statut=$status");
+                    logMsg('info', "Lecture → lux=$lux | statut=$status");
                     if (insertLightMeasure($lux)) {
                         logMsg('ok', "Mesure enregistrée : {$lux} lux ({$status})");
                     } else {
