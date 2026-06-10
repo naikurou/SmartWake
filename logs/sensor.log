@@ -33,3 +33,60 @@
 [2026-06-10 15:02:45] [INFO] DÃ©marrage de la lecture...
 [2026-06-10 15:02:45] [INFO] Configuration port Windows : Paramètre non valide - \\.\COM7:
 [2026-06-10 15:02:45] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:11:40] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:11:40] [INFO] Port     : \\.\COM7
+[2026-06-10 15:11:40] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:11:40] [INFO] Mode     : fopen() natif
+[2026-06-10 15:11:40] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:11:40] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:11:40] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:13:12] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:13:12] [INFO] Port     : \\.\COM7
+[2026-06-10 15:13:12] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:13:12] [INFO] Mode     : fopen() natif
+[2026-06-10 15:13:12] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:13:12] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:13:12] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-10 15:13:52] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:13:53] [INFO] Port     : \\.\COM7
+[2026-06-10 15:13:53] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:13:53] [INFO] Mode     : fopen() natif
+[2026-06-10 15:13:53] [INFO] DÃ©marrage de la lecture...
+[2026-06-10 15:13:57] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     OFF
+    Circuit RTS :     ON
+[2026-06-10 15:13:57] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...

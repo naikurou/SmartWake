@@ -21,7 +21,6 @@
  * Tiva C envoie via UART :
  *   UARTprintf("%d\n", lightValue);   // Valeur brute ADC (0–4095) ou lux convertis
  */
-
 // ============================================================
 // CONFIGURATION — Modifier selon votre environnement
 // ============================================================
@@ -33,23 +32,19 @@ define('ADC_MAX',        4095);      // Résolution ADC Tiva C (12 bits)
 define('LUX_MAX',        1024);      // Valeur max lux affichée sur le site
 define('USE_DIO',        false);     // true = PHP DIO, false = fopen() natif (Windows)
 define('LOG_FILE',       __DIR__ . '/../logs/sensor.log');
-
 // ============================================================
 // Chargement des dépendances
 // ============================================================
 require_once __DIR__ . '/../includes/functions.php';
-
 // ============================================================
 // Utilitaires
 // ============================================================
-
 /**
  * Enregistre un message dans le log et l'affiche en console.
  */
 function logMsg(string $level, string $msg): void {
     $line = '[' . date('Y-m-d H:i:s') . '] [' . strtoupper($level) . '] ' . $msg . PHP_EOL;
     echo $line;
-
     // Créer le dossier logs si besoin
     $logDir = dirname(LOG_FILE);
     if (!is_dir($logDir)) {
@@ -57,19 +52,6 @@ function logMsg(string $level, string $msg): void {
     }
     file_put_contents(LOG_FILE, $line, FILE_APPEND | LOCK_EX);
 }
-
-/**
- * Convertit une valeur ADC brute (0–4095) en lux simulés (0–1024).
- * Adapter si la Tiva envoie directement des lux.
- *
- * @param int $rawValue Valeur ADC brute
- * @return int Valeur en lux
- */
-function adcToLux(int $rawValue): int {
-    $rawValue = max(0, min(ADC_MAX, $rawValue));
-    return (int) round(($rawValue / ADC_MAX) * LUX_MAX);
-}
-
 /**
  * Valide qu'une ligne lue depuis le port série est une donnée numérique valide (entier ou flottant).
  *
@@ -93,31 +75,26 @@ function parseSerialLine(string $line): ?int {
     }
     return $val;
 }
-
 // ============================================================
 // Ouverture du port série
 // ============================================================
-
 logMsg('info', '=== SmartWake Serial Reader ===');
 logMsg('info', 'Port     : ' . SERIAL_PORT);
 logMsg('info', 'Baudrate : ' . BAUD_RATE . ' baud');
 logMsg('info', 'Mode     : ' . (USE_DIO ? 'PHP DIO' : 'fopen() natif'));
 logMsg('info', 'Démarrage de la lecture...');
 echo str_repeat('-', 50) . PHP_EOL;
-
 // ---- Mode PHP DIO (extension pecl/dio) ----
 if (USE_DIO) {
     if (!function_exists('dio_open')) {
         logMsg('error', 'L\'extension PHP DIO n\'est pas installée. Installez-la avec : pecl install dio');
         exit(1);
     }
-
     $fd = @dio_open(SERIAL_PORT, O_RDWR | O_NOCTTY | O_NONBLOCK);
     if ($fd === false) {
         logMsg('error', 'Impossible d\'ouvrir le port ' . SERIAL_PORT . ' en mode DIO.');
         exit(1);
     }
-
     // Configuration du port série
     dio_tcsetattr($fd, [
         'baud'   => BAUD_RATE,
@@ -125,36 +102,28 @@ if (USE_DIO) {
         'stop'   => 1,
         'parity' => 0,
     ]);
-
     logMsg('info', 'Port série ouvert (DIO). En attente de données...');
-
     $iteration = 0;
     $buffer    = '';
-
     while (MAX_ITERATIONS === 0 || $iteration < MAX_ITERATIONS) {
         $data = @dio_read($fd, 128);
         if ($data !== false && strlen($data) > 0) {
             $buffer .= $data;
-
             // Traiter chaque ligne complète (\n)
             while (($pos = strpos($buffer, "\n")) !== false) {
                 $line   = substr($buffer, 0, $pos);
                 $buffer = substr($buffer, $pos + 1);
-
                 $rawVal = parseSerialLine($line);
                 if ($rawVal !== null) {
                     // Convertir ADC → lux si nécessaire
                     $lux    = ($rawVal <= LUX_MAX) ? $rawVal : adcToLux($rawVal);
                     $status = getDayStatus($lux);
-
                     logMsg('info', "Lecture → brut=$rawVal | lux=$lux | statut=$status");
-
                     if (insertLightMeasure($lux)) {
                         logMsg('ok', "Mesure enregistrée : {$lux} lux ({$status})");
                     } else {
                         logMsg('warn', 'Échec de l\'enregistrement en base de données.');
                     }
-
                     $iteration++;
                     if (MAX_ITERATIONS > 0 && $iteration >= MAX_ITERATIONS) break 2;
                 } else {
@@ -162,16 +131,13 @@ if (USE_DIO) {
                 }
             }
         }
-
         if (READ_INTERVAL > 0) {
             sleep(READ_INTERVAL);
         } else {
             usleep(100000); // 100ms pour éviter de saturer le CPU
         }
     }
-
     dio_close($fd);
-
 // ---- Mode fopen() natif (Windows, XAMPP) ----
 } else {
     /*
@@ -180,7 +146,6 @@ if (USE_DIO) {
      *   MODE COM22: BAUD=9600 PARITY=N DATA=8 STOP=1
      * ou via le Gestionnaire de périphériques.
      */
-
     // Configurer le port automatiquement (Windows uniquement)
     if (PHP_OS_FAMILY === 'Windows') {
         // Nettoyer le préfixe \\.\ pour la commande MODE
@@ -193,7 +158,6 @@ if (USE_DIO) {
         $modeOut = shell_exec($modeCmd);
         logMsg('info', 'Configuration port Windows : ' . trim($modeOut ?? 'OK'));
     }
-
     // Ouvrir le port
     $handle = @fopen(SERIAL_PORT, 'r+b');
     if ($handle === false) {
@@ -201,42 +165,31 @@ if (USE_DIO) {
         logMsg('error', 'Vérifiez : port disponible, XAMPP lancé en administrateur, pilote Tiva C installé.');
         exit(1);
     }
-
     // Mode non-bloquant pour éviter les deadlocks
     stream_set_blocking($handle, false);
     stream_set_timeout($handle, 3);
-
     logMsg('info', 'Port série ouvert (fopen). En attente de données...');
-
     $iteration = 0;
     $buffer    = '';
     $lastRead  = time();
-
     while (MAX_ITERATIONS === 0 || $iteration < MAX_ITERATIONS) {
         $chunk = fread($handle, 256);
-
         if ($chunk !== false && strlen($chunk) > 0) {
             $buffer .= $chunk;
             $lastRead = time();
-
             // Traiter chaque ligne complète
             while (($pos = strpos($buffer, "\n")) !== false) {
                 $line   = substr($buffer, 0, $pos);
                 $buffer = substr($buffer, $pos + 1);
-
-                $rawVal = parseSerialLine($line);
-                if ($rawVal !== null) {
-                    $lux    = ($rawVal <= LUX_MAX) ? $rawVal : adcToLux($rawVal);
+                $lux = parseSerialLine($line);
+                if ($lux !== null) {
                     $status = getDayStatus($lux);
-
-                    logMsg('info', "Lecture → brut=$rawVal | lux=$lux | statut=$status");
-
+                    logMsg('info', "Lecture → lux=$lux | statut=$status");
                     if (insertLightMeasure($lux)) {
                         logMsg('ok', "✅ Enregistré : {$lux} lux ({$status})");
                     } else {
                         logMsg('warn', '⚠️  Échec enregistrement DB.');
                     }
-
                     $iteration++;
                     if (MAX_ITERATIONS > 0 && $iteration >= MAX_ITERATIONS) break 2;
                 } else {
@@ -246,22 +199,17 @@ if (USE_DIO) {
                 }
             }
         }
-
         // Watchdog : avertissement si aucune donnée depuis 30s
         if (time() - $lastRead > 30) {
             logMsg('warn', 'Aucune donnée reçue depuis 30 secondes. Vérifiez la connexion Tiva C.');
             $lastRead = time();
         }
-
         usleep(100000); // Pause 100ms
     }
-
     fclose($handle);
 }
-
 logMsg('info', 'Lecture terminée. ' . ($iteration ?? 0) . ' mesure(s) enregistrée(s).');
 echo str_repeat('-', 50) . PHP_EOL;
-
 /*
  * ============================================================
  * NOTES D'INTÉGRATION TIVA C
