@@ -263,3 +263,337 @@
     Circuit DTR�:     ON
     Circuit RTS�:     ON
 [2026-06-10 15:33:55] [INFO] Port série ouvert (fopen). En attente de données...
+[2026-06-10 15:35:49] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:35:49] [INFO] Port     : \\.\COM7
+[2026-06-10 15:35:49] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:35:49] [INFO] Mode     : fopen() natif
+[2026-06-10 15:35:49] [INFO] Démarrage de la lecture...
+[2026-06-10 15:35:49] [INFO] Configuration port Windows : Statut du p�riph�rique COM7:
+----------------------------
+    Baud�:            9600
+    Parit�:          None
+    Bits de donn�es�: 8
+    Bits d�arr�t�:    1
+    Temporisation�:   ON
+    XON/XOFF�:        OFF
+    Protocole CTS�:   OFF
+    Protocole DSR�:   OFF
+    Sensibilit� DSR�: OFF
+    Circuit DTR�:     ON
+    Circuit RTS�:     ON
+[2026-06-10 15:35:49] [INFO] Port série ouvert (fopen). En attente de données...
+[2026-06-10 15:35:49] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:35:49] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:35:50] [INFO] Lecture → lux=0 | statut=NIGHT
+[2026-06-10 15:35:50] [OK] ✅ Enregistré : 0 lux (NIGHT)
+[2026-06-10 15:35:51] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:35:51] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:35:52] [INFO] Lecture → lux=0 | statut=NIGHT
+[2026-06-10 15:35:52] [OK] ✅ Enregistré : 0 lux (NIGHT)
+[2026-06-10 15:35:53] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:35:53] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:35:54] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:35:54] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:35:55] [INFO] Lecture → lux=0 | statut=NIGHT
+[2026-06-10 15:35:55] [OK] ✅ Enregistré : 0 lux (NIGHT)
+[2026-06-10 15:35:56] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:35:56] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:35:57] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:35:57] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:35:58] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:35:58] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:35:59] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:35:59] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:00] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:00] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:01] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:01] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:02] [INFO] Lecture → lux=0 | statut=NIGHT
+[2026-06-10 15:36:02] [OK] ✅ Enregistré : 0 lux (NIGHT)
+[2026-06-10 15:36:03] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:03] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:04] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:04] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:06] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:06] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:08] [INFO] Lecture → lux=10 | statut=NIGHT
+[2026-06-10 15:36:08] [OK] ✅ Enregistré : 10 lux (NIGHT)
+[2026-06-10 15:36:09] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:09] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:10] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:10] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:11] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:11] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:12] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:12] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:13] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:13] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:14] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:14] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:15] [INFO] Lecture → lux=4 | statut=NIGHT
+[2026-06-10 15:36:15] [OK] ✅ Enregistré : 4 lux (NIGHT)
+[2026-06-10 15:36:16] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:36:16] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:36:17] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:36:17] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:36:18] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:36:18] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:36:19] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:19] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:20] [INFO] Lecture → lux=0 | statut=NIGHT
+[2026-06-10 15:36:20] [OK] ✅ Enregistré : 0 lux (NIGHT)
+[2026-06-10 15:36:21] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:21] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:22] [INFO] Lecture → lux=6 | statut=NIGHT
+[2026-06-10 15:36:22] [OK] ✅ Enregistré : 6 lux (NIGHT)
+[2026-06-10 15:36:23] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:23] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:24] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:24] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:25] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:25] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:26] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:26] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:27] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:27] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:28] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:28] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:29] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:29] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:30] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:30] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:31] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:31] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:32] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:32] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:33] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:33] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:34] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:34] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:35] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:35] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:36] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:36:36] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:36:37] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:37] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:38] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:38] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:39] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:39] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:40] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:40] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:41] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:41] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:42] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:42] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:43] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:43] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:44] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:44] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:45] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:45] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:46] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:46] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:47] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:47] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:48] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:36:48] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:36:49] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:49] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:50] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:50] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:51] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:51] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:52] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:52] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:53] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:53] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:54] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:54] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:55] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:55] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:56] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:56] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:57] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:57] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:36:58] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:36:58] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:36:59] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:36:59] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:00] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:00] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:01] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:01] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:02] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:02] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:03] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:03] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:04] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:04] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:05] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:05] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:06] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:06] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:07] [INFO] Lecture → lux=28 | statut=NIGHT
+[2026-06-10 15:37:07] [OK] ✅ Enregistré : 28 lux (NIGHT)
+[2026-06-10 15:37:08] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:08] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:09] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:09] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:10] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:10] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:11] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:11] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:12] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:12] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:13] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:13] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:14] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:14] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:15] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:15] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:16] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:16] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:17] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:17] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:18] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:18] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:19] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:19] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:20] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:20] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:21] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:21] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:22] [INFO] Lecture → lux=5 | statut=NIGHT
+[2026-06-10 15:37:22] [OK] ✅ Enregistré : 5 lux (NIGHT)
+[2026-06-10 15:37:23] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:23] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:24] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:24] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:25] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:25] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:26] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:26] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:27] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:27] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:28] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:28] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:29] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:29] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:30] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:30] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:31] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:31] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:32] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:32] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:33] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:33] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:34] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:34] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:35] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:35] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:36] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:36] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:37] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:37] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:38] [INFO] Lecture → lux=5 | statut=NIGHT
+[2026-06-10 15:37:38] [OK] ✅ Enregistré : 5 lux (NIGHT)
+[2026-06-10 15:37:39] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:39] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:40] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:40] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:41] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:41] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:42] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:42] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:43] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:43] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:44] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:44] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:45] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:45] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:46] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:46] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:47] [INFO] Lecture → lux=1 | statut=NIGHT
+[2026-06-10 15:37:47] [OK] ✅ Enregistré : 1 lux (NIGHT)
+[2026-06-10 15:37:48] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:48] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:49] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:49] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:50] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:50] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:37:51] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:37:51] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:37:52] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:37:52] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:39:01] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 15:39:01] [INFO] Port     : \\.\COM7
+[2026-06-10 15:39:01] [INFO] Baudrate : 9600 baud
+[2026-06-10 15:39:01] [INFO] Mode     : fopen() natif
+[2026-06-10 15:39:01] [INFO] Démarrage de la lecture...
+[2026-06-10 15:39:01] [INFO] Configuration port Windows : Statut du p�riph�rique COM7:
+----------------------------
+    Baud�:            9600
+    Parit�:          None
+    Bits de donn�es�: 8
+    Bits d�arr�t�:    1
+    Temporisation�:   ON
+    XON/XOFF�:        OFF
+    Protocole CTS�:   OFF
+    Protocole DSR�:   OFF
+    Sensibilit� DSR�: OFF
+    Circuit DTR�:     ON
+    Circuit RTS�:     ON
+[2026-06-10 15:39:01] [INFO] Port série ouvert (fopen). En attente de données...
+[2026-06-10 15:39:01] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:39:01] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:39:02] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:39:02] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:39:03] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:39:03] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:39:04] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:39:04] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:39:05] [INFO] Lecture → lux=2 | statut=NIGHT
+[2026-06-10 15:39:05] [OK] ✅ Enregistré : 2 lux (NIGHT)
+[2026-06-10 15:39:06] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:39:06] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 15:39:07] [INFO] Lecture → lux=1024 | statut=DAY
+[2026-06-10 15:39:07] [OK] ✅ Enregistré : 1024 lux (DAY)
+[2026-06-10 16:01:38] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 16:01:38] [INFO] Port     : \\.\COM7
+[2026-06-10 16:01:38] [INFO] Baudrate : 9600 baud
+[2026-06-10 16:01:38] [INFO] Mode     : fopen() natif
+[2026-06-10 16:01:38] [INFO] Démarrage de la lecture...
+[2026-06-10 16:01:42] [INFO] Configuration port Windows : Statut du p�riph�rique COM7:
+----------------------------
+    Baud�:            9600
+    Parit�:          None
+    Bits de donn�es�: 8
+    Bits d�arr�t�:    1
+    Temporisation�:   OFF
+    XON/XOFF�:        OFF
+    Protocole CTS�:   OFF
+    Protocole DSR�:   OFF
+    Sensibilit� DSR�: OFF
+    Circuit DTR�:     ON
+    Circuit RTS�:     ON
+[2026-06-10 16:01:42] [INFO] Port série ouvert (fopen). En attente de données...
+[2026-06-10 16:01:58] [INFO] === SmartWake Serial Reader ===
+[2026-06-10 16:01:58] [INFO] Port     : \\.\COM7
+[2026-06-10 16:01:58] [INFO] Baudrate : 9600 baud
+[2026-06-10 16:01:58] [INFO] Mode     : fopen() natif
+[2026-06-10 16:01:58] [INFO] Démarrage de la lecture...
+[2026-06-10 16:01:58] [INFO] Configuration port Windows : Statut du p�riph�rique COM7:
+----------------------------
+    Baud�:            9600
+    Parit�:          None
+    Bits de donn�es�: 8
+    Bits d�arr�t�:    1
+    Temporisation�:   OFF
+    XON/XOFF�:        OFF
+    Protocole CTS�:   OFF
+    Protocole DSR�:   OFF
+    Sensibilit� DSR�: OFF
+    Circuit DTR�:     ON
+    Circuit RTS�:     ON
+[2026-06-10 16:01:58] [INFO] Port série ouvert (fopen). En attente de données...

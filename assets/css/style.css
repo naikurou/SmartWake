@@ -333,6 +333,114 @@ main { flex: 1; }
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
+/* --- Badges 6 niveaux de luminosité --- */
+.badge-level { font-size: 0.82rem; }
+
+.level-night-full {
+  background: rgba(30, 30, 46, 0.6);
+  color: #a5b4fc;
+  border: 1px solid rgba(100, 100, 180, 0.3);
+}
+.level-night-dim {
+  background: rgba(79, 70, 229, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(129, 140, 248, 0.4);
+}
+.level-dawn {
+  background: rgba(249, 115, 22, 0.15);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.4);
+}
+.level-morning {
+  background: rgba(250, 204, 21, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+}
+.level-day {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.4);
+}
+.level-alert {
+  background: rgba(244, 63, 94, 0.2);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  animation: badge-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(244, 63, 94, 0); }
+}
+
+/* Cercle lux — styles par niveau */
+.lux-circle .lux-label {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.1rem;
+}
+
+.lux-circle.level-night-full {
+  background: radial-gradient(circle, rgba(79,70,229,0.15), rgba(30,30,46,0.05));
+  border: 2px solid rgba(100,100,180,0.3);
+  box-shadow: 0 0 20px rgba(79,70,229,0.2);
+}
+.lux-circle.level-night-dim {
+  background: radial-gradient(circle, rgba(129,140,248,0.2), rgba(79,70,229,0.05));
+  border: 2px solid rgba(129,140,248,0.4);
+  box-shadow: 0 0 25px rgba(129,140,248,0.25);
+  animation: pulse-night 3s ease-in-out infinite;
+}
+.lux-circle.level-dawn {
+  background: radial-gradient(circle, rgba(249,115,22,0.2), rgba(249,115,22,0.05));
+  border: 2px solid rgba(249,115,22,0.4);
+  box-shadow: 0 0 25px rgba(249,115,22,0.25);
+  animation: pulse-dawn 2.5s ease-in-out infinite;
+}
+.lux-circle.level-morning {
+  background: radial-gradient(circle, rgba(250,204,21,0.2), rgba(250,204,21,0.05));
+  border: 2px solid rgba(250,204,21,0.45);
+  box-shadow: 0 0 30px rgba(250,204,21,0.3);
+  animation: pulse-day 2s ease-in-out infinite;
+}
+.lux-circle.level-day {
+  background: radial-gradient(circle, rgba(96,165,250,0.2), rgba(96,165,250,0.05));
+  border: 2px solid rgba(96,165,250,0.45);
+  box-shadow: 0 0 30px rgba(96,165,250,0.3);
+  animation: pulse-day 2s ease-in-out infinite;
+}
+.lux-circle.level-alert {
+  background: radial-gradient(circle, rgba(244,63,94,0.25), rgba(244,63,94,0.05));
+  border: 2px solid rgba(244,63,94,0.5);
+  box-shadow: 0 0 40px rgba(244,63,94,0.4);
+  animation: pulse-alert 0.7s ease-in-out infinite;
+}
+
+@keyframes pulse-dawn {
+  0%, 100% { box-shadow: 0 0 20px rgba(249,115,22,0.2); }
+  50%       { box-shadow: 0 0 45px rgba(249,115,22,0.5); }
+}
+@keyframes pulse-alert {
+  0%, 100% { box-shadow: 0 0 30px rgba(244,63,94,0.3); }
+  50%       { box-shadow: 0 0 60px rgba(244,63,94,0.7); }
+}
+
+/* Flash page entière quand alerte lumière soudaine */
+@keyframes alert-flash-anim {
+  0%, 100% { background-color: var(--color-bg); }
+  25%, 75%  { background-color: rgba(244, 63, 94, 0.08); }
+}
+body.alert-flash {
+  animation: alert-flash-anim 1s ease-in-out;
+}
+
+/* Wake card — couleurs par action */
+.wake-card.action-soft_alarm  { border-color: rgba(249, 115, 22, 0.4); }
+.wake-card.action-main_alarm  { border-color: rgba(250, 204, 21, 0.4); }
+.wake-card.action-alert       { border-color: rgba(244, 63, 94, 0.5); background: linear-gradient(135deg, rgba(244,63,94,0.1), rgba(244,63,94,0.05)); }
+
 /* --- Boutons --- */
 .btn {
   display: inline-flex;

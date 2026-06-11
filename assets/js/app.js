@@ -51,49 +51,64 @@
 
   if (!elLux) return; // Pas sur le dashboard, on s'arrête
 
+  // Mapping niveau -> couleur barre de progression
+  const LEVEL_COLORS = {
+    NIGHT_FULL : '#1e1e2e',
+    NIGHT_DIM  : '#4f46e5',
+    DAWN       : '#f97316',
+    MORNING    : '#facc15',
+    DAY        : '#60a5fa',
+    ALERT      : '#f43f5e',
+  };
+
   /**
    * Met à jour l'interface avec les dernières données capteur.
    * @param {Object} data - Réponse JSON de l'API
    */
   function updateUI(data) {
     const lux    = data.light_value ?? 0;
-    const status = data.status ?? 'UNKNOWN';
-    const ts     = data.timestamp ?? '';
+    const status = data.status     ?? 'UNKNOWN';
+    const level  = data.lux_level  ?? 'NIGHT_FULL';
+    const label  = data.lux_label  ?? 'Inconnu';
+    const icon   = data.lux_icon   ?? '⬛';
+    const ts     = data.timestamp  ?? '';
     const wake   = data.wake_recommendation ?? {};
+    const color  = LEVEL_COLORS[level] || '#60a5fa';
 
     // --- Luminosité ---
     if (elLux) {
       elLux.textContent = lux + ' lux';
-      elLux.className   = 'card-value glow-blue';
+      elLux.style.color = color;
     }
 
     // --- Barre de progression ---
     if (elLuxFill) {
-      const pct = Math.min(Math.round((lux / 1024) * 100), 100);
-      elLuxFill.style.width = pct + '%';
+      const MAX_LUX = 600;
+      const pct = Math.min(Math.round((lux / MAX_LUX) * 100), 100);
+      elLuxFill.style.width      = pct + '%';
+      elLuxFill.style.background = `linear-gradient(90deg, ${color}99, ${color})`;
     }
 
-    // --- Statut Jour/Nuit ---
+    // --- Badge statut ---
     if (elStatus) {
-      if (status === 'DAY') {
-        elStatus.innerHTML = '<span class="badge badge-day">☀️ Jour</span>';
-      } else {
-        elStatus.innerHTML = '<span class="badge badge-night">🌙 Nuit</span>';
-      }
+      elStatus.innerHTML = `<span class="badge badge-level level-${level.toLowerCase().replace('_','-')}">${icon} ${label}</span>`;
     }
 
     // --- Texte statut (aria) ---
     if (elStatusTxt) {
-      elStatusTxt.textContent = status === 'DAY' ? 'Jour' : 'Nuit';
+      elStatusTxt.textContent = label;
     }
 
     // --- Cercle lumineux ---
     if (elLuxCircle) {
-      elLuxCircle.className = 'lux-circle ' + (status === 'DAY' ? 'is-day' : 'is-night');
-      const icon = elLuxCircle.querySelector('.lux-icon');
-      if (icon) icon.textContent = status === 'DAY' ? '☀️' : '🌙';
-      const val = elLuxCircle.querySelector('.lux-val');
-      if (val) val.textContent = lux + ' lux';
+      elLuxCircle.className = 'lux-circle level-' + level.toLowerCase().replace('_', '-');
+      elLuxCircle.style.setProperty('--level-color', color);
+      const iconEl = elLuxCircle.querySelector('.lux-icon');
+      if (iconEl) iconEl.textContent = icon;
+      const valEl  = elLuxCircle.querySelector('.lux-val');
+      if (valEl)  valEl.textContent  = lux + ' lux';
+      const lblEl  = elLuxCircle.querySelector('.lux-label');
+      if (lblEl)  lblEl.textContent  = label;
     }
 
     // --- Horodatage ---
@@ -105,10 +120,24 @@
     // --- Section réveil intelligent ---
     if (elWakeCard && wake) {
       const isOptimal = wake.optimal === true;
-      elWakeCard.className = 'wake-card card ' + (isOptimal ? 'optimal' : 'not-optimal');
-      if (elWakeIcon)  elWakeIcon.textContent  = isOptimal ? '🌅' : '😴';
-      if (elWakeMsg)   elWakeMsg.textContent   = wake.message ?? '';
-      if (elWakeDet)   elWakeDet.textContent   = wake.detail  ?? '';
+      const action    = wake.action  ?? '';
+      elWakeCard.className = 'wake-card card ' + (isOptimal ? 'optimal' : 'not-optimal') + ' action-' + action;
+      if (elWakeIcon) elWakeIcon.textContent = {
+        sleep         : '😴',
+        simulate_dawn : '🌙',
+        soft_alarm    : '🌅',
+        main_alarm    : '🔔',
+        day_mode      : '☀️',
+        alert         : '⚠️',
+      }[action] || '😴';
+      if (elWakeMsg) elWakeMsg.textContent = wake.message ?? '';
+      if (elWakeDet) elWakeDet.textContent = wake.detail  ?? '';
+    }
+
+    // --- Alerte lumière soudaine : flash de la page ---
+    if (level === 'ALERT') {
+      document.body.classList.add('alert-flash');
+      setTimeout(() => document.body.classList.remove('alert-flash'), 1000);
     }
   }
 

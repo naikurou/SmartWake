@@ -7,23 +7,63 @@
 require_once __DIR__ . '/db.php';
 
 // ============================================================
-// Constante du seuil Jour/Nuit
+// Seuils de luminosité (lux) — configurable
 // ============================================================
-define('DAY_THRESHOLD', 500);
-define('IDEAL_WAKE_THRESHOLD', 700);
+define('LUX_NIGHT_FULL',   1);    // < 1 lux   : Nuit complète
+define('LUX_NIGHT_DIM',   10);    // 1-10 lux  : Nuit avec faible éclairage
+define('LUX_DAWN',        50);    // 10-50 lux : Aube naissante
+define('LUX_MORNING',    200);    // 50-200 lux: Matin clair
+define('LUX_DAY',        500);    // 200-500   : Plein jour
+define('LUX_ALERT',      500);    // > 500 lux : Alerte lumière soudaine
+// Compat ascendante
+define('DAY_THRESHOLD',    200);
+define('IDEAL_WAKE_THRESHOLD', 50);
 
 // ============================================================
 // Fonctions capteur
 // ============================================================
 
 /**
- * Détermine le statut Jour/Nuit à partir d'une valeur de luminosité.
+ * Détermine le niveau de luminosité en 6 paliers.
  *
- * @param int $lightValue Valeur en lux
- * @return string 'DAY' ou 'NIGHT'
+ * @param int $lux Valeur en lux
+ * @return string Identifiant du niveau
  */
-function getDayStatus(int $lightValue): string {
-    return $lightValue > DAY_THRESHOLD ? 'DAY' : 'NIGHT';
+function getLuxLevel(int $lux): string {
+    if ($lux < LUX_NIGHT_FULL)  return 'NIGHT_FULL';   // < 1 lux
+    if ($lux < LUX_NIGHT_DIM)   return 'NIGHT_DIM';    // 1-10 lux
+    if ($lux < LUX_DAWN)        return 'DAWN';          // 10-50 lux
+    if ($lux < LUX_MORNING)     return 'MORNING';       // 50-200 lux
+    if ($lux < LUX_ALERT)       return 'DAY';           // 200-500 lux
+    return 'ALERT';                                      // >= 500 lux
+}
+
+/**
+ * Retourne les métadonnées d'un niveau de luminosité.
+ *
+ * @param string $level
+ * @return array
+ */
+function getLuxLevelMeta(string $level): array {
+    $meta = [
+        'NIGHT_FULL' => ['label' => 'Nuit complète',            'icon' => '⬛', 'css' => 'level-night-full',  'range' => '< 1 lux'],
+        'NIGHT_DIM'  => ['label' => 'Nuit — faible éclairage', 'icon' => '🌙', 'css' => 'level-night-dim',   'range' => '1–10 lux'],
+        'DAWN'       => ['label' => 'Aube naissante',            'icon' => '🌅', 'css' => 'level-dawn',         'range' => '10–50 lux'],
+        'MORNING'    => ['label' => 'Matin clair',               'icon' => '🌤️', 'css' => 'level-morning',      'range' => '50–200 lux'],
+        'DAY'        => ['label' => 'Plein jour',                'icon' => '☀️', 'css' => 'level-day',          'range' => '200–500 lux'],
+        'ALERT'      => ['label' => 'Lumière soudaine',          'icon' => '💡', 'css' => 'level-alert',        'range' => '> 500 lux'],
+    ];
+    return $meta[$level] ?? $meta['NIGHT_FULL'];
+}
+
+/**
+ * Compatibilité ascendante : retourne 'DAY' ou 'NIGHT' (pour la BDD existante).
+ *
+ * @param int $lux
+ * @return string
+ */
+function getDayStatus(int $lux): string {
+    return $lux >= DAY_THRESHOLD ? 'DAY' : 'NIGHT';
 }
 
 /**
@@ -171,12 +211,21 @@ function formatDate(string $datetime): string {
 }
 
 /**
- * Retourne un badge HTML pour le statut Jour/Nuit.
+ * Retourne un badge HTML pour le niveau de luminosité.
  *
- * @param string $status 'DAY' ou 'NIGHT'
+ * @param string $status 'DAY' ou 'NIGHT' (champ BDD)
+ * @param int    $lux    Valeur en lux pour obtenir le vrai niveau
  * @return string HTML sécurisé
  */
-function statusBadge(string $status): string {
+function statusBadge(string $status, int $lux = -1): string {
+    if ($lux >= 0) {
+        $level = getLuxLevel($lux);
+        $meta  = getLuxLevelMeta($level);
+        return '<span class="badge badge-level ' . $meta['css'] . '" aria-label="' . $meta['label'] . '">'
+            . $meta['icon'] . ' ' . $meta['label']
+            . '</span>';
+    }
+    // Fallback binaire
     if ($status === 'DAY') {
         return '<span class="badge badge-day" aria-label="Jour">☀️ Jour</span>';
     }
@@ -184,25 +233,63 @@ function statusBadge(string $status): string {
 }
 
 /**
- * Retourne la recommandation de réveil basée sur la luminosité et le statut.
+ * Retourne la recommandation de réveil basée sur les 6 niveaux de luminosité.
  *
- * @param int    $lightValue
- * @param string $status
- * @return array ['optimal' => bool, 'message' => string]
+ * @param int    $lux
+ * @param string $status (inutilisé, gardé pour compatibilité)
+ * @return array
  */
-function getWakeRecommendation(int $lightValue, string $status): array {
-    if ($status === 'DAY' && $lightValue > IDEAL_WAKE_THRESHOLD) {
-        return [
-            'optimal' => true,
-            'message' => 'Conditions idéales pour le réveil détectées',
-            'detail'  => "Luminosité de {$lightValue} lux — Lumière naturelle suffisante pour un réveil en douceur.",
-        ];
+function getWakeRecommendation(int $lux, string $status = ''): array {
+    $level = getLuxLevel($lux);
+    switch ($level) {
+        case 'NIGHT_FULL':
+            return [
+                'optimal' => false,
+                'level'   => $level,
+                'message' => 'Obscurité totale — Mode veille',
+                'detail'  => "Il fait nuit noire ({$lux} lux). Le réveil est en mode veille, luminosité minimale.",
+                'action'  => 'sleep',
+            ];
+        case 'NIGHT_DIM':
+            return [
+                'optimal' => false,
+                'level'   => $level,
+                'message' => 'Veilleuse détectée — Simulation d\'aube',
+                'detail'  => "Faible éclairage ({$lux} lux). Simulation d'aube douce en cours.",
+                'action'  => 'simulate_dawn',
+            ];
+        case 'DAWN':
+            return [
+                'optimal' => true,
+                'level'   => $level,
+                'message' => 'Aube naissante — Alarme douce',
+                'detail'  => "Lumière du matin ({$lux} lux). C'est le moment idéal pour une alarme douce !",
+                'action'  => 'soft_alarm',
+            ];
+        case 'MORNING':
+            return [
+                'optimal' => true,
+                'level'   => $level,
+                'message' => 'Matin clair — Alarme principale',
+                'detail'  => "Pièce bien éclairée ({$lux} lux). L'alarme principale se déclenche.",
+                'action'  => 'main_alarm',
+            ];
+        case 'DAY':
+            return [
+                'optimal' => true,
+                'level'   => $level,
+                'message' => 'Plein jour — Dashboard adapté',
+                'detail'  => "Lumière naturelle franche ({$lux} lux). L'écran du dashboard réduit sa luminosité.",
+                'action'  => 'day_mode',
+            ];
+        case 'ALERT':
+        default:
+            return [
+                'optimal' => false,
+                'level'   => $level,
+                'message' => '⚠️ Lumière soudaine détectée !',
+                'detail'  => "Changement brusque ({$lux} lux). Quelqu'un a allumé la lumière dans la pièce.",
+                'action'  => 'alert',
+            ];
     }
-    return [
-        'optimal' => false,
-        'message' => 'Conditions de réveil non optimales',
-        'detail'  => $status === 'NIGHT'
-            ? "Il fait encore nuit ({$lightValue} lux). Continuez à dormir !"
-            : "La luminosité ({$lightValue} lux) n'est pas encore suffisante pour un réveil idéal.",
-    ];
 }

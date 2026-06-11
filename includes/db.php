@@ -8,11 +8,11 @@
 // Configuration Azure Database for MySQL
 // Modifier ces valeurs selon votre environnement
 // ============================================================
-define('DB_HOST',    getenv('DB_HOST')     ?: 'localhost');
+define('DB_HOST',    getenv('DB_HOST')     ?: '178.33.122.21');
 define('DB_PORT',    getenv('DB_PORT')     ?: '3306');
-define('DB_NAME',    getenv('DB_NAME')     ?: 'smartwake');
-define('DB_USER',    getenv('DB_USER')     ?: 'root');
-define('DB_PASS',    getenv('DB_PASS')     ?: '');
+define('DB_NAME',    getenv('DB_NAME')     ?: 'hangardb_axst62997');
+define('DB_USER',    getenv('DB_USER')     ?: 'axst62997');
+define('DB_PASS',    getenv('DB_PASS')     ?: 'vN98OBrkug96JSeUmiFxuZGp');
 define('DB_CHARSET', 'utf8mb4');
 
 /**
