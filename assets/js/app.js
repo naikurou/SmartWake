@@ -37,8 +37,8 @@
 
   const BASE_URL = (window.SMARTWAKE_BASE || '') + '/smartwake/api/latest.php';
 
-  // Éléments DOM du dashboard
   const elLux       = document.getElementById('live-lux');
+  const elLuxHero   = document.getElementById('live-lux-hero');
   const elStatus    = document.getElementById('live-status');
   const elStatusTxt = document.getElementById('live-status-text');
   const elTimestamp = document.getElementById('live-timestamp');
@@ -77,8 +77,11 @@
 
     // --- Luminosité ---
     if (elLux) {
-      elLux.textContent = lux + ' lux';
+      elLux.innerHTML = lux + ' <small>lux</small>';
       elLux.style.color = color;
+    }
+    if (elLuxHero) {
+      elLuxHero.textContent = lux + ' lux';
     }
 
     // --- Barre de progression ---
@@ -121,7 +124,7 @@
     if (elWakeCard && wake) {
       const isOptimal = wake.optimal === true;
       const action    = wake.action  ?? '';
-      elWakeCard.className = 'wake-card card ' + (isOptimal ? 'optimal' : 'not-optimal') + ' action-' + action;
+      elWakeCard.className = 'card metric-card wake-card ' + (isOptimal ? 'optimal' : 'not-optimal') + ' action-' + action;
       if (elWakeIcon) elWakeIcon.textContent = {
         sleep         : '😴',
         simulate_dawn : '🌙',
@@ -132,6 +135,13 @@
       }[action] || '😴';
       if (elWakeMsg) elWakeMsg.textContent = wake.message ?? '';
       if (elWakeDet) elWakeDet.textContent = wake.detail  ?? '';
+      
+      const footer = elWakeCard.querySelector('.wake-footer');
+      if (footer) {
+        footer.innerHTML = isOptimal 
+          ? '<span class="badge badge-success">✅ Conditions optimales</span>'
+          : '<span class="badge badge-night">💤 Pas encore</span>';
+      }
     }
 
     // --- Alerte lumière soudaine : flash de la page ---
