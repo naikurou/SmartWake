@@ -8,7 +8,7 @@
    1. GOOGLE FONTS IMPORT
    ============================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 
 /* =============================================================================
@@ -17,61 +17,60 @@
 
 :root {
   /* ── Colors ─────────────────────────────────────────────── */
-  --color-bg:            #0A0F1E;
-  --color-bg-card:       rgba(13, 20, 40, 0.85);
-  --color-bg-card-solid: #0D1428;
-  --color-primary:       #2563EB;
-  --color-primary-dark:  #1D4ED8;
-  --color-primary-light: #3B82F6;
-  --color-accent:        #06B6D4;
-  --color-accent-dark:   #0891B2;
+  --color-bg:            #000000;
+  --color-bg-card:       rgba(24, 24, 27, 0.65);
+  --color-bg-card-solid: #09090B;
+  --color-primary:       #FAFAFA;
+  --color-primary-dark:  #A1A1AA;
+  --color-primary-light: #FFFFFF;
+  --color-accent:        #3B82F6;
+  --color-accent-dark:   #2563EB;
   --color-gold:          #F59E0B;
   --color-gold-dark:     #D97706;
-  --color-text:          #F1F5F9;
-  --color-text-muted:    #64748B;
-  --color-text-subtle:   #94A3B8;
-  --color-border:        rgba(99, 179, 237, 0.12);
-  --color-border-strong: rgba(99, 179, 237, 0.25);
+  --color-text:          #FAFAFA;
+  --color-text-muted:    #A1A1AA;
+  --color-text-subtle:   #D4D4D8;
+  --color-border:        rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
   --color-success:       #10B981;
   --color-success-dim:   rgba(16, 185, 129, 0.12);
   --color-danger:        #F43F5E;
   --color-danger-dim:    rgba(244, 63, 94, 0.12);
-  --color-info:          #06B6D4;
-  --color-info-dim:      rgba(6, 182, 212, 0.12);
+  --color-info:          #3B82F6;
+  --color-info-dim:      rgba(59, 130, 246, 0.12);
   --color-warning:       #F59E0B;
   --color-warning-dim:   rgba(245, 158, 11, 0.12);
 
   /* ── Night / Dawn / Day level colors ────────────────────── */
-  --color-night-full:    #1E1B4B;
-  --color-night-dim:     #312E81;
+  --color-night-full:    #18181B;
+  --color-night-dim:     #27272A;
   --color-dawn:          #F97316;
   --color-morning:       #EAB308;
   --color-day:           #38BDF8;
   --color-alert:         #EF4444;
 
   /* ── Gradients ───────────────────────────────────────────── */
-  --gradient-primary:    linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-brand:      linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  --gradient-primary:    linear-gradient(135deg, #27272A 0%, #09090B 100%);
+  --gradient-brand:      linear-gradient(90deg, #FFFFFF 0%, #A1A1AA 100%);
   --gradient-danger:     linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
   --gradient-gold:       linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  --gradient-night:      linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
-  --gradient-dawn:       linear-gradient(135deg, #7C3AED 0%, #F97316 100%);
-  --gradient-day:        linear-gradient(135deg, #0EA5E9 0%, #06B6D4 100%);
-  --gradient-bg-radial:  radial-gradient(ellipse 80% 60% at 20% 10%, rgba(37,99,235,0.08) 0%, transparent 60%),
-                         radial-gradient(ellipse 60% 50% at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 55%),
-                         radial-gradient(ellipse 40% 40% at 50% 50%, rgba(245,158,11,0.03) 0%, transparent 70%);
+  --gradient-night:      linear-gradient(135deg, #18181B 0%, #27272A 100%);
+  --gradient-dawn:       linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  --gradient-day:        linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+  --gradient-bg-radial:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 50%),
+                         radial-gradient(ellipse 40% 40% at 50% 100%, rgba(59,130,246,0.05) 0%, transparent 60%);
 
   /* ── Shadows ─────────────────────────────────────────────── */
   --shadow-sm:           0 2px 8px rgba(0, 0, 0, 0.35);
   --shadow-md:           0 4px 20px rgba(0, 0, 0, 0.45);
   --shadow-lg:           0 8px 40px rgba(0, 0, 0, 0.55);
   --shadow-xl:           0 16px 64px rgba(0, 0, 0, 0.65);
-  --shadow-glow-blue:    0 0 24px rgba(37, 99, 235, 0.45), 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-glow-cyan:    0 0 24px rgba(6, 182, 212, 0.45), 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-glow-gold:    0 0 24px rgba(245, 158, 11, 0.45), 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-glow-danger:  0 0 24px rgba(244, 63, 94, 0.45), 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-card:         0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 6px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover:   0 12px 48px rgba(37, 99, 235, 0.25), 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue:    0 0 24px rgba(255, 255, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow-cyan:    0 0 24px rgba(255, 255, 255, 0.15), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow-gold:    0 0 24px rgba(245, 158, 11, 0.25), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-glow-danger:  0 0 24px rgba(244, 63, 94, 0.25), 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-card:         0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 6px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover:   0 12px 48px rgba(255, 255, 255, 0.05), 0 4px 16px rgba(0, 0, 0, 0.6);
 
   /* ── Spacing ─────────────────────────────────────────────── */
   --space-xs:   0.25rem;
@@ -93,8 +92,8 @@
   --radius-full: 9999px;
 
   /* ── Typography ──────────────────────────────────────────── */
-  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Orbitron', 'Courier New', monospace;
+  --font-body:    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   --font-size-xs:   0.65rem;
   --font-size-sm:   0.78rem;
   --font-size-base: 0.9rem;
@@ -166,10 +165,9 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 90% 70% at 15% 5%,  rgba(37, 99, 235, 0.09) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 60% at 85% 85%,  rgba(6, 182, 212, 0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 50% at 50% 40%,  rgba(245, 158, 11, 0.04) 0%, transparent 65%),
-    radial-gradient(ellipse 100% 100% at 50% 50%, #0A0F1E 0%, #060914 100%);
+    radial-gradient(ellipse 90% 70% at 50% 0%,  rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse 50% 50% at 50% 100%,  rgba(59, 130, 246, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #000000 0%, #09090B 100%);
   pointer-events: none;
 }
 
@@ -179,10 +177,10 @@ body::after {
   inset: 0;
   z-index: -1;
   background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(99,179,237,0.08) 0%, transparent 1px),
-    radial-gradient(1px 1px at 60% 70%, rgba(99,179,237,0.06) 0%, transparent 1px),
-    radial-gradient(1px 1px at 80% 20%, rgba(37,99,235,0.07) 0%, transparent 1px),
-    radial-gradient(1px 1px at 40% 80%, rgba(6,182,212,0.06) 0%, transparent 1px);
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 1px),
+    radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.03) 0%, transparent 1px),
+    radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 1px),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.03) 0%, transparent 1px);
   pointer-events: none;
 }
 
@@ -244,13 +242,13 @@ h6 { font-size: var(--font-size-md); }
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-full);
   transition: background var(--transition-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 ::-webkit-scrollbar-corner {

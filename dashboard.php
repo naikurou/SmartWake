@@ -52,7 +52,6 @@ $csrfToken = generateCsrfToken();
       <ul class="navbar-nav" id="navbar-nav" role="list">
         <li><a href="/smartwake/dashboard.php" class="nav-link active" aria-current="page">Dashboard</a></li>
         <li><a href="/smartwake/history.php" class="nav-link">Historique</a></li>
-        <li><a href="/smartwake/api/latest.php" class="nav-link" target="_blank" rel="noopener">API</a></li>
         <li class="nav-separator"></li>
         <li>
           <span class="nav-user">
@@ -245,8 +244,6 @@ $csrfToken = generateCsrfToken();
       <span class="footer-brand">🌅 SmartWake</span>
       <span class="footer-sep">·</span>
       <span>Projet ISEP <?= date('Y') ?></span>
-      <span class="footer-sep">·</span>
-      <a href="/smartwake/api/latest.php" target="_blank" rel="noopener">API JSON</a>
     </div>
   </footer>
 
