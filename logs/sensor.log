@@ -597,3 +597,250 @@
     Circuit DTR :     ON
     Circuit RTS :     ON
 [2026-06-10 16:01:58] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-11 16:55:17] [INFO] === SmartWake Serial Reader ===
+[2026-06-11 16:55:17] [INFO] Port     : \\.\COM7
+[2026-06-11 16:55:17] [INFO] Baudrate : 9600 baud
+[2026-06-11 16:55:17] [INFO] Mode     : fopen() natif
+[2026-06-11 16:55:17] [INFO] DÃ©marrage de la lecture...
+[2026-06-11 16:55:17] [INFO] Configuration port Windows : Statut du périphérique COM7:
+----------------------------
+    Baud :            9600
+    Parité :          None
+    Bits de données : 8
+    Bits d’arrêt :    1
+    Temporisation :   OFF
+    XON/XOFF :        OFF
+    Protocole CTS :   OFF
+    Protocole DSR :   OFF
+    Sensibilité DSR : OFF
+    Circuit DTR :     ON
+    Circuit RTS :     ON
+[2026-06-11 16:55:17] [INFO] Port sÃ©rie ouvert (fopen). En attente de donnÃ©es...
+[2026-06-11 16:58:20] [INFO] === SmartWake Serial Reader (PowerShell) ===
+[2026-06-11 16:58:20] [INFO] Port     : COM7
+[2026-06-11 16:58:20] [INFO] Baudrate : 9600 baud
+[2026-06-11 16:58:20] [INFO] BDD      : hangardb_axst62997 @ 178.33.122.21
+[2026-06-11 16:58:20] [INFO] Port serie ouvert. En attente de donnees... (Ctrl+C pour quitter)
+[2026-06-11 16:58:20] [INFO] Lecture -> 24.95 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:20] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:20] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:20] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:20] [INFO] Lecture -> 24.73 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.95 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.56 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.56 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:21] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:21] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.66 lux brut | 27 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 27 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.18 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 25.90 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 25.81 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 25.81 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:22] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:22] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.42 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.18 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.47 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.23 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.28 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.80 lux brut | 27 lux | Aube naissante
+[2026-06-11 16:58:23] [OK] Enregistre : 27 lux (Aube naissante)
+[2026-06-11 16:58:23] [INFO] Lecture -> 26.42 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:24] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:24] [INFO] Lecture -> 26.37 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:24] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:24] [DEBUG] Ligne ignoree (non numerique) : '26.24.73'
+[2026-06-11 16:58:24] [INFO] Lecture -> 24.64 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:24] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:24] [INFO] Lecture -> 24.60 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:24] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:24] [INFO] Lecture -> 24.91 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:24] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:24] [INFO] Lecture -> 25.17 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:25] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:25] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:26] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:26] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:27] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:27] [INFO] Lecture -> 24.77 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:28] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:28] [INFO] Lecture -> 24.04 lux brut | 24 lux | Aube naissante
+[2026-06-11 16:58:29] [OK] Enregistre : 24 lux (Aube naissante)
+[2026-06-11 16:58:29] [INFO] Lecture -> 24.73 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:30] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:30] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:31] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:31] [INFO] Lecture -> 24.82 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:32] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:32] [INFO] Lecture -> 26.56 lux brut | 27 lux | Aube naissante
+[2026-06-11 16:58:33] [OK] Enregistre : 27 lux (Aube naissante)
+[2026-06-11 16:58:33] [INFO] Lecture -> 26.04 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:34] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:34] [INFO] Lecture -> 26.66 lux brut | 27 lux | Aube naissante
+[2026-06-11 16:58:35] [OK] Enregistre : 27 lux (Aube naissante)
+[2026-06-11 16:58:35] [INFO] Lecture -> 25.99 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:36] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:36] [INFO] Lecture -> 25.40 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:37] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:37] [INFO] Lecture -> 25.26 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:38] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:38] [INFO] Lecture -> 25.44 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:39] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:39] [INFO] Lecture -> 25.44 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:40] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:40] [INFO] Lecture -> 25.72 lux brut | 26 lux | Aube naissante
+[2026-06-11 16:58:41] [OK] Enregistre : 26 lux (Aube naissante)
+[2026-06-11 16:58:41] [INFO] Lecture -> 25.35 lux brut | 25 lux | Aube naissante
+[2026-06-11 16:58:42] [OK] Enregistre : 25 lux (Aube naissante)
+[2026-06-11 16:58:42] [INFO] Lecture -> 31.59 lux brut | 32 lux | Aube naissante
+[2026-06-11 16:58:43] [OK] Enregistre : 32 lux (Aube naissante)
+[2026-06-11 16:58:43] [INFO] Lecture -> 9.71 lux brut | 10 lux | Aube naissante
+[2026-06-11 16:58:44] [OK] Enregistre : 10 lux (Aube naissante)
+[2026-06-11 16:58:45] [INFO] Lecture -> 17.96 lux brut | 18 lux | Aube naissante
+[2026-06-11 16:58:45] [OK] Enregistre : 18 lux (Aube naissante)
+[2026-06-11 16:58:46] [INFO] Lecture -> 10.82 lux brut | 11 lux | Aube naissante
+[2026-06-11 16:58:46] [OK] Enregistre : 11 lux (Aube naissante)
+[2026-06-11 16:58:47] [INFO] Lecture -> 12.61 lux brut | 13 lux | Aube naissante
+[2026-06-11 16:58:47] [OK] Enregistre : 13 lux (Aube naissante)
+[2026-06-11 16:58:48] [INFO] Lecture -> 5.85 lux brut | 6 lux | Nuit - faible eclairage
+[2026-06-11 16:58:48] [OK] Enregistre : 6 lux (Nuit - faible eclairage)
+[2026-06-11 16:58:49] [INFO] Lecture -> 8.56 lux brut | 9 lux | Nuit - faible eclairage
+[2026-06-11 16:58:49] [OK] Enregistre : 9 lux (Nuit - faible eclairage)
+[2026-06-11 16:58:50] [INFO] Lecture -> 62.59 lux brut | 63 lux | Matin clair
+[2026-06-11 16:58:50] [OK] Enregistre : 63 lux (Matin clair)
+[2026-06-11 16:58:51] [INFO] Lecture -> 41.42 lux brut | 41 lux | Aube naissante
+[2026-06-11 16:58:51] [OK] Enregistre : 41 lux (Aube naissante)
+[2026-06-11 16:58:52] [INFO] Lecture -> 42.23 lux brut | 42 lux | Aube naissante
+[2026-06-11 16:58:52] [OK] Enregistre : 42 lux (Aube naissante)
+[2026-06-11 16:58:53] [INFO] Lecture -> 39.79 lux brut | 40 lux | Aube naissante
+[2026-06-11 16:58:53] [OK] Enregistre : 40 lux (Aube naissante)
+[2026-06-11 16:58:54] [INFO] Lecture -> 51.94 lux brut | 52 lux | Matin clair
+[2026-06-11 16:58:54] [OK] Enregistre : 52 lux (Matin clair)
+[2026-06-11 16:58:55] [INFO] Lecture -> 56.21 lux brut | 56 lux | Matin clair
+[2026-06-11 16:58:55] [OK] Enregistre : 56 lux (Matin clair)
+[2026-06-11 16:58:56] [INFO] Lecture -> 71.06 lux brut | 71 lux | Matin clair
+[2026-06-11 16:58:56] [OK] Enregistre : 71 lux (Matin clair)
+[2026-06-11 16:58:57] [INFO] Lecture -> 66.10 lux brut | 66 lux | Matin clair
+[2026-06-11 16:58:57] [OK] Enregistre : 66 lux (Matin clair)
+[2026-06-11 16:58:58] [INFO] Lecture -> 66.28 lux brut | 66 lux | Matin clair
+[2026-06-11 16:58:58] [OK] Enregistre : 66 lux (Matin clair)
+[2026-06-11 16:58:59] [INFO] Lecture -> 72.64 lux brut | 73 lux | Matin clair
+[2026-06-11 16:58:59] [OK] Enregistre : 73 lux (Matin clair)
+[2026-06-11 16:59:00] [INFO] Lecture -> 64.06 lux brut | 64 lux | Matin clair
+[2026-06-11 16:59:00] [OK] Enregistre : 64 lux (Matin clair)
+[2026-06-11 16:59:01] [INFO] Lecture -> 130.69 lux brut | 131 lux | Matin clair
+[2026-06-11 16:59:01] [OK] Enregistre : 131 lux (Matin clair)
+[2026-06-11 16:59:02] [INFO] Lecture -> 151.62 lux brut | 152 lux | Matin clair
+[2026-06-11 16:59:02] [OK] Enregistre : 152 lux (Matin clair)
+[2026-06-11 16:59:03] [INFO] Lecture -> 710.55 lux brut | 711 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:03] [OK] Enregistre : 711 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:04] [INFO] Lecture -> 733.68 lux brut | 734 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:04] [OK] Enregistre : 734 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:05] [INFO] Lecture -> 674.59 lux brut | 675 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:05] [OK] Enregistre : 675 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:06] [INFO] Lecture -> 611.07 lux brut | 611 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:06] [OK] Enregistre : 611 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:07] [INFO] Lecture -> 582.91 lux brut | 583 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:07] [OK] Enregistre : 583 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:08] [INFO] Lecture -> 561.89 lux brut | 562 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:08] [OK] Enregistre : 562 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:09] [INFO] Lecture -> 561.89 lux brut | 562 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:09] [OK] Enregistre : 562 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:10] [INFO] Lecture -> 546.93 lux brut | 547 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:10] [OK] Enregistre : 547 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:11] [INFO] Lecture -> 527.98 lux brut | 528 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:11] [OK] Enregistre : 528 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:12] [INFO] Lecture -> 505.76 lux brut | 506 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:12] [OK] Enregistre : 506 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:13] [INFO] Lecture -> 501.50 lux brut | 502 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:13] [OK] Enregistre : 502 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:14] [INFO] Lecture -> 461.94 lux brut | 462 lux | Plein jour
+[2026-06-11 16:59:14] [OK] Enregistre : 462 lux (Plein jour)
+[2026-06-11 16:59:15] [INFO] Lecture -> 572.24 lux brut | 572 lux | !!! ALERTE lumiere soudaine !!!
+[2026-06-11 16:59:15] [OK] Enregistre : 572 lux (!!! ALERTE lumiere soudaine !!!)
+[2026-06-11 16:59:16] [INFO] Lecture -> 53.44 lux brut | 53 lux | Matin clair
+[2026-06-11 16:59:16] [OK] Enregistre : 53 lux (Matin clair)
+[2026-06-11 16:59:17] [INFO] Lecture -> 33.42 lux brut | 33 lux | Aube naissante
+[2026-06-11 16:59:17] [OK] Enregistre : 33 lux (Aube naissante)
+[2026-06-11 16:59:18] [INFO] Lecture -> 36.34 lux brut | 36 lux | Aube naissante
+[2026-06-11 16:59:18] [OK] Enregistre : 36 lux (Aube naissante)
+[2026-06-11 16:59:19] [INFO] Lecture -> 40.13 lux brut | 40 lux | Aube naissante
+[2026-06-11 16:59:19] [OK] Enregistre : 40 lux (Aube naissante)
+[2026-06-11 16:59:20] [INFO] Lecture -> 39.37 lux brut | 39 lux | Aube naissante
+[2026-06-11 16:59:20] [OK] Enregistre : 39 lux (Aube naissante)
+[2026-06-11 16:59:21] [INFO] Lecture -> 32.08 lux brut | 32 lux | Aube naissante
+[2026-06-11 16:59:21] [OK] Enregistre : 32 lux (Aube naissante)
+[2026-06-11 16:59:22] [INFO] Lecture -> 29.89 lux brut | 30 lux | Aube naissante
+[2026-06-11 16:59:22] [OK] Enregistre : 30 lux (Aube naissante)
+[2026-06-11 16:59:23] [INFO] Lecture -> 39.46 lux brut | 39 lux | Aube naissante
+[2026-06-11 16:59:23] [OK] Enregistre : 39 lux (Aube naissante)
+[2026-06-11 16:59:24] [INFO] Lecture -> 38.01 lux brut | 38 lux | Aube naissante
+[2026-06-11 16:59:24] [OK] Enregistre : 38 lux (Aube naissante)
+[2026-06-11 16:59:25] [INFO] Lecture -> 38.17 lux brut | 38 lux | Aube naissante
+[2026-06-11 16:59:25] [OK] Enregistre : 38 lux (Aube naissante)
+[2026-06-11 16:59:26] [INFO] Lecture -> 38.80 lux brut | 39 lux | Aube naissante
+[2026-06-11 16:59:26] [OK] Enregistre : 39 lux (Aube naissante)
+[2026-06-11 16:59:27] [INFO] Lecture -> 40.13 lux brut | 40 lux | Aube naissante
+[2026-06-11 16:59:27] [OK] Enregistre : 40 lux (Aube naissante)
+[2026-06-11 16:59:28] [INFO] Lecture -> 27.55 lux brut | 28 lux | Aube naissante
+[2026-06-11 16:59:28] [OK] Enregistre : 28 lux (Aube naissante)
+[2026-06-11 16:59:29] [INFO] Lecture -> 38.88 lux brut | 39 lux | Aube naissante
+[2026-06-11 16:59:29] [OK] Enregistre : 39 lux (Aube naissante)
+[2026-06-11 16:59:30] [INFO] Lecture -> 40.47 lux brut | 40 lux | Aube naissante
+[2026-06-11 16:59:30] [OK] Enregistre : 40 lux (Aube naissante)
+[2026-06-11 16:59:31] [INFO] Lecture -> 40.47 lux brut | 40 lux | Aube naissante
+[2026-06-11 16:59:31] [OK] Enregistre : 40 lux (Aube naissante)
+[2026-06-11 16:59:32] [INFO] Lecture -> 33.62 lux brut | 34 lux | Aube naissante
+[2026-06-11 16:59:32] [OK] Enregistre : 34 lux (Aube naissante)
+[2026-06-11 16:59:33] [INFO] Lecture -> 40.64 lux brut | 41 lux | Aube naissante
+[2026-06-11 16:59:33] [OK] Enregistre : 41 lux (Aube naissante)
+[2026-06-11 16:59:34] [INFO] Lecture -> 38.64 lux brut | 39 lux | Aube naissante
+[2026-06-11 16:59:34] [OK] Enregistre : 39 lux (Aube naissante)
+[2026-06-11 16:59:35] [INFO] Lecture -> 36.41 lux brut | 36 lux | Aube naissante
+[2026-06-11 16:59:35] [OK] Enregistre : 36 lux (Aube naissante)
+[2026-06-11 16:59:36] [INFO] Lecture -> 36.34 lux brut | 36 lux | Aube naissante
+[2026-06-11 16:59:36] [INFO] Port ferme.

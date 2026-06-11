@@ -1,5 +1,5 @@
-# SmartWake - Lecteur serie PowerShell (fiable sur Windows)
-# Lit la carte Tiva C sur COM7 et insere les valeurs en base MySQL
+# SmartWake - Lecteur serie PowerShell BIDIRECTIONNEL
+# Lit les lux de la Tiva C ET renvoie les messages du site vers l'ecran OLED
 
 # ============================================================
 # CONFIGURATION
@@ -13,9 +13,19 @@ $dbName    = "hangardb_axst62997"
 $mysqlExe  = "C:\xampp\mysql\bin\mysql.exe"
 $logFile   = "C:\xampp\htdocs\smartwake\logs\sensor.log"
 
-# Seuils lux
-$SEUIL_ALERT   = 500
-$SEUIL_DAY     = 200
+# Seuils (doivent correspondre a functions.php)
+function Get-LuxLevel($lux) {
+    if ($lux -lt 1)   { return @{ level="NIGHT_FULL"; label="Nuit complete";          action="Veille"        } }
+    if ($lux -lt 10)  { return @{ level="NIGHT_DIM";  label="Nuit - faible eclairage"; action="Simul. aube"   } }
+    if ($lux -lt 50)  { return @{ level="DAWN";       label="Aube naissante";          action="Alarme douce"  } }
+    if ($lux -lt 200) { return @{ level="MORNING";    label="Matin clair";             action="Alarme princ." } }
+    if ($lux -lt 500) { return @{ level="DAY";        label="Plein jour";              action="Mode jour"     } }
+    return              @{ level="ALERT";      label="Alerte lumiere!";        action="ALERTE!"       }
+}
+
+function Get-DayStatus($lux) {
+    if ($lux -ge 200) { return "JOUR" } else { return "NUIT" }
+}
 
 function Write-Log($level, $msg) {
     $line = "[$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')] [$($level.ToUpper())] $msg"
@@ -23,24 +33,36 @@ function Write-Log($level, $msg) {
     Add-Content -Path $logFile -Value $line -Encoding UTF8
 }
 
-function Get-DayStatus($lux) {
-    if ($lux -ge $SEUIL_DAY) { return "DAY" } else { return "NIGHT" }
+function Insert-Measure($lux, $status) {
+    $dbStatus = if ($status -eq "JOUR") { "DAY" } else { "NIGHT" }
+    $sql = "INSERT INTO light_sensor_data (light_value, day_status) VALUES ($lux, '$dbStatus');"
+    & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -e $sql 2>&1 | Out-Null
+    return ($LASTEXITCODE -eq 0)
 }
 
-function Insert-Measure($lux) {
+# ============================================================
+# Format du message renvoy a la Tiva C (ASCII uniquement)
+# Format : "MSG:<label>|<lux> lux|<statut>|<action>\n"
+# La Tiva C peut parser avec Serial.readStringUntil('\n')
+# et split sur '|' pour afficher sur l'ecran OLED
+# ============================================================
+function Build-OledMessage($lux, $luxInfo) {
     $status = Get-DayStatus $lux
-    $sql    = "INSERT INTO light_sensor_data (light_value, day_status) VALUES ($lux, '$status');"
-    $result = & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -e $sql 2>&1
-    return ($LASTEXITCODE -eq 0)
+    # Format compact pour OLED (max ~16 chars par ligne)
+    # Ligne 1 : label du niveau
+    # Ligne 2 : valeur en lux
+    # Ligne 3 : statut JOUR/NUIT
+    # Ligne 4 : action recommandee
+    return "MSG:$($luxInfo.label)|$lux lux|$status|$($luxInfo.action)"
 }
 
 # ============================================================
 # LANCEMENT
 # ============================================================
-Write-Log "INFO" "=== SmartWake Serial Reader (PowerShell) ==="
-Write-Log "INFO" "Port     : $portName"
-Write-Log "INFO" "Baudrate : $baudRate baud"
+Write-Log "INFO" "=== SmartWake Serial Reader BIDIRECTIONNEL ==="
+Write-Log "INFO" "Port     : $portName @ $baudRate baud"
 Write-Log "INFO" "BDD      : $dbName @ $dbHost"
+Write-Log "INFO" "Mode     : Lecture lux + Renvoi messages OLED"
 Write-Host ("-" * 50)
 
 try {
@@ -48,53 +70,61 @@ try {
     $port.DtrEnable  = $true
     $port.RtsEnable  = $true
     $port.ReadTimeout = 3000
+    $port.NewLine    = "`n"
     $port.Open()
-    Write-Log "INFO" "Port serie ouvert. En attente de donnees... (Ctrl+C pour quitter)"
+
+    Write-Log "INFO" "Port ouvert. En attente de donnees de la carte... (Ctrl+C pour quitter)"
     Write-Host ("-" * 50)
+
+    # Petite pause pour laisser la carte s'initialiser
+    Start-Sleep -Milliseconds 500
 
     while ($true) {
         try {
             $raw = $port.ReadLine().Trim()
 
-            # Ignorer les lignes vides ou non numeriques
             if ([string]::IsNullOrWhiteSpace($raw)) { continue }
 
-            # Verifier si c'est un nombre valide
+            # Ignorer les messages qu'on a nous-memes envoyes (echo)
+            if ($raw.StartsWith("MSG:")) { continue }
+
+            # Parser le float (separateur decimal = point)
             $luxFloat = 0.0
             if (-not [double]::TryParse($raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$luxFloat)) {
-                Write-Log "DEBUG" "Ligne ignoree (non numerique) : '$raw'"
+                Write-Log "DEBUG" "Ligne ignoree : '$raw'"
                 continue
             }
 
-            # Arrondir a l'entier
-            $lux = [int][Math]::Round($luxFloat)
+            $lux     = [int][Math]::Round($luxFloat)
+            $luxInfo = Get-LuxLevel $lux
+            $status  = Get-DayStatus $lux
 
-            # Determiner le niveau
-            $level = if ($lux -lt 1)    { "Nuit complete" }
-                elseif ($lux -lt 10)    { "Nuit - faible eclairage" }
-                elseif ($lux -lt 50)    { "Aube naissante" }
-                elseif ($lux -lt 200)   { "Matin clair" }
-                elseif ($lux -lt 500)   { "Plein jour" }
-                else                    { "!!! ALERTE lumiere soudaine !!!" }
+            Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $($luxInfo.label) | $status"
 
-            Write-Log "INFO" "Lecture -> $raw lux brut | $lux lux | $level"
-
-            if (Insert-Measure $lux) {
-                Write-Log "OK" "Enregistre : $lux lux ($level)"
+            # 1. Enregistrer en base de donnees
+            if (Insert-Measure $lux $status) {
+                Write-Log "OK" "Enregistre en BDD : $lux lux ($($luxInfo.label))"
             } else {
-                Write-Log "WARN" "Echec insertion DB pour $lux lux"
+                Write-Log "WARN" "Echec insertion BDD"
             }
 
+            # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
+            $msg = Build-OledMessage $lux $luxInfo
+            $port.WriteLine($msg)
+            Write-Log "INFO" "Envoye a la carte -> $msg"
+
         } catch [System.TimeoutException] {
-            Write-Log "WARN" "Aucune donnee depuis 3s. Carte toujours connectee ?"
+            Write-Log "WARN" "Timeout : aucune donnee depuis 3s. Carte toujours connectee ?"
+        } catch {
+            Write-Log "ERROR" "Erreur lecture : $_"
         }
     }
 
 } catch {
-    Write-Log "ERROR" "Erreur : $_"
+    Write-Log "ERROR" "Impossible d'ouvrir le port $portName : $_"
 } finally {
-    if ($port -ne $null -and $port.IsOpen) {
+    if ($null -ne $port -and $port.IsOpen) {
         $port.Close()
-        Write-Log "INFO" "Port ferme."
+        Write-Log "INFO" "Port ferme proprement."
     }
 }
