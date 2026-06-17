@@ -11,5 +11,5 @@ if (isLoggedIn() && verifyCsrfToken($token)) {
     logoutUser();
 }
 
-header('Location: /smartwake/login.php');
+header('Location: ' . BASE_URL . 'login.php');
 exit;

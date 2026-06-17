@@ -5,7 +5,7 @@
 require_once __DIR__ . '/includes/auth.php';
 
 if (isLoggedIn()) {
-    header('Location: /smartwake/dashboard.php');
+    header('Location: ' . BASE_URL . 'dashboard.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         if ($result['success']) {
             $success = "Compte créé avec succès ! Redirection vers la connexion...";
-            header('refresh:2;url=/smartwake/login.php');
+            header('refresh:2;url=' . BASE_URL . 'login.php');
         } else {
             $error = $result['message'];
         }
@@ -42,7 +42,7 @@ $csrfToken = generateCsrfToken();
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/smartwake/assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
 </head>
 <body class="auth-body">
 
@@ -79,7 +79,7 @@ $csrfToken = generateCsrfToken();
       <?php else: ?>
 
         <!-- Formulaire -->
-        <form method="POST" action="/smartwake/register.php" novalidate class="auth-form">
+        <form method="POST" action="<?= BASE_URL ?>register.php" novalidate class="auth-form">
           <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
           <div class="form-group">
@@ -123,7 +123,7 @@ $csrfToken = generateCsrfToken();
 
       <p class="auth-switch">
         Déjà un compte ?
-        <a href="/smartwake/login.php">Se connecter</a>
+        <a href="<?= BASE_URL ?>login.php">Se connecter</a>
       </p>
 
     </div>

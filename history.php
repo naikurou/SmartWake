@@ -25,7 +25,7 @@ $csrfToken = generateCsrfToken();
   <meta name="description" content="Historique complet des mesures de luminosité de SmartWake.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/smartwake/assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
 </head>
 <body>
 <div class="page-wrapper">
@@ -33,7 +33,7 @@ $csrfToken = generateCsrfToken();
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="container navbar-inner">
-      <a href="/smartwake/dashboard.php" class="navbar-brand" aria-label="SmartWake">
+      <a href="<?= BASE_URL ?>dashboard.php" class="navbar-brand" aria-label="SmartWake">
         <span class="brand-icon" aria-hidden="true">🌅</span>
         <span class="brand-text">Smart<span class="brand-accent">Wake</span></span>
       </a>
@@ -44,8 +44,8 @@ $csrfToken = generateCsrfToken();
       </button>
 
       <ul class="navbar-nav" id="navbar-nav" role="list">
-        <li><a href="/smartwake/dashboard.php" class="nav-link">Dashboard</a></li>
-        <li><a href="/smartwake/history.php" class="nav-link active" aria-current="page">Historique</a></li>
+        <li><a href="<?= BASE_URL ?>dashboard.php" class="nav-link">Dashboard</a></li>
+        <li><a href="<?= BASE_URL ?>history.php" class="nav-link active" aria-current="page">Historique</a></li>
         <li class="nav-separator"></li>
         <li>
           <span class="nav-user">
@@ -54,7 +54,7 @@ $csrfToken = generateCsrfToken();
           </span>
         </li>
         <li>
-          <a href="/smartwake/logout.php?token=<?= urlencode($csrfToken) ?>"
+          <a href="<?= BASE_URL ?>logout.php?token=<?= urlencode($csrfToken) ?>"
              class="btn btn-ghost btn-sm" aria-label="Se déconnecter">
             Déconnexion
           </a>
@@ -166,6 +166,6 @@ $csrfToken = generateCsrfToken();
   </footer>
 
 </div><!-- /page-wrapper -->
-<script src="/smartwake/assets/js/app.js" defer></script>
+<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
 </body>
 </html>

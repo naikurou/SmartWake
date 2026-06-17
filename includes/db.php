@@ -14,6 +14,7 @@ define('DB_NAME',    getenv('DB_NAME')     ?: 'hangardb_axst62997');
 define('DB_USER',    getenv('DB_USER')     ?: 'axst62997');
 define('DB_PASS',    getenv('DB_PASS')     ?: 'vN98OBrkug96JSeUmiFxuZGp');
 define('DB_CHARSET', 'utf8mb4');
+define('BASE_URL',   rtrim(getenv('BASE_URL') ?: '/smartwake', '/') . '/');
 
 /**
  * Retourne une instance PDO singleton vers la base de données.
