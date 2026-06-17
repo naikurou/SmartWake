@@ -320,12 +320,13 @@
     });
   }
 
-  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  // Délégation sur document : fonctionne peu importe le timing de chargement du DOM
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.theme-toggle')) {
       var next = document.documentElement.classList.contains('light-mode') ? 'dark' : 'light';
       localStorage.setItem(STORAGE_KEY, next);
       applyTheme(next);
-    });
+    }
   });
 
   applyTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
