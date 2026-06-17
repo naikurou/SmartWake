@@ -9,7 +9,7 @@ ServerSignature Off
 # ============================================================
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /smartwake/
+    RewriteBase /
 
     # Bloquer l'accès aux fichiers cachés (.env, .git, etc.)
     RewriteRule ^\.                - [F,L]
