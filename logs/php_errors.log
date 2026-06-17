@@ -1,0 +1,81 @@
+[08-Jun-2026 17:26:12 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:26:12 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartwake\register.php(27): registerUser('Nahil', 'nahilgameur@gma...', 'HaLoUf@2023')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[08-Jun-2026 17:26:33 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:26:33 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(107): getDB()
+#1 C:\xampp\htdocs\smartwake\login.php(23): loginUser('Nahilgameur@gma...', '1234')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[08-Jun-2026 17:27:37 Europe/Berlin] [SmartWake] Erreur DB : SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for your-server.mysql.database.azure.com failed: H�te inconnu. 
+[08-Jun-2026 17:27:37 Europe/Berlin] PHP Fatal error:  Uncaught RuntimeException: Impossible de se connecter à la base de données. in C:\xampp\htdocs\smartwake\includes\db.php:53
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartwake\register.php(27): registerUser('nein', 'nein@gmail.com', 'neinnein')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[15-Jun-2026 15:09:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:108
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(108): PDO->prepare('SELECT id, user...')
+#1 C:\xampp\htdocs\smartWake\login.php(17): loginUser('lebrodave@gmail...', '1234')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 108
+[15-Jun-2026 15:09:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:108
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(108): PDO->prepare('SELECT id, user...')
+#1 C:\xampp\htdocs\smartWake\login.php(17): loginUser('lebrodave@gmail...', '1234')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 108
+[15-Jun-2026 15:12:49 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('Adj\xC3\xA9', 'lebrodave@gmail...', '#Galiku159159')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:12:57 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('Adj\xC3\xA9', 'lebrodave@gmail...', '#Galiku159159')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:13:26 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('Adj\xC3\xA9', 'lebrodave@gmail...', '#GalikuGal15915...')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:15:19 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('Adj\xC3\xA9', 'lebrodave@gmail...', '#GalikuGal15915...')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:18:50 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('test@test.com', 'test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:19:17 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartWake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('test@test.com', 'test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\auth.php on line 75
+[15-Jun-2026 15:20:00 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\smartWake\includes\db.php:30
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('test@test.com', 'test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\db.php on line 30
+[15-Jun-2026 15:22:18 Europe/Berlin] PHP Fatal error:  Uncaught Error: Undefined constant "DB_HOST" in C:\xampp\htdocs\smartWake\includes\db.php:30
+Stack trace:
+#0 C:\xampp\htdocs\smartWake\includes\auth.php(72): getDB()
+#1 C:\xampp\htdocs\smartWake\register.php(19): registerUser('test@test.com', 'test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartWake\includes\db.php on line 30
