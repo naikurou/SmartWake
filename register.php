@@ -43,8 +43,10 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body class="auth-body">
+<button class="theme-toggle theme-toggle-float" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
 
   <!-- Particules de fond -->
   <div class="auth-bg" aria-hidden="true">
@@ -133,5 +135,6 @@ $csrfToken = generateCsrfToken();
     <p>SmartWake © <?= date('Y') ?> — Projet ISEP</p>
   </footer>
 
+<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
 </body>
 </html>

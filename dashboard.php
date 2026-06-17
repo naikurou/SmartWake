@@ -32,6 +32,7 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body>
 <div class="page-wrapper">
@@ -58,6 +59,9 @@ $csrfToken = generateCsrfToken();
             <span class="nav-user-avatar"><?= strtoupper(substr($_SESSION['username'], 0, 1)) ?></span>
             <?= e($_SESSION['username']) ?>
           </span>
+        </li>
+        <li>
+          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
         </li>
         <li>
           <a href="<?= BASE_URL ?>logout.php?token=<?= urlencode($csrfToken) ?>"
@@ -256,6 +260,7 @@ $csrfToken = generateCsrfToken();
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
         integrity="sha256-oVuCdcZBQCLlBt4H8D0lUV5J+LbGGJPULXgKpnXoUHU="
         crossorigin="anonymous"></script>
+<script>window.SMARTWAKE_BASE = '<?= BASE_URL ?>';</script>
 <script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
 </body>
 </html>

@@ -26,6 +26,7 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body>
 <div class="page-wrapper">
@@ -58,6 +59,9 @@ $csrfToken = generateCsrfToken();
              class="btn btn-ghost btn-sm" aria-label="Se déconnecter">
             Déconnexion
           </a>
+        </li>
+        <li>
+          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
         </li>
       </ul>
     </div>
@@ -167,5 +171,6 @@ $csrfToken = generateCsrfToken();
 
 </div><!-- /page-wrapper -->
 <script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
+
 </body>
 </html>

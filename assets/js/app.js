@@ -35,7 +35,7 @@
 (function () {
   'use strict';
 
-  const BASE_URL = (window.SMARTWAKE_BASE || '') + '/smartwake/api/latest.php';
+  const BASE_URL = (window.SMARTWAKE_BASE || '') + 'api/latest.php';
 
   const elLux       = document.getElementById('live-lux');
   const elLuxHero   = document.getElementById('live-lux-hero');
@@ -305,7 +305,34 @@
 })();
 
 /* ============================================================
-   4. Auto-refresh de la page historique
+   4. Toggle thème clair / sombre
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'smartwake-theme';
+
+  function applyTheme(theme) {
+    document.documentElement.classList.toggle('light-mode', theme === 'light');
+    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+      btn.textContent = theme === 'light' ? '🌙' : '☀️';
+      btn.setAttribute('aria-label', theme === 'light' ? 'Passer en mode sombre' : 'Passer en mode clair');
+    });
+  }
+
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.classList.contains('light-mode') ? 'dark' : 'light';
+      localStorage.setItem(STORAGE_KEY, next);
+      applyTheme(next);
+    });
+  });
+
+  applyTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
+})();
+
+/* ============================================================
+   5. Auto-refresh de la page historique
    ============================================================ */
 (function () {
   'use strict';
