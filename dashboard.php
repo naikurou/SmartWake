@@ -279,9 +279,11 @@ $csrfToken = generateCsrfToken();
           <label for="day-lux">Seuil Jour (Lux) - Déclenchement réveil normal</label>
           <input type="number" id="day-lux" class="form-control" value="500" min="0">
         </div>
-        <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
           <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Sauvegarder</button>
-          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer()">🚨 Tester le Buzzer</button>
+          <span style="color:var(--text-muted); margin: 0 0.5rem;">|</span>
+          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer(1)">🚨 Buzzer ON</button>
+          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer(0)">🔇 Buzzer OFF</button>
         </div>
         <p id="settings-msg" style="margin-top:0.5rem; font-size:0.9rem;"></p>
       </form>
@@ -351,16 +353,23 @@ function saveSettings() {
     if(data.success) setTimeout(closeSettingsModal, 1500);
   });
 }
-function testBuzzer() {
-  const btn = document.querySelector('#settings-form .btn-outline');
-  const oldText = btn.textContent;
-  btn.textContent = 'Envoi...';
+function testBuzzer(state) {
+  const btnON = document.querySelectorAll('#settings-form .btn-outline')[0];
+  const btnOFF = document.querySelectorAll('#settings-form .btn-outline')[1];
   
-  fetch('<?= BASE_URL ?>api/test_buzzer.php', { method: 'POST' })
+  const targetBtn = state === 1 ? btnON : btnOFF;
+  const oldText = targetBtn.textContent;
+  targetBtn.textContent = 'Envoi...';
+  
+  fetch('<?= BASE_URL ?>api/test_buzzer.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ etat: state })
+  })
   .then(r => r.json())
   .then(data => {
-    btn.textContent = data.success ? '✅ Envoyé !' : '❌ Erreur';
-    setTimeout(() => { btn.textContent = oldText; }, 2000);
+    targetBtn.textContent = data.success ? '✅ OK !' : '❌ Erreur';
+    setTimeout(() => { targetBtn.textContent = oldText; }, 2000);
   });
 }
 </script>
