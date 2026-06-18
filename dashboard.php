@@ -304,9 +304,12 @@ $csrfToken = generateCsrfToken();
     </div>
 
     <!-- Lien historique -->
-    <div class="section-cta reveal">
+    <div class="section-cta reveal" style="display: flex; gap: 1rem; justify-content: center;">
       <a href="<?= BASE_URL ?>history.php" class="btn btn-outline">
         📋 Voir l'historique complet
+      </a>
+      <a href="<?= BASE_URL ?>graphs.php" class="btn btn-outline">
+        📈 Afficher les graphiques
       </a>
     </div>
 
