@@ -1,5 +1,5 @@
 /* =============================================================================
-   SMARTWAKE — Microsoft AI / Copilot Design System
+   SMARTWAKE — Professional SaaS Design System
    ============================================================================= */
 
 /* ── Typography ── */
@@ -20,9 +20,9 @@
   --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.5);
   
-  /* Copilot Gradients */
-  --copilot-gradient: linear-gradient(135deg, #00A4EF 0%, #B4A0FF 50%, #FF7EB3 100%);
-  --copilot-gradient-dim: linear-gradient(135deg, rgba(0, 164, 239, 0.2) 0%, rgba(180, 160, 255, 0.2) 50%, rgba(255, 126, 179, 0.2) 100%);
+  /* Brand Gradients */
+  --brand-gradient: linear-gradient(135deg, #0ea5e9 0%, #4f46e5 100%);
+  --brand-gradient-dim: rgba(14, 165, 233, 0.15);
   
   /* Status Colors */
   --color-success: #107C41;
@@ -69,9 +69,7 @@ body::before {
   inset: 0;
   z-index: -1;
   background: 
-    radial-gradient(circle at 15% 50%, rgba(180, 160, 255, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(0, 164, 239, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 50% 100%, rgba(255, 126, 179, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -641,9 +639,9 @@ a:hover { opacity: 0.8; }
   opacity: 0.4;
   animation: float 20s infinite ease-in-out alternate;
 }
-.orb-1 { width: 400px; height: 400px; background: #00A4EF; top: -10%; left: -10%; animation-delay: 0s; }
-.orb-2 { width: 500px; height: 500px; background: #B4A0FF; bottom: -20%; right: -10%; animation-delay: -5s; }
-.orb-3 { width: 300px; height: 300px; background: #FF7EB3; top: 40%; left: 60%; animation-delay: -10s; }
+.orb-1 { width: 400px; height: 400px; background: #0ea5e9; top: -10%; left: -10%; animation-delay: 0s; }
+.orb-2 { width: 500px; height: 500px; background: #2563eb; bottom: -20%; right: -10%; animation-delay: -5s; }
+.orb-3 { width: 300px; height: 300px; background: #06b6d4; top: 40%; left: 60%; animation-delay: -10s; }
 
 [data-theme="light"] .auth-bg-orb {
   opacity: 0.15;
@@ -953,9 +951,7 @@ a:hover { opacity: 0.8; }
 
 [data-theme="light"] body::before {
   background:
-    radial-gradient(circle at 15% 50%, rgba(0, 164, 239, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(180, 160, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 50% 100%, rgba(255, 126, 179, 0.04) 0%, transparent 50%);
+    radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
 }
 
 [data-theme="light"] .navbar {
