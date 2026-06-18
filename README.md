@@ -25,7 +25,7 @@
 
 - Lit en temps réel la **luminosité ambiante** via un capteur LDR branché sur une **carte Tiva C (TM4C123GH6PM)**
 - Communique les mesures via **port série USB (COM)** en bidirectionnel (envoie l'affichage vers l'écran OLED)
-- Stocke les données dans **Azure Database for MySQL**
+- Stocke les données dans une **base MySQL distante (Serveur Hangar)**
 - Affiche un **tableau de bord web** avec graphiques, historique et recommandation de réveil
 - Permet la configuration de **seuils d'alarme** via un panneau de paramètres ⚙️
 - Interagit avec le **groupe Actionneurs** (Buzzer/LED) via la base de données distante (`etats_actionneurs`)
@@ -57,7 +57,8 @@ Azure Database for MySQL
 Site Web PHP
     │  dashboard.php  (temps réel, polling 5s, réglages alarme)
     │  history.php    (historique paginé)
-    └  api/         (JSON REST pour lire/sauvegarder les paramètres)
+    │  graphs.php     (graphiques d'évolution avec zoom/pan)
+    └  api/           (JSON REST pour lire/sauvegarder les paramètres)
 ```
 
 ---
@@ -68,7 +69,7 @@ Site Web PHP
 |-----------|-----------------|
 | PHP | 8.1+ |
 | Apache | 2.4+ avec mod_rewrite |
-| MySQL | 8.0+ (Azure Database for MySQL Flexible Server) |
+| MySQL | 8.0+ |
 | XAMPP | 8.2+ (développement local) |
 | PHP Extension | PDO, PDO_MySQL |
 | PHP Extension (optionnel) | DIO (pour le mode série avancé) |
@@ -129,31 +130,16 @@ http://localhost/smartwake/
 
 ---
 
-## Configuration Azure
-
-### Créer un serveur Flexible MySQL
-
-1. Portail Azure → **Azure Database for MySQL Flexible Server**
-2. Créer un serveur (ex : `smartwake-mysql.mysql.database.azure.com`)
-3. Autoriser votre IP dans **Networking → Add current client IP**
-4. Créer la base : `smartwake`
+## Configuration Base de données distante
 
 ### Configurer `includes/db.php`
 
 ```php
-define('DB_HOST', 'smartwake-mysql.mysql.database.azure.com');
+define('DB_HOST', '178.33.122.21'); // IP du serveur Hangar
 define('DB_PORT', '3306');
-define('DB_NAME', 'smartwake');
-define('DB_USER', 'adminuser@smartwake-mysql');
+define('DB_NAME', 'hangardb_axst62997');
+define('DB_USER', 'hangar_axst62997');
 define('DB_PASS', 'VotreMotDePasse!');
-```
-
-### Télécharger le certificat SSL Azure
-
-```bash
-# Télécharger le certificat TLS Azure
-curl -o certs/DigiCertGlobalRootG2.crt.pem \
-  https://dl.cacerts.digicert.com/DigiCertGlobalRootG2.crt.pem
 ```
 
 ---
