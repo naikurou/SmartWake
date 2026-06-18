@@ -178,11 +178,11 @@ $csrfToken = generateCsrfToken();
   <footer class="auth-footer">
     <p>Smart Alarm © <?= date('Y') ?></p>
     <div class="auth-footer-links">
-      <a href="#">CGU</a>
+      <a href="<?= BASE_URL ?>cgu.php">CGU</a>
       <span class="separator">&middot;</span>
-      <a href="#">Mentions Légales</a>
+      <a href="<?= BASE_URL ?>mentions-legales.php">Mentions Légales</a>
       <span class="separator">&middot;</span>
-      <a href="mailto:contact@smartwake.isep.fr">Contact</a>
+      <a href="mailto:contact@smartalarm.isep.fr">Contact</a>
     </div>
   </footer>
 
