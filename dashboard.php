@@ -26,6 +26,14 @@ $wake      = $latest ? getWakeRecommendation($lux, $status) : ['optimal' => fals
 $level     = $latest ? getLuxLevel($lux) : 'NIGHT_FULL';
 $meta      = $latest ? getLuxLevelMeta($level) : ['label' => 'Hors ligne', 'icon' => '🔌', 'css' => 'level-night-full', 'range' => ''];
 $luxPct    = min(round(($lux / 600) * 100), 100);
+
+// Fetch Alarm Settings
+$pdo = getDB();
+$stmtSettings = $pdo->query("SELECT is_active, duration_minutes FROM alarm_settings WHERE id = 1");
+$settingsData = $stmtSettings->fetch();
+$isAlarmActive = $settingsData ? (bool)$settingsData['is_active'] : false;
+$alarmDuration = $settingsData ? (int)$settingsData['duration_minutes'] : 5;
+
 $csrfToken = generateCsrfToken();
 ?>
 <!DOCTYPE html>
@@ -155,9 +163,16 @@ $csrfToken = generateCsrfToken();
       <article id="wake-card"
                class="card metric-card wake-card <?= $wake['optimal'] ? 'optimal' : 'not-optimal' ?> action-<?= e($wake['action'] ?? 'sleep') ?> reveal"
                role="region" aria-label="Recommandation de réveil">
-        <div class="card-header">
-          <span class="card-icon"><i class="ph-fill ph-alarm"></i></span>
-          <span class="card-label">Réveil Intelligent</span>
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="card-icon"><i class="ph-fill ph-alarm"></i></span>
+            <span class="card-label">Réveil Intelligent</span>
+          </div>
+          <?php if ($isAlarmActive): ?>
+            <span class="badge badge-success" style="font-size: 0.75rem;"><i class="ph-bold ph-bell-ringing"></i> Alarme Active (<?= $alarmDuration ?> min)</span>
+          <?php else: ?>
+            <span class="badge badge-night" style="font-size: 0.75rem;"><i class="ph-bold ph-bell-slash"></i> Alarme Désactivée</span>
+          <?php endif; ?>
         </div>
         <div class="wake-body">
           <span id="wake-icon" class="wake-icon" aria-hidden="true">
@@ -318,6 +333,14 @@ $csrfToken = generateCsrfToken();
           </div>
           <small id="day-lux-help" class="form-help text-muted">Ex: ~500 Lux = Pièce éclairée</small>
         </div>
+        <div class="form-group" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-light);">
+          <label for="alarm-duration" style="font-weight: 500;">Durée de sonnerie (Minutes) <i class="ph-fill ph-timer"></i></label>
+          <div class="range-wrap">
+            <input type="range" id="alarm-duration-range" min="1" max="15" value="5" oninput="document.getElementById('alarm-duration').value = this.value;">
+            <input type="number" id="alarm-duration" class="form-control" value="5" min="1" max="60" oninput="document.getElementById('alarm-duration-range').value = this.value;" style="width: 100px; padding: 0.5rem; text-align: center; font-weight: bold;">
+          </div>
+          <small class="form-help text-muted">Durée avant arrêt automatique si l'alarme n'est pas stoppée.</small>
+        </div>
         <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
           <button type="button" class="btn btn-primary" onclick="saveSettings()"><i class="ph-fill ph-floppy-disk"></i> Sauvegarder</button>
           <span style="color:var(--text-muted); margin: 0 0.5rem;">|</span>
@@ -365,6 +388,12 @@ function openSettingsModal() {
         document.getElementById('night-lux-range').value = data.night_lux;
         document.getElementById('day-lux').value = data.day_lux;
         document.getElementById('day-lux-range').value = data.day_lux;
+        
+        if (data.duration) {
+          document.getElementById('alarm-duration').value = data.duration;
+          document.getElementById('alarm-duration-range').value = data.duration;
+        }
+
         updateLuxHelper('night');
         updateLuxHelper('day');
       }
@@ -390,12 +419,13 @@ function closeSettingsModal() {
 }
 function saveSettings() {
   const btn = document.querySelector('#settings-form .btn-primary');
-  btn.textContent = 'Sauvegarde...';
+  btn.innerHTML = '<i class="ph-bold ph-spinner ph-spin"></i> Sauvegarde...';
   
   const payload = {
     is_active: document.getElementById('alarm-active').checked ? 1 : 0,
     night_lux: document.getElementById('night-lux').value,
-    day_lux: document.getElementById('day-lux').value
+    day_lux: document.getElementById('day-lux').value,
+    duration: document.getElementById('alarm-duration').value
   };
 
   fetch('<?= BASE_URL ?>api/save_settings.php', {
@@ -407,9 +437,9 @@ function saveSettings() {
   .then(data => {
     btn.textContent = '💾 Sauvegarder';
     const msg = document.getElementById('settings-msg');
-    msg.textContent = data.success ? '✅ Paramètres sauvegardés !' : '❌ Erreur de sauvegarde';
+    msg.textContent = data.success ? '✅ Paramètres sauvegardés ! Actualisation...' : '❌ Erreur de sauvegarde';
     msg.style.color = data.success ? 'green' : 'red';
-    if(data.success) setTimeout(closeSettingsModal, 1500);
+    if(data.success) setTimeout(() => window.location.reload(), 1500);
   });
 }
 function testBuzzer() {

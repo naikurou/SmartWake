@@ -36,16 +36,18 @@ function Process-Measure($lux, $status) {
     $dbStatus = if ($status -eq "JOUR") { "DAY" } else { "NIGHT" }
     
     # 1. Recuperer les parametres
-    $sqlSettings = "SELECT is_active, night_lux_threshold, day_lux_threshold FROM alarm_settings WHERE id=1;"
+    if ($global:alarmStartTime -eq $null) { $global:alarmStartTime = $null } # init
+    $sqlSettings = "SELECT is_active, night_lux_threshold, day_lux_threshold, duration_minutes FROM alarm_settings WHERE id=1;"
     $settingsRaw = & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" -N -B $dbName -e $sqlSettings
     
     $triggerAlarm = $false
     if ($settingsRaw -ne $null) {
         $parts = $settingsRaw -split "`t"
-        if ($parts.Length -ge 3) {
+        if ($parts.Length -ge 4) {
             $isActive = $parts[0]
             $nightLux = [int]$parts[1]
             $dayLux   = [int]$parts[2]
+            $duration = [int]$parts[3]
             
             $hour = (Get-Date).Hour
             $isNight = ($hour -ge 22 -or $hour -lt 6)
@@ -53,6 +55,22 @@ function Process-Measure($lux, $status) {
             if ($isActive -eq "1") {
                 if ($isNight -and $lux -ge $nightLux) { $triggerAlarm = $true }
                 if (-not $isNight -and $lux -ge $dayLux) { $triggerAlarm = $true }
+            }
+            
+            # Gestion de la durée de l'alarme
+            if ($triggerAlarm) {
+                if ($global:alarmStartTime -eq $null) {
+                    $global:alarmStartTime = Get-Date
+                    Write-Log "INFO" "Alarme declenchee. Duree prevue: $duration min."
+                } else {
+                    $elapsed = (Get-Date) - $global:alarmStartTime
+                    if ($elapsed.TotalMinutes -ge $duration) {
+                        $triggerAlarm = $false
+                        # On ne logue qu'une fois la desactivation automatique (le script boucle vite)
+                    }
+                }
+            } else {
+                $global:alarmStartTime = $null
             }
         }
     }
