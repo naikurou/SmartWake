@@ -1065,8 +1065,11 @@ a:hover { opacity: 0.8; }
   .stats-band { flex-direction: column; }
   .stat-pill-divider { width: 100%; height: 1px; }
   .dash-title { font-size: 2.25rem; }
+  
+  .auth-page { padding: 1rem; }
+  .auth-card { padding: 1.5rem; }
+  .auth-title { font-size: 1.5rem; }
 }
-
 /* =============================================================================
    Mode Clair (Light Mode)
    ============================================================================= */
