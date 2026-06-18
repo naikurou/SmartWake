@@ -149,7 +149,7 @@ $csrfToken = generateCsrfToken();
             <div class="form-input-wrap">
               <span class="form-input-icon" aria-hidden="true"><i class="ph-fill ph-key"></i></span>
               <input type="password" id="password" name="password" class="form-control has-toggle"
-                placeholder="Minimum 8 caractères" autocomplete="new-password" required aria-required="true" minlength="8">
+                placeholder="Min. 8 caractères" autocomplete="new-password" required aria-required="true" minlength="8">
               <button type="button" class="btn-toggle-password" onclick="togglePassword('password')" aria-label="Afficher le mot de passe" title="Afficher le mot de passe">
                 <i class="ph-fill ph-eye"></i>
               </button>
