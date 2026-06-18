@@ -62,6 +62,7 @@ $csrfToken = generateCsrfToken();
 </head>
 <body class="auth-body">
 <button class="theme-toggle theme-toggle-float" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+<div class="auth-wrapper">
 
   <!-- Particules de fond -->
   <div class="auth-bg" aria-hidden="true">
@@ -149,6 +150,7 @@ $csrfToken = generateCsrfToken();
   <footer class="auth-footer">
     <p>SmartWake © <?= date('Y') ?> — Projet ISEP</p>
   </footer>
+</div>
 
 <script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 </body>
