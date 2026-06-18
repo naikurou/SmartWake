@@ -49,7 +49,7 @@ $csrfToken = generateCsrfToken();
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('smartwake-theme', theme);
       document.querySelectorAll('.theme-toggle').forEach(btn => {
-        btn.textContent = theme === 'light' ? '🌙' : '☀️';
+        btn.innerHTML = theme === 'light' ? '<i class="ph-fill ph-moon"></i>' : '<i class="ph-fill ph-sun"></i>';
       });
     }
     function toggleTheme() {
@@ -64,7 +64,7 @@ $csrfToken = generateCsrfToken();
 <body class="auth-body">
 <header class="auth-header">
   <div class="auth-header-title">
-    🎓 Projet ISEP — <span>Équipe SmartWake</span>
+    <i class="ph-fill ph-graduation-cap" style="font-size: 1.25rem;"></i> Projet ISEP — <span>Équipe SmartWake</span>
   </div>
   <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">
     <i class="ph-fill ph-sun"></i>
