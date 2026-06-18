@@ -22,7 +22,7 @@ $data100   = getLast100Measures();
 $lux       = $latest ? (int)$latest['light_value'] : 0;
 $status    = $latest ? $latest['day_status']        : 'UNKNOWN';
 $timestamp = $latest ? $latest['created_at']        : null;
-$wake      = $latest ? getWakeRecommendation($lux, $status) : ['optimal' => false, 'action' => 'sleep', 'message' => 'Matériel non détecté', 'detail' => 'En attente de connexion du capteur Tiva C...'];
+$wake      = $latest ? getWakeRecommendation($lux, $status) : ['optimal' => false, 'action' => 'sleep', 'message' => 'Matériel non détecté', 'detail' => 'En attente de connexion du capteur TIVA EK123GXL...'];
 $level     = $latest ? getLuxLevel($lux) : 'NIGHT_FULL';
 $meta      = $latest ? getLuxLevelMeta($level) : ['label' => 'Hors ligne', 'icon' => '🔌', 'css' => 'level-night-full', 'range' => ''];
 $luxPct    = min(round(($lux / 600) * 100), 100);
@@ -34,7 +34,7 @@ $csrfToken = generateCsrfToken();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — Smart Alarm</title>
-  <meta name="description" content="Surveillance en temps réel de la luminosité ambiante via capteur Tiva C.">
+  <meta name="description" content="Surveillance en temps réel de la luminosité ambiante via capteur TIVA EK123GXL.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
