@@ -55,6 +55,20 @@ $csrfToken = generateCsrfToken();
     const savedTheme = localStorage.getItem('smartwake-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
     window.addEventListener('DOMContentLoaded', () => applyTheme(savedTheme));
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const btnIcon = input.nextElementSibling.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        btnIcon.classList.remove('ph-eye');
+        btnIcon.classList.add('ph-eye-slash');
+      } else {
+        input.type = 'password';
+        btnIcon.classList.remove('ph-eye-slash');
+        btnIcon.classList.add('ph-eye');
+      }
+    }
   </script>
 </head>
 <body class="auth-body">
@@ -113,9 +127,12 @@ $csrfToken = generateCsrfToken();
           <label class="form-label" for="password">Mot de passe</label>
           <div class="form-input-wrap">
             <span class="form-input-icon" aria-hidden="true"><i class="ph-fill ph-key"></i></span>
-            <input type="password" id="password" name="password" class="form-control"
+            <input type="password" id="password" name="password" class="form-control has-toggle"
               placeholder="••••••••" autocomplete="current-password"
               required aria-required="true" minlength="8">
+            <button type="button" class="btn-toggle-password" onclick="togglePassword('password')" aria-label="Afficher le mot de passe" title="Afficher le mot de passe">
+              <i class="ph-fill ph-eye"></i>
+            </button>
           </div>
         </div>
 
