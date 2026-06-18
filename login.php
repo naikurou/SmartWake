@@ -57,7 +57,12 @@ $csrfToken = generateCsrfToken();
   </script>
 </head>
 <body class="auth-body">
-<button class="theme-toggle theme-toggle-float" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+<header class="auth-header">
+  <div class="auth-header-title">
+    🎓 Projet ISEP — <span>Équipe SmartWake</span>
+  </div>
+  <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+</header>
 <div class="auth-wrapper">
   <!-- Particules de fond -->
   <div class="auth-bg" aria-hidden="true">

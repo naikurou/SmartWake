@@ -891,11 +891,26 @@ a:hover { opacity: 0.8; }
   background: rgba(255, 255, 255, 0.06);
   color: var(--text-main);
 }
-.theme-toggle-float {
+.auth-header {
   position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
+  top: 0; left: 0; right: 0;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   z-index: 200;
+}
+.auth-header-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.auth-header-title span {
+  color: var(--text-main);
 }
 
 /* ── Light Mode ── */
