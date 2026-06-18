@@ -29,8 +29,16 @@ $luxPct    = min(round(($lux / 600) * 100), 100);
 
 // Fetch Alarm Settings
 $pdo = getDB();
-$stmtSettings = $pdo->query("SELECT is_active, duration_minutes FROM alarm_settings WHERE id = 1");
-$settingsData = $stmtSettings->fetch();
+try {
+    $stmtSettings = $pdo->query("SELECT is_active, duration_minutes FROM alarm_settings WHERE id = 1");
+} catch (PDOException $e) {
+    // Si la colonne n'existe pas encore, on fait la migration ici
+    try {
+        $pdo->exec("ALTER TABLE alarm_settings ADD COLUMN duration_minutes INT NOT NULL DEFAULT 5");
+    } catch (Exception $e2) { }
+    $stmtSettings = $pdo->query("SELECT is_active, duration_minutes FROM alarm_settings WHERE id = 1");
+}
+$settingsData = $stmtSettings ? $stmtSettings->fetch() : null;
 $isAlarmActive = $settingsData ? (bool)$settingsData['is_active'] : false;
 $alarmDuration = $settingsData ? (int)$settingsData['duration_minutes'] : 5;
 
