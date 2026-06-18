@@ -306,7 +306,7 @@ $csrfToken = generateCsrfToken();
           <label for="night-lux" style="font-weight: 500;">Alarme Nuit (Lux) - Tolérance avant sonnerie</label>
           <div class="range-wrap">
             <input type="range" id="night-lux-range" min="0" max="200" value="50" oninput="document.getElementById('night-lux').value = this.value; updateLuxHelper('night')">
-            <input type="number" id="night-lux" class="form-control" value="50" min="0" oninput="document.getElementById('night-lux-range').value = this.value; updateLuxHelper('night')" style="width: 100px; font-weight: bold;">
+            <input type="number" id="night-lux" class="form-control" value="50" min="0" oninput="document.getElementById('night-lux-range').value = this.value; updateLuxHelper('night')" style="width: 100px; padding: 0.5rem; text-align: center; font-weight: bold;">
           </div>
           <small id="night-lux-help" class="form-help text-muted">Ex: ~50 Lux = Veilleuse</small>
         </div>
@@ -314,7 +314,7 @@ $csrfToken = generateCsrfToken();
           <label for="day-lux" style="font-weight: 500;">Alarme Matin (Lux) - Lumière pour couper l'alarme</label>
           <div class="range-wrap">
             <input type="range" id="day-lux-range" min="200" max="1500" value="500" oninput="document.getElementById('day-lux').value = this.value; updateLuxHelper('day')">
-            <input type="number" id="day-lux" class="form-control" value="500" min="0" oninput="document.getElementById('day-lux-range').value = this.value; updateLuxHelper('day')" style="width: 100px; font-weight: bold;">
+            <input type="number" id="day-lux" class="form-control" value="500" min="0" oninput="document.getElementById('day-lux-range').value = this.value; updateLuxHelper('day')" style="width: 100px; padding: 0.5rem; text-align: center; font-weight: bold;">
           </div>
           <small id="day-lux-help" class="form-help text-muted">Ex: ~500 Lux = Pièce éclairée</small>
         </div>
