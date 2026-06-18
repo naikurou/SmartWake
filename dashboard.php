@@ -303,12 +303,20 @@ $csrfToken = generateCsrfToken();
           </label>
         </div>
         <div class="form-group">
-          <label for="night-lux">Seuil Nuit (Lux) - Déclenchement si intrusion lumineuse</label>
-          <input type="number" id="night-lux" class="form-control" value="50" min="0">
+          <label for="night-lux">Seuil Nuit (Lux) - Tolérance avant déclenchement de l'alarme</label>
+          <div class="range-wrap">
+            <input type="range" id="night-lux-range" min="0" max="200" value="50" oninput="document.getElementById('night-lux').value = this.value; updateLuxHelper('night')">
+            <input type="number" id="night-lux" class="form-control" value="50" min="0" oninput="document.getElementById('night-lux-range').value = this.value; updateLuxHelper('night')" style="width: 80px; text-align: center;">
+          </div>
+          <small id="night-lux-help" class="form-help text-muted">~50 Lux : Veilleuse / Pièce sombre</small>
         </div>
         <div class="form-group">
-          <label for="day-lux">Seuil Jour (Lux) - Déclenchement réveil normal</label>
-          <input type="number" id="day-lux" class="form-control" value="500" min="0">
+          <label for="day-lux">Seuil Jour (Lux) - Niveau de lumière pour un réveil normal</label>
+          <div class="range-wrap">
+            <input type="range" id="day-lux-range" min="200" max="1500" value="500" oninput="document.getElementById('day-lux').value = this.value; updateLuxHelper('day')">
+            <input type="number" id="day-lux" class="form-control" value="500" min="0" oninput="document.getElementById('day-lux-range').value = this.value; updateLuxHelper('day')" style="width: 80px; text-align: center;">
+          </div>
+          <small id="day-lux-help" class="form-help text-muted">~500 Lux : Bureau / Éclairage classique</small>
         </div>
         <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
           <button type="button" class="btn btn-primary" onclick="saveSettings()"><i class="ph-fill ph-floppy-disk"></i> Sauvegarder</button>
@@ -339,6 +347,9 @@ $csrfToken = generateCsrfToken();
 .modal-close:hover { color: var(--text-main); }
 .checkbox-label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
 .btn-settings { background: transparent; border: none; cursor: pointer; }
+.range-wrap { display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; }
+.range-wrap input[type=range] { flex: 1; cursor: pointer; }
+.form-help { display: block; margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
 </style>
 
 <script>
@@ -351,9 +362,27 @@ function openSettingsModal() {
       if(data.success) {
         document.getElementById('alarm-active').checked = data.is_active;
         document.getElementById('night-lux').value = data.night_lux;
+        document.getElementById('night-lux-range').value = data.night_lux;
         document.getElementById('day-lux').value = data.day_lux;
+        document.getElementById('day-lux-range').value = data.day_lux;
+        updateLuxHelper('night');
+        updateLuxHelper('day');
       }
     });
+}
+function getLuxDescription(val) {
+  if (val <= 10) return "Nuit noire / Pénombre";
+  if (val <= 50) return "Veilleuse / Pièce très sombre";
+  if (val <= 150) return "Éclairage très tamisé";
+  if (val <= 300) return "Salon / Éclairage doux";
+  if (val <= 600) return "Bureau / Éclairage classique";
+  if (val <= 1000) return "Lumière du jour (nuageux)";
+  return "Plein soleil / Forte lumière";
+}
+function updateLuxHelper(type) {
+  const val = parseInt(document.getElementById(type + '-lux').value, 10) || 0;
+  const desc = getLuxDescription(val);
+  document.getElementById(type + '-lux-help').textContent = '~' + val + ' Lux : ' + desc;
 }
 function closeSettingsModal() {
   document.getElementById('settings-modal').style.display = 'none';
