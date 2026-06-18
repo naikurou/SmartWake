@@ -182,7 +182,7 @@ $csrfToken = generateCsrfToken();
       <span class="separator">&middot;</span>
       <a href="<?= BASE_URL ?>mentions-legales.php">Mentions Légales</a>
       <span class="separator">&middot;</span>
-      <a href="mailto:contact@smartalarm.isep.fr">Contact</a>
+      <a href="mailto:contact@smartwake.isep.fr">Contact</a>
     </div>
   </footer>
 
