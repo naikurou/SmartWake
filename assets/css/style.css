@@ -930,18 +930,23 @@ a:hover { opacity: 0.8; }
 
 /* ── Light Mode ── */
 [data-theme="light"] {
-  /* Colors - Premium Light Theme */
   --bg-main: #f8fafc;
-  --bg-card: rgba(255, 255, 255, 0.95);
-  --bg-card-hover: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
   --text-main: #0f172a;
   --text-muted: #64748b;
   --border-light: rgba(0, 0, 0, 0.08);
   --border-hover: rgba(0, 0, 0, 0.15);
   
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .dash-live-badge {
+  color: #0f5132;
+  background: rgba(16, 124, 65, 0.15);
+  border-color: rgba(16, 124, 65, 0.3);
 }
 
 [data-theme="light"] body {
