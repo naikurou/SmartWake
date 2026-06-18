@@ -109,6 +109,7 @@ Write-Log "INFO" "Mode     : API HTTP + Renvoi messages OLED (Toutes les 15s)"
 Write-Host ("-" * 50)
 
 $global:lastOledUpdate = (Get-Date).AddSeconds(-20)
+$global:lastApiSync = (Get-Date).AddSeconds(-20)
 
 while ($true) {
     try {
@@ -146,10 +147,13 @@ while ($true) {
 
                 Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $status"
 
-                # 1. Enregistrer en base de donnees via API et maj actionneur
-                $trigger = Process-Measure $lux $status
-                if ($trigger) {
-                    Write-Log "WARN" "Alarme declenchee pour $lux lux !"
+                # 1. Enregistrer en base de donnees via API et maj actionneur (toutes les 5 secondes)
+                if ((Get-Date) - $global:lastApiSync -ge [timespan]::FromSeconds(5)) {
+                    $trigger = Process-Measure $lux $status
+                    if ($trigger) {
+                        Write-Log "WARN" "Alarme declenchee pour $lux lux !"
+                    }
+                    $global:lastApiSync = Get-Date
                 }
 
                 # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED) toutes les 15 secondes
