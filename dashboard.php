@@ -270,18 +270,36 @@ $csrfToken = generateCsrfToken();
       <span>📈</span> Évolution de la luminosité
     </div>
 
-    <div class="chart-grid reveal" role="region" aria-label="Graphiques">
-      <div class="card chart-card">
-        <p class="card-label">Dernières 24 heures</p>
-        <div class="chart-container">
-          <canvas id="chart-24h" role="img" aria-label="Luminosité — 24h"></canvas>
-        </div>
-      </div>
-      <div class="card chart-card">
-        <p class="card-label">100 dernières mesures</p>
-        <div class="chart-container">
-          <canvas id="chart-100" role="img" aria-label="100 dernières mesures"></canvas>
-        </div>
+    <div class="card" style="padding: 1.5rem;">
+      <p class="card-label" style="margin-bottom: 1rem; font-weight: 600; color: var(--text-muted);">10 dernières mesures</p>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+          <thead>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">
+              <th style="padding: 0.5rem;">Heure</th>
+              <th style="padding: 0.5rem;">Luminosité</th>
+              <th style="padding: 0.5rem;">Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php 
+            $last10 = array_slice($data100, 0, 10);
+            foreach($last10 as $row): 
+              $time = date('H:i:s', strtotime($row['created_at']));
+            ?>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem; color: var(--text-muted);"><?= e($time) ?></td>
+              <td style="padding: 0.5rem; font-weight: 500; color: var(--text-main);"><?= e($row['light_value']) ?> lux</td>
+              <td style="padding: 0.5rem;"><?= statusBadge($row['day_status'], (int)$row['light_value']) ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <?php if(empty($last10)): ?>
+            <tr>
+              <td colspan="3" style="padding: 1rem; text-align: center; color: var(--text-muted);">Aucune donnée récente.</td>
+            </tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -464,15 +482,6 @@ function testBuzzer() {
 }
 </script>
 
-<script>
-  const CHART_24H_DATA = <?= json_encode($data24h,  JSON_HEX_TAG | JSON_HEX_AMP) ?>;
-  const CHART_100_DATA = <?= json_encode($data100, JSON_HEX_TAG | JSON_HEX_AMP) ?>;
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
-        integrity="sha256-oVuCdcZBQCLlBt4H8D0lUV5J+LbGGJPULXgKpnXoUHU="
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"
-        crossorigin="anonymous"></script>
 <script>window.SMARTWAKE_BASE = '<?= BASE_URL ?>';</script>
 <script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 </body>
