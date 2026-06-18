@@ -39,19 +39,38 @@ function getLuxLevel(int $lux): string {
 }
 
 /**
+ * Retourne le moment de la journée basé sur l'heure locale
+ *
+ * @return string Moment de la journée
+ */
+function getTimePeriodLabel(): string {
+    $hour = (int)date('H');
+    if ($hour >= 6 && $hour < 12) {
+        return "Matin";
+    } elseif ($hour >= 12 && $hour < 18) {
+        return "Après-midi";
+    } elseif ($hour >= 18 && $hour < 22) {
+        return "Soirée";
+    } else {
+        return "Nuit";
+    }
+}
+
+/**
  * Retourne les métadonnées d'un niveau de luminosité.
  *
  * @param string $level
  * @return array
  */
 function getLuxLevelMeta(string $level): array {
+    $period = getTimePeriodLabel();
     $meta = [
-        'NIGHT_FULL' => ['label' => 'Nuit complète',            'icon' => '⬛', 'css' => 'level-night-full',  'range' => '< 1 lux'],
-        'NIGHT_DIM'  => ['label' => 'Nuit — faible éclairage', 'icon' => '🌙', 'css' => 'level-night-dim',   'range' => '1–10 lux'],
-        'DAWN'       => ['label' => 'Aube naissante',            'icon' => '🌅', 'css' => 'level-dawn',         'range' => '10–50 lux'],
-        'MORNING'    => ['label' => 'Matin clair',               'icon' => '🌤️', 'css' => 'level-morning',      'range' => '50–200 lux'],
-        'DAY'        => ['label' => 'Plein jour',                'icon' => '☀️', 'css' => 'level-day',          'range' => '200–500 lux'],
-        'ALERT'      => ['label' => 'Lumière soudaine',          'icon' => '💡', 'css' => 'level-alert',        'range' => '> 500 lux'],
+        'NIGHT_FULL' => ['label' => $period, 'icon' => '⬛', 'css' => 'level-night-full',  'range' => '< 1 lux'],
+        'NIGHT_DIM'  => ['label' => $period, 'icon' => '🌙', 'css' => 'level-night-dim',   'range' => '1–10 lux'],
+        'DAWN'       => ['label' => $period, 'icon' => '🌅', 'css' => 'level-dawn',         'range' => '10–50 lux'],
+        'MORNING'    => ['label' => $period, 'icon' => '🌤️', 'css' => 'level-morning',      'range' => '50–200 lux'],
+        'DAY'        => ['label' => $period, 'icon' => '☀️', 'css' => 'level-day',          'range' => '200–500 lux'],
+        'ALERT'      => ['label' => $period, 'icon' => '💡', 'css' => 'level-alert',        'range' => '> 500 lux'],
     ];
     return $meta[$level] ?? $meta['NIGHT_FULL'];
 }
@@ -242,20 +261,21 @@ function statusBadge(string $status, int $lux = -1): string {
  */
 function getWakeRecommendation(int $lux, string $status = ''): array {
     $level = getLuxLevel($lux);
+    $period = getTimePeriodLabel();
     switch ($level) {
         case 'NIGHT_FULL':
             return [
                 'optimal' => false,
                 'level'   => $level,
-                'message' => 'Obscurité totale — Mode veille',
-                'detail'  => "Il fait nuit noire ({$lux} lux). Le réveil est en mode veille, luminosité minimale.",
+                'message' => $period . ' — Mode veille',
+                'detail'  => "Il fait très sombre ({$lux} lux). Le réveil est en mode veille, luminosité minimale.",
                 'action'  => 'sleep',
             ];
         case 'NIGHT_DIM':
             return [
                 'optimal' => false,
                 'level'   => $level,
-                'message' => 'Veilleuse détectée — Simulation d\'aube',
+                'message' => $period . ' — Simulation d\'aube',
                 'detail'  => "Faible éclairage ({$lux} lux). Simulation d'aube douce en cours.",
                 'action'  => 'simulate_dawn',
             ];
@@ -263,15 +283,15 @@ function getWakeRecommendation(int $lux, string $status = ''): array {
             return [
                 'optimal' => true,
                 'level'   => $level,
-                'message' => 'Aube naissante — Alarme douce',
-                'detail'  => "Lumière du matin ({$lux} lux). C'est le moment idéal pour une alarme douce !",
+                'message' => $period . ' — Alarme douce',
+                'detail'  => "Lumière émergente ({$lux} lux). C'est le moment idéal pour une alarme douce !",
                 'action'  => 'soft_alarm',
             ];
         case 'MORNING':
             return [
                 'optimal' => true,
                 'level'   => $level,
-                'message' => 'Matin clair — Alarme principale',
+                'message' => $period . ' — Alarme principale',
                 'detail'  => "Pièce bien éclairée ({$lux} lux). L'alarme principale se déclenche.",
                 'action'  => 'main_alarm',
             ];
@@ -279,8 +299,8 @@ function getWakeRecommendation(int $lux, string $status = ''): array {
             return [
                 'optimal' => true,
                 'level'   => $level,
-                'message' => 'Plein jour — Dashboard adapté',
-                'detail'  => "Lumière naturelle franche ({$lux} lux). L'écran du dashboard réduit sa luminosité.",
+                'message' => $period . ' — Dashboard adapté',
+                'detail'  => "Lumière franche ({$lux} lux). L'écran du dashboard réduit sa luminosité.",
                 'action'  => 'day_mode',
             ];
         case 'ALERT':
