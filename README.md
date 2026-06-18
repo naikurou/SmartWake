@@ -24,16 +24,16 @@
 **SmartWake** est un système connecté qui :
 
 - Lit en temps réel la **luminosité ambiante** via un capteur LDR branché sur une **carte Tiva C (TM4C123GH6PM)**
-- Communique les mesures via **port série USB (COM)**
+- Communique les mesures via **port série USB (COM)** en bidirectionnel (envoie l'affichage vers l'écran OLED)
 - Stocke les données dans **Azure Database for MySQL**
 - Affiche un **tableau de bord web** avec graphiques, historique et recommandation de réveil
-- Détermine automatiquement si c'est le **JOUR** (> 500 lux) ou la **NUIT** (≤ 500 lux)
+- Permet la configuration de **seuils d'alarme** via un panneau de paramètres ⚙️
+- Interagit avec le **groupe Actionneurs** (Buzzer/LED) via la base de données distante (`etats_actionneurs`)
 
-| Valeur lumière | État |
-|----------------|------|
-| > 700 lux      | ☀️ Réveil idéal |
-| 501–700 lux    | ☀️ Jour |
-| ≤ 500 lux      | 🌙 Nuit |
+| Valeur lumière | État | Action |
+|----------------|------|--------|
+| Configurable   | Nuit / Intrusion | Déclenche l'alarme (Buzzer ON) |
+| Configurable   | Jour | Déclenche le réveil (Buzzer ON) |
 
 ---
 
@@ -42,19 +42,22 @@
 ```
 Tiva C (TM4C123GH6PM)
     │  LDR → ADC 12 bits
-    │  UART0 → USB → COM22
+    │  UART0 → USB → COM14
+    │  ← Écran OLED (Heure, Lux, Période)
     ↓
-read_sensor.php  (PHP CLI)
-    │  fopen('COM22') ou PHP DIO
+smartwake_reader.ps1 (PowerShell)
+    │  Port Série (Bidirectionnel)
     │  Parsing valeur brute → lux
+    │  Lecture des paramètres depuis `alarm_settings`
+    │  Écriture commande Buzzer → `etats_actionneurs`
     ↓
 Azure Database for MySQL
-    │  Table light_sensor_data
+    │  Tables `light_sensor_data`, `alarm_settings`, `etats_actionneurs`
     ↓
 Site Web PHP
-    │  dashboard.php  (temps réel, polling 5s)
+    │  dashboard.php  (temps réel, polling 5s, réglages alarme)
     │  history.php    (historique paginé)
-    └  api/latest.php (JSON REST)
+    └  api/         (JSON REST pour lire/sauvegarder les paramètres)
 ```
 
 ---
@@ -163,12 +166,11 @@ curl -o certs/DigiCertGlobalRootG2.crt.pem \
 # 1. Brancher la carte Tiva C via USB
 # 2. Vérifier le port COM dans le Gestionnaire de périphériques
 
-# 3. Configurer le port dans serial/read_sensor.php
-define('SERIAL_PORT', 'COM22');   # Adapter selon votre port
-define('BAUD_RATE',   9600);
+# 3. Configurer le port dans serial/smartwake_reader.ps1 (ex: COM14)
+$portName = "COM14"
 
-# 4. Lancer le script en CLI (PowerShell ou CMD en administrateur)
-php serial\read_sensor.php
+# 4. Lancer le script PowerShell (en administrateur si nécessaire)
+powershell.exe -ExecutionPolicy Bypass -File serial\smartwake_reader.ps1
 ```
 
 ### Sans matériel (simulation)
@@ -181,11 +183,15 @@ php serial\simulate.php
 **Sortie attendue :**
 
 ```
-[14:22:01] [INFO]  === SmartWake Serial Reader ===
-[14:22:01] [INFO]  Port     : COM22
-[14:22:01] [INFO]  Baudrate : 9600 baud
-[14:22:02] [INFO]  Lecture → brut=742 | lux=742 | statut=DAY
-[14:22:02] [OK]    ✅ Enregistré : 742 lux (DAY)
+[2026-06-18 10:46:25] [INFO] === SmartWake Serial Reader BIDIRECTIONNEL ===
+[2026-06-18 10:46:25] [INFO] Port     : COM14 @ 9600 baud
+[2026-06-18 10:46:25] [INFO] BDD      : hangardb_axst62997 @ 178.33.122.21
+[2026-06-18 10:46:25] [INFO] Mode     : Lecture lux + Renvoi messages OLED
+--------------------------------------------------
+[2026-06-18 10:46:26] [INFO] Port ouvert. En attente de donnees de la carte...
+[2026-06-18 10:46:28] [INFO] Recu : 12.5 lux brut -> 13 lux | NUIT
+[2026-06-18 10:46:28] [OK] Enregistre en BDD : 13 lux
+[2026-06-18 10:46:28] [INFO] Envoye a la carte -> MSG:10:46|13 lux|Matin
 ```
 
 ---

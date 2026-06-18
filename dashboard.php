@@ -61,6 +61,9 @@ $csrfToken = generateCsrfToken();
           </span>
         </li>
         <li>
+          <button class="nav-link btn-settings" aria-label="Paramètres d'alarme" title="Paramètres d'alarme" onclick="openSettingsModal()">⚙️ Paramètres</button>
+        </li>
+        <li>
           <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
         </li>
         <li>
@@ -252,6 +255,115 @@ $csrfToken = generateCsrfToken();
   </footer>
 
 </div><!-- /page-wrapper -->
+
+<!-- ===== SETTINGS MODAL ===== -->
+<div id="settings-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-content card">
+    <div class="modal-header">
+      <h2>⚙️ Paramètres d'Alarme</h2>
+      <button class="modal-close" onclick="closeSettingsModal()">✖</button>
+    </div>
+    <div class="modal-body">
+      <form id="settings-form">
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="alarm-active" checked>
+            Activer l'alarme intelligente
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="night-lux">Seuil Nuit (Lux) - Déclenchement si intrusion lumineuse</label>
+          <input type="number" id="night-lux" class="form-control" value="50" min="0">
+        </div>
+        <div class="form-group">
+          <label for="day-lux">Seuil Jour (Lux) - Déclenchement réveil normal</label>
+          <input type="number" id="day-lux" class="form-control" value="500" min="0">
+        </div>
+        <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Sauvegarder</button>
+          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer()">🚨 Tester le Buzzer</button>
+        </div>
+        <p id="settings-msg" style="margin-top:0.5rem; font-size:0.9rem;"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+/* CSS très basique pour la modale, s'intégrant au thème existant */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5); z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--bg-card); width: 90%; max-width: 450px;
+  border-radius: var(--radius-lg); padding: 1.5rem;
+}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.modal-header h2 { margin: 0; font-size: 1.25rem; }
+.modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+.modal-close:hover { color: var(--text-main); }
+.checkbox-label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+.btn-settings { background: transparent; border: none; cursor: pointer; }
+</style>
+
+<script>
+function openSettingsModal() {
+  document.getElementById('settings-modal').style.display = 'flex';
+  // Charger les paramètres depuis l'API
+  fetch('<?= BASE_URL ?>api/get_settings.php')
+    .then(r => r.json())
+    .then(data => {
+      if(data.success) {
+        document.getElementById('alarm-active').checked = data.is_active;
+        document.getElementById('night-lux').value = data.night_lux;
+        document.getElementById('day-lux').value = data.day_lux;
+      }
+    });
+}
+function closeSettingsModal() {
+  document.getElementById('settings-modal').style.display = 'none';
+  document.getElementById('settings-msg').textContent = '';
+}
+function saveSettings() {
+  const btn = document.querySelector('#settings-form .btn-primary');
+  btn.textContent = 'Sauvegarde...';
+  
+  const payload = {
+    is_active: document.getElementById('alarm-active').checked ? 1 : 0,
+    night_lux: document.getElementById('night-lux').value,
+    day_lux: document.getElementById('day-lux').value
+  };
+
+  fetch('<?= BASE_URL ?>api/save_settings.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(data => {
+    btn.textContent = '💾 Sauvegarder';
+    const msg = document.getElementById('settings-msg');
+    msg.textContent = data.success ? '✅ Paramètres sauvegardés !' : '❌ Erreur de sauvegarde';
+    msg.style.color = data.success ? 'green' : 'red';
+    if(data.success) setTimeout(closeSettingsModal, 1500);
+  });
+}
+function testBuzzer() {
+  const btn = document.querySelector('#settings-form .btn-outline');
+  const oldText = btn.textContent;
+  btn.textContent = 'Envoi...';
+  
+  fetch('<?= BASE_URL ?>api/test_buzzer.php', { method: 'POST' })
+  .then(r => r.json())
+  .then(data => {
+    btn.textContent = data.success ? '✅ Envoyé !' : '❌ Erreur';
+    setTimeout(() => { btn.textContent = oldText; }, 2000);
+  });
+}
+</script>
 
 <script>
   const CHART_24H_DATA = <?= json_encode($data24h,  JSON_HEX_TAG | JSON_HEX_AMP) ?>;

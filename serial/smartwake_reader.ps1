@@ -4,7 +4,7 @@
 # ============================================================
 # CONFIGURATION
 # ============================================================
-$portName  = "COM7"
+$portName  = "COM14"
 $baudRate  = 9600
 $dbHost    = "178.33.122.21"
 $dbUser    = "axst62997"
@@ -14,13 +14,12 @@ $mysqlExe  = "C:\xampp\mysql\bin\mysql.exe"
 $logFile   = "C:\xampp\htdocs\smartwake\logs\sensor.log"
 
 # Seuils (doivent correspondre a functions.php)
-function Get-LuxLevel($lux) {
-    if ($lux -lt 1)   { return @{ level="NIGHT_FULL"; label="Nuit complete";          action="Veille"        } }
-    if ($lux -lt 10)  { return @{ level="NIGHT_DIM";  label="Nuit - faible eclairage"; action="Simul. aube"   } }
-    if ($lux -lt 50)  { return @{ level="DAWN";       label="Aube naissante";          action="Alarme douce"  } }
-    if ($lux -lt 200) { return @{ level="MORNING";    label="Matin clair";             action="Alarme princ." } }
-    if ($lux -lt 500) { return @{ level="DAY";        label="Plein jour";              action="Mode jour"     } }
-    return              @{ level="ALERT";      label="Alerte lumiere!";        action="ALERTE!"       }
+function Get-TimePeriodLabel($hour) {
+    if ($hour -ge 6 -and $hour -lt 9)   { return "Aube" }
+    if ($hour -ge 9 -and $hour -lt 12)  { return "Matin" }
+    if ($hour -ge 12 -and $hour -lt 18) { return "Apres-midi" }
+    if ($hour -ge 18 -and $hour -lt 22) { return "Debut soiree" }
+    return "Nuit"
 }
 
 function Get-DayStatus($lux) {
@@ -33,27 +32,52 @@ function Write-Log($level, $msg) {
     Add-Content -Path $logFile -Value $line -Encoding UTF8
 }
 
-function Insert-Measure($lux, $status) {
+function Process-Measure($lux, $status) {
     $dbStatus = if ($status -eq "JOUR") { "DAY" } else { "NIGHT" }
-    $sql = "INSERT INTO light_sensor_data (light_value, day_status) VALUES ($lux, '$dbStatus');"
-    & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -e $sql 2>&1 | Out-Null
-    return ($LASTEXITCODE -eq 0)
+    
+    # 1. Recuperer les parametres
+    $sqlSettings = "SELECT is_active, night_lux_threshold, day_lux_threshold FROM alarm_settings WHERE id=1;"
+    $settingsRaw = & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" -N -B $dbName -e $sqlSettings
+    
+    $triggerAlarm = $false
+    if ($settingsRaw -ne $null) {
+        $parts = $settingsRaw -split "`t"
+        if ($parts.Length -ge 3) {
+            $isActive = $parts[0]
+            $nightLux = [int]$parts[1]
+            $dayLux   = [int]$parts[2]
+            
+            $hour = (Get-Date).Hour
+            $isNight = ($hour -ge 22 -or $hour -lt 6)
+            
+            if ($isActive -eq "1") {
+                if ($isNight -and $lux -ge $nightLux) { $triggerAlarm = $true }
+                if (-not $isNight -and $lux -ge $dayLux) { $triggerAlarm = $true }
+            }
+        }
+    }
+    
+    # 2. Inserer dans light_sensor_data
+    $sqlInsert = "INSERT INTO light_sensor_data (light_value, day_status) VALUES ($lux, '$dbStatus');"
+    
+    # 3. Mettre a jour le buzzer
+    $buzzerState = if ($triggerAlarm) { 1 } else { 0 }
+    $sqlBuzzer = "INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', $buzzerState, 'groupe_ldr') ON DUPLICATE KEY UPDATE etat=$buzzerState, declenche_par='groupe_ldr';"
+    
+    # Executer les deux requetes
+    $sqlCombined = $sqlInsert + $sqlBuzzer
+    & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -e $sqlCombined 2>&1 | Out-Null
+    
+    return $triggerAlarm
 }
 
 # ============================================================
 # Format du message renvoy a la Tiva C (ASCII uniquement)
-# Format : "MSG:<label>|<lux> lux|<statut>|<action>\n"
-# La Tiva C peut parser avec Serial.readStringUntil('\n')
-# et split sur '|' pour afficher sur l'ecran OLED
 # ============================================================
-function Build-OledMessage($lux, $luxInfo) {
-    $status = Get-DayStatus $lux
-    # Format compact pour OLED (max ~16 chars par ligne)
-    # Ligne 1 : label du niveau
-    # Ligne 2 : valeur en lux
-    # Ligne 3 : statut JOUR/NUIT
-    # Ligne 4 : action recommandee
-    return "MSG:$($luxInfo.label)|$lux lux|$status|$($luxInfo.action)"
+function Build-OledMessage($lux) {
+    $heure   = Get-Date -Format 'HH:mm'
+    $periode = Get-TimePeriodLabel (Get-Date).Hour
+    return "MSG:$heure|$lux lux|$periode"
 }
 
 # ============================================================
@@ -96,20 +120,20 @@ try {
             }
 
             $lux     = [int][Math]::Round($luxFloat)
-            $luxInfo = Get-LuxLevel $lux
             $status  = Get-DayStatus $lux
 
-            Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $($luxInfo.label) | $status"
+            Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $status"
 
-            # 1. Enregistrer en base de donnees
-            if (Insert-Measure $lux $status) {
-                Write-Log "OK" "Enregistre en BDD : $lux lux ($($luxInfo.label))"
+            # 1. Enregistrer en base de donnees et maj actionneur
+            $trigger = Process-Measure $lux $status
+            if ($trigger) {
+                Write-Log "WARN" "Alarme declenchee pour $lux lux !"
             } else {
-                Write-Log "WARN" "Echec insertion BDD"
+                Write-Log "OK" "Enregistre en BDD : $lux lux"
             }
 
             # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
-            $msg = Build-OledMessage $lux $luxInfo
+            $msg = Build-OledMessage $lux
             $port.WriteLine($msg)
             Write-Log "INFO" "Envoye a la carte -> $msg"
 

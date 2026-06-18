@@ -844,3 +844,8 @@
 [2026-06-11 16:59:35] [OK] Enregistre : 36 lux (Aube naissante)
 [2026-06-11 16:59:36] [INFO] Lecture -> 36.34 lux brut | 36 lux | Aube naissante
 [2026-06-11 16:59:36] [INFO] Port ferme.
+[2026-06-18 10:46:25] [INFO] === SmartWake Serial Reader BIDIRECTIONNEL ===
+[2026-06-18 10:46:25] [INFO] Port     : COM14 @ 9600 baud
+[2026-06-18 10:46:25] [INFO] BDD      : hangardb_axst62997 @ 178.33.122.21
+[2026-06-18 10:46:25] [INFO] Mode     : Lecture lux + Renvoi messages OLED
+[2026-06-18 10:46:26] [ERROR] Impossible d'ouvrir le port COM14 : Exception lors de l'appel de « Open » avec « 0 » argument(s) : « Le port 'COM14' n'existe pas. »
