@@ -4,6 +4,8 @@
  * Utilise PDO avec des options sécurisées pour Azure Database for MySQL
  */
 
+date_default_timezone_set('Europe/Paris');
+
 // ============================================================
 // Configuration Azure Database for MySQL
 // Modifier ces valeurs selon votre environnement
@@ -48,6 +50,13 @@ function getDB(): PDO {
 
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+            // Configurer le fuseau horaire de la session MySQL sur Paris
+            try {
+                $pdo->exec("SET time_zone = 'Europe/Paris'");
+            } catch(PDOException $e) {
+                // En cas d'erreur (si MySQL n'a pas les tables de fuseaux nommés), utiliser le décalage fixe (Heure d'été)
+                $pdo->exec("SET time_zone = '+02:00'");
+            }
         } catch (PDOException $e) {
             // Ne jamais exposer les détails de connexion en production
             error_log('[SmartWake] Erreur DB : ' . $e->getMessage());
