@@ -44,8 +44,8 @@ try {
     }
 
     // Vérifier si le matériel physique est connecté (données de moins de 15 secondes)
-    $timeDiff = time() - strtotime($latest['created_at']);
-    if ($timeDiff > 15) {
+    $secondsAgo = isset($latest['seconds_ago']) ? (int)$latest['seconds_ago'] : 0;
+    if ($secondsAgo > 15) {
         http_response_code(404);
         echo json_encode([
             'error'     => "Le matériel physique n'est pas connecté à l'ordinateur.",

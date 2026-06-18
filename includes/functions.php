@@ -94,7 +94,8 @@ function insertLightMeasure(int $lightValue): bool {
 function getLatestMeasure(): ?array {
     $db   = getDB();
     $stmt = $db->query(
-        'SELECT light_value, day_status, created_at FROM light_sensor_data ORDER BY created_at DESC LIMIT 1'
+        'SELECT light_value, day_status, created_at, TIMESTAMPDIFF(SECOND, created_at, NOW()) AS seconds_ago 
+         FROM light_sensor_data ORDER BY created_at DESC LIMIT 1'
     );
     $row = $stmt->fetch();
     return $row ?: null;

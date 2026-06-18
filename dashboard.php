@@ -64,7 +64,7 @@ $csrfToken = generateCsrfToken();
           <button class="nav-link btn-settings" aria-label="Paramètres d'alarme" title="Paramètres d'alarme" onclick="openSettingsModal()">⚙️ Paramètres</button>
         </li>
         <li>
-          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
+          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
         </li>
         <li>
           <a href="<?= BASE_URL ?>logout.php?token=<?= urlencode($csrfToken) ?>"
@@ -282,8 +282,7 @@ $csrfToken = generateCsrfToken();
         <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
           <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Sauvegarder</button>
           <span style="color:var(--text-muted); margin: 0 0.5rem;">|</span>
-          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer(1)">🚨 Buzzer ON</button>
-          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer(0)">🔇 Buzzer OFF</button>
+          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer()">🚨 Tester le Buzzer</button>
         </div>
         <p id="settings-msg" style="margin-top:0.5rem; font-size:0.9rem;"></p>
       </form>
@@ -353,23 +352,16 @@ function saveSettings() {
     if(data.success) setTimeout(closeSettingsModal, 1500);
   });
 }
-function testBuzzer(state) {
-  const btnON = document.querySelectorAll('#settings-form .btn-outline')[0];
-  const btnOFF = document.querySelectorAll('#settings-form .btn-outline')[1];
+function testBuzzer() {
+  const btn = document.querySelectorAll('#settings-form .btn-outline')[0];
+  const oldText = btn.textContent;
+  btn.textContent = 'Test en cours...';
   
-  const targetBtn = state === 1 ? btnON : btnOFF;
-  const oldText = targetBtn.textContent;
-  targetBtn.textContent = 'Envoi...';
-  
-  fetch('<?= BASE_URL ?>api/test_buzzer.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ etat: state })
-  })
+  fetch('<?= BASE_URL ?>api/test_buzzer.php', { method: 'POST' })
   .then(r => r.json())
   .then(data => {
-    targetBtn.textContent = data.success ? '✅ OK !' : '❌ Erreur';
-    setTimeout(() => { targetBtn.textContent = oldText; }, 2000);
+    btn.textContent = data.success ? '✅ Test OK !' : '❌ Erreur';
+    setTimeout(() => { btn.textContent = oldText; }, 2000);
   });
 }
 </script>

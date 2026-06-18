@@ -8,14 +8,19 @@ if (!isLoggedIn()) {
     exit;
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
-$etat = isset($input['etat']) ? (int)$input['etat'] : 1;
-
 try {
     $pdo = getDB();
-    // Insère ou met à jour la table etats_actionneurs pour forcer le buzzer à l'état demandé
-    $stmt = $pdo->prepare("INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', ?, 'groupe_ldr_test') ON DUPLICATE KEY UPDATE etat = VALUES(etat), declenche_par = 'groupe_ldr_test', derniere_action = CURRENT_TIMESTAMP");
-    $stmt->execute([$etat]);
+    
+    // 1. Allume le buzzer (ON)
+    $stmtON = $pdo->prepare("INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', 1, 'groupe_ldr_test') ON DUPLICATE KEY UPDATE etat = 1, declenche_par = 'groupe_ldr_test', derniere_action = CURRENT_TIMESTAMP");
+    $stmtON->execute();
+    
+    // 2. Attend 1 seconde pour que le buzzer retentisse brièvement
+    sleep(1);
+    
+    // 3. Éteint le buzzer (OFF)
+    $stmtOFF = $pdo->prepare("INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', 0, 'groupe_ldr_test') ON DUPLICATE KEY UPDATE etat = 0, declenche_par = 'groupe_ldr_test', derniere_action = CURRENT_TIMESTAMP");
+    $stmtOFF->execute();
     
     echo json_encode(['success' => true]);
 } catch (Exception $e) {

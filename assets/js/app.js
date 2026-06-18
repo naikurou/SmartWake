@@ -162,6 +162,18 @@
       updateUI(data);
     } catch (err) {
       console.warn('[SmartWake] Erreur fetch :', err.message);
+      // Mettre à jour l'UI pour indiquer la déconnexion
+      if (elLux) elLux.innerHTML = '<span style="font-size:1.2rem;color:var(--text-muted)">Hors ligne</span>';
+      if (elStatusTxt) elStatusTxt.textContent = "Capteur déconnecté";
+      if (elTimestamp) elTimestamp.textContent = "Matériel physique introuvable";
+      if (elWakeCard) {
+         elWakeCard.className = 'card metric-card wake-card not-optimal action-sleep';
+         if (elWakeIcon) elWakeIcon.textContent = '🔌';
+         if (elWakeMsg) elWakeMsg.textContent = 'Matériel non détecté';
+         if (elWakeDet) elWakeDet.textContent = "En attente de connexion du capteur Tiva C...";
+         const footer = elWakeCard.querySelector('.wake-footer');
+         if (footer) footer.innerHTML = '<span class="badge badge-night">Veuillez brancher le capteur</span>';
+      }
     }
   }
 
@@ -307,9 +319,6 @@
 /* ============================================================
    4. Toggle thème clair / sombre
    ============================================================ */
-(function () {
-  'use strict';
-
   var STORAGE_KEY = 'smartwake-theme';
 
   function applyTheme(theme) {
@@ -320,17 +329,21 @@
     });
   }
 
-  // Délégation sur document : fonctionne peu importe le timing de chargement du DOM
+  window.toggleTheme = function(e) {
+    if (e) e.preventDefault();
+    var next = document.documentElement.classList.contains('light-mode') ? 'dark' : 'light';
+    localStorage.setItem(STORAGE_KEY, next);
+    applyTheme(next);
+  };
+
+  // Délégation sur document en secours, au cas où onclick n'est pas utilisé
   document.addEventListener('click', function (e) {
-    if (e.target.closest('.theme-toggle')) {
-      var next = document.documentElement.classList.contains('light-mode') ? 'dark' : 'light';
-      localStorage.setItem(STORAGE_KEY, next);
-      applyTheme(next);
+    if (e.target.closest('.theme-toggle') && !e.target.closest('[onclick]')) {
+      window.toggleTheme();
     }
   });
 
   applyTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
-})();
 
 /* ============================================================
    5. Auto-refresh de la page historique
