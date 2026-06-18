@@ -316,34 +316,7 @@
   }
 })();
 
-/* ============================================================
-   4. Toggle thème clair / sombre
-   ============================================================ */
-  var STORAGE_KEY = 'smartwake-theme';
 
-  function applyTheme(theme) {
-    document.documentElement.classList.toggle('light-mode', theme === 'light');
-    document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-      btn.textContent = theme === 'light' ? '🌙' : '☀️';
-      btn.setAttribute('aria-label', theme === 'light' ? 'Passer en mode sombre' : 'Passer en mode clair');
-    });
-  }
-
-  window.toggleTheme = function(e) {
-    if (e) e.preventDefault();
-    var next = document.documentElement.classList.contains('light-mode') ? 'dark' : 'light';
-    localStorage.setItem(STORAGE_KEY, next);
-    applyTheme(next);
-  };
-
-  // Délégation sur document en secours, au cas où onclick n'est pas utilisé
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('.theme-toggle') && !e.target.closest('[onclick]')) {
-      window.toggleTheme();
-    }
-  });
-
-  applyTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
 
 /* ============================================================
    5. Auto-refresh de la page historique

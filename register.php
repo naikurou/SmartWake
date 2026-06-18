@@ -43,10 +43,25 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
-  <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
+  <script>
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('smartwake-theme', theme);
+      document.querySelectorAll('.theme-toggle').forEach(btn => {
+        btn.textContent = theme === 'light' ? '🌙' : '☀️';
+      });
+    }
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    }
+    const savedTheme = localStorage.getItem('smartwake-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    window.addEventListener('DOMContentLoaded', () => applyTheme(savedTheme));
+  </script>
 </head>
 <body class="auth-body">
-<button class="theme-toggle theme-toggle-float" aria-label="Passer en mode clair" title="Changer le thème">☀️</button>
+<button class="theme-toggle theme-toggle-float" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
 
   <!-- Particules de fond -->
   <div class="auth-bg" aria-hidden="true">
