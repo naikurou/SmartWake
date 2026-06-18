@@ -278,7 +278,7 @@
   }
 
   // --- Graphique 1 : 24 dernières heures ---
-  if (typeof CHART_24H_DATA !== 'undefined') {
+  if (typeof CHART_24H_DATA !== 'undefined' && Array.isArray(CHART_24H_DATA)) {
     const labels = CHART_24H_DATA.map(r => {
       const d = new Date(r.created_at.replace(' ', 'T'));
       return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
@@ -288,7 +288,7 @@
   }
 
   // --- Graphique 2 : 100 dernières mesures ---
-  if (typeof CHART_100_DATA !== 'undefined') {
+  if (typeof CHART_100_DATA !== 'undefined' && Array.isArray(CHART_100_DATA)) {
     const labels = CHART_100_DATA.map((r, i) => '#' + (i + 1));
     const values = CHART_100_DATA.map(r => parseInt(r.light_value, 10));
     createLineChart('chart-100', labels, values, '');
