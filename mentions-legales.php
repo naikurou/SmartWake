@@ -14,21 +14,25 @@
   </script>
 </head>
 <body class="dashboard-body">
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="/" class="navbar-brand">
-        <i class="ph-fill ph-sun-horizon" style="color: #00A4EF; font-size: 1.5rem;"></i>
-        Smart<span class="brand-accent"> Alarm</span>
-      </a>
-      <div class="navbar-actions">
-        <a href="javascript:history.back()" class="btn btn-outline" style="padding: 0.5rem 1rem;">Retour</a>
+  <nav class="dash-nav">
+    <div class="container dash-nav-inner">
+      <div class="dash-brand">
+        <a href="<?= BASE_URL ?>" class="brand-link">
+          <i class="ph-fill ph-sun-horizon" style="color: #00A4EF; font-size: 1.5rem;"></i>
+          Smart<span class="brand-accent"> Alarm</span>
+        </a>
       </div>
+      <ul class="dash-nav-links">
+        <li>
+          <a href="javascript:history.back()" class="btn btn-outline btn-sm">Retour</a>
+        </li>
+      </ul>
     </div>
   </nav>
 
-  <main class="dash-container" style="max-width: 800px; margin-top: 2rem;">
+  <main class="container" style="max-width: 800px; margin-top: 3rem; margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
     <div class="card" style="padding: 2.5rem;">
-      <h1 class="dash-title" style="margin-bottom: 2rem;">Mentions Légales</h1>
+      <h1 class="dash-title" style="margin-bottom: 2rem; font-size: 2.25rem; word-wrap: break-word;">Mentions Légales</h1>
       
       <div style="color: var(--text-muted); line-height: 1.6;">
         <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">Éditeur du Service</h2>
@@ -47,7 +51,7 @@
     </div>
   </main>
   
-  <footer class="dash-container" style="text-align: center; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+  <footer class="container" style="text-align: center; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem;">
     <p>Smart Alarm © 2026</p>
   </footer>
 </body>
