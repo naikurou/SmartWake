@@ -89,66 +89,70 @@ Write-Log "INFO" "BDD      : $dbName @ $dbHost"
 Write-Log "INFO" "Mode     : Lecture lux + Renvoi messages OLED"
 Write-Host ("-" * 50)
 
-try {
-    $port = New-Object System.IO.Ports.SerialPort $portName, $baudRate, "None", 8, "One"
-    $port.DtrEnable  = $true
-    $port.RtsEnable  = $true
-    $port.ReadTimeout = 3000
-    $port.NewLine    = "`n"
-    $port.Open()
+while ($true) {
+    try {
+        $port = New-Object System.IO.Ports.SerialPort $portName, $baudRate, "None", 8, "One"
+        $port.DtrEnable  = $true
+        $port.RtsEnable  = $true
+        $port.ReadTimeout = 3000
+        $port.NewLine    = "`n"
+        $port.Open()
 
-    Write-Log "INFO" "Port ouvert. En attente de donnees de la carte... (Ctrl+C pour quitter)"
-    Write-Host ("-" * 50)
+        Write-Log "INFO" "Port ouvert. En attente de donnees de la carte... (Ctrl+C pour quitter)"
+        Write-Host ("-" * 50)
 
-    # Petite pause pour laisser la carte s'initialiser
-    Start-Sleep -Milliseconds 500
+        # Petite pause pour laisser la carte s'initialiser
+        Start-Sleep -Milliseconds 500
 
-    while ($true) {
-        try {
-            $raw = $port.ReadLine().Trim()
+        while ($true) {
+            try {
+                $raw = $port.ReadLine().Trim()
 
-            if ([string]::IsNullOrWhiteSpace($raw)) { continue }
+                if ([string]::IsNullOrWhiteSpace($raw)) { continue }
 
-            # Ignorer les messages qu'on a nous-memes envoyes (echo)
-            if ($raw.StartsWith("MSG:")) { continue }
+                # Ignorer les messages qu'on a nous-memes envoyes (echo)
+                if ($raw.StartsWith("MSG:")) { continue }
 
-            # Parser le float (separateur decimal = point)
-            $luxFloat = 0.0
-            if (-not [double]::TryParse($raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$luxFloat)) {
-                Write-Log "DEBUG" "Ligne ignoree : '$raw'"
+                # Parser le float (separateur decimal = point)
+                $luxFloat = 0.0
+                if (-not [double]::TryParse($raw, [System.Globalization.NumberStyles]::Float, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$luxFloat)) {
+                    Write-Log "DEBUG" "Ligne ignoree : '$raw'"
+                    continue
+                }
+
+                $lux     = [int][Math]::Round($luxFloat)
+                $status  = Get-DayStatus $lux
+
+                Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $status"
+
+                # 1. Enregistrer en base de donnees et maj actionneur
+                $trigger = Process-Measure $lux $status
+                if ($trigger) {
+                    Write-Log "WARN" "Alarme declenchee pour $lux lux !"
+                } else {
+                    Write-Log "OK" "Enregistre en BDD : $lux lux"
+                }
+
+                # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
+                $msg = Build-OledMessage $lux
+                $port.WriteLine($msg)
+                Write-Log "INFO" "Envoye a la carte -> $msg"
+
+            } catch [System.TimeoutException] {
+                # Timeout normal si aucune donnee n'est envoyee
                 continue
+            } catch {
+                Write-Log "ERROR" "Erreur de lecture sur le port : $_"
+                break # Sortir de la boucle interne pour tenter de rouvrir le port
             }
-
-            $lux     = [int][Math]::Round($luxFloat)
-            $status  = Get-DayStatus $lux
-
-            Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $status"
-
-            # 1. Enregistrer en base de donnees et maj actionneur
-            $trigger = Process-Measure $lux $status
-            if ($trigger) {
-                Write-Log "WARN" "Alarme declenchee pour $lux lux !"
-            } else {
-                Write-Log "OK" "Enregistre en BDD : $lux lux"
-            }
-
-            # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
-            $msg = Build-OledMessage $lux
-            $port.WriteLine($msg)
-            Write-Log "INFO" "Envoye a la carte -> $msg"
-
-        } catch [System.TimeoutException] {
-            Write-Log "WARN" "Timeout : aucune donnee depuis 3s. Carte toujours connectee ?"
-        } catch {
-            Write-Log "ERROR" "Erreur lecture : $_"
         }
-    }
-
-} catch {
-    Write-Log "ERROR" "Impossible d'ouvrir le port $portName : $_"
-} finally {
-    if ($null -ne $port -and $port.IsOpen) {
-        $port.Close()
-        Write-Log "INFO" "Port ferme proprement."
+    } catch {
+        Write-Log "ERROR" "Impossible d'ouvrir le port $portName. En attente du materiel physique..."
+        Start-Sleep -Seconds 5
+    } finally {
+        if ($port -ne $null -and $port.IsOpen) {
+            $port.Close()
+            $port.Dispose()
+        }
     }
 }

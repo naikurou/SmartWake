@@ -43,6 +43,19 @@ try {
         exit;
     }
 
+    // Vérifier si le matériel physique est connecté (données de moins de 15 secondes)
+    $timeDiff = time() - strtotime($latest['created_at']);
+    if ($timeDiff > 15) {
+        http_response_code(404);
+        echo json_encode([
+            'error'     => "Le matériel physique n'est pas connecté à l'ordinateur.",
+            'light_value' => null,
+            'status'    => null,
+            'timestamp' => null,
+        ]);
+        exit;
+    }
+
     $lux    = (int)$latest['light_value'];
     $status = $latest['day_status'];
     $level  = getLuxLevel($lux);
