@@ -6,11 +6,7 @@
 # ============================================================
 $portName  = "COM14"
 $baudRate  = 9600
-$dbHost    = "178.33.122.21"
-$dbUser    = "axst62997"
-$dbPass    = "vN98OBrkug96JSeUmiFxuZGp"
-$dbName    = "hangardb_axst62997"
-$mysqlExe  = "C:\xampp\mysql\bin\mysql.exe"
+$apiUrl    = "https://smartwake.hangar.garageisep.com/api/hardware_sync.php"
 $logFile   = "C:\xampp\htdocs\smartwake\logs\sensor.log"
 
 # Seuils (doivent correspondre a functions.php)
@@ -35,59 +31,64 @@ function Write-Log($level, $msg) {
 function Process-Measure($lux, $status) {
     $dbStatus = if ($status -eq "JOUR") { "DAY" } else { "NIGHT" }
     
-    # 1. Recuperer les parametres
-    if ($global:alarmStartTime -eq $null) { $global:alarmStartTime = $null } # init
-    $sqlSettings = "SELECT is_active, night_lux_threshold, day_lux_threshold, duration_minutes FROM alarm_settings WHERE id=1;"
-    $settingsRaw = & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" -N -B $dbName -e $sqlSettings
+    # Initialisation de l'état du buzzer
+    if ($global:triggerAlarm -eq $null) { $global:triggerAlarm = $false }
+    $buzzerState = if ($global:triggerAlarm) { 1 } else { 0 }
     
-    $triggerAlarm = $false
-    if ($settingsRaw -ne $null) {
-        $parts = $settingsRaw -split "`t"
-        if ($parts.Length -ge 4) {
-            $isActive = $parts[0]
-            $nightLux = [int]$parts[1]
-            $dayLux   = [int]$parts[2]
-            $duration = [int]$parts[3]
-            
-            $hour = (Get-Date).Hour
-            $isNight = ($hour -ge 22 -or $hour -lt 6)
-            
-            if ($isActive -eq "1") {
-                if ($isNight -and $lux -ge $nightLux) { $triggerAlarm = $true }
-                if (-not $isNight -and $lux -ge $dayLux) { $triggerAlarm = $true }
-            }
-            
-            # Gestion de la durée de l'alarme
-            if ($triggerAlarm) {
-                if ($global:alarmStartTime -eq $null) {
-                    $global:alarmStartTime = Get-Date
-                    Write-Log "INFO" "Alarme declenchee. Duree prevue: $duration min."
-                } else {
-                    $elapsed = (Get-Date) - $global:alarmStartTime
-                    if ($elapsed.TotalMinutes -ge $duration) {
-                        $triggerAlarm = $false
-                        # On ne logue qu'une fois la desactivation automatique (le script boucle vite)
-                    }
-                }
-            } else {
-                $global:alarmStartTime = $null
-            }
-        }
+    # 1. Envoyer les données à l'API et récupérer les paramètres
+    $body = @{
+        lux = $lux
+        status = $dbStatus
+        buzzer = $buzzerState
     }
     
-    # 2. Inserer dans light_sensor_data
-    $sqlInsert = "INSERT INTO light_sensor_data (light_value, day_status) VALUES ($lux, '$dbStatus');"
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Method Post -Body $body -ErrorAction Stop
+    } catch {
+        Write-Log "ERROR" "Impossible de joindre le site web: $_"
+        return $global:triggerAlarm
+    }
     
-    # 3. Mettre a jour le buzzer
-    $buzzerState = if ($triggerAlarm) { 1 } else { 0 }
-    $sqlBuzzer = "INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', $buzzerState, 'groupe_ldr') ON DUPLICATE KEY UPDATE etat=$buzzerState, declenche_par='groupe_ldr';"
-    
-    # Executer les deux requetes
-    $sqlCombined = $sqlInsert + $sqlBuzzer
-    & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -e $sqlCombined 2>&1 | Out-Null
-    
-    return $triggerAlarm
+    # 2. Mettre a jour les parametres locaux avec la reponse
+    if ($response.success -eq $true) {
+        $isActive = $response.settings.is_active
+        $nightLux = $response.settings.night_lux
+        $dayLux   = $response.settings.day_lux
+        $duration = $response.settings.duration
+        
+        $hour = (Get-Date).Hour
+        $isNight = ($hour -ge 22 -or $hour -lt 6)
+        
+        $triggerAlarm = $false
+        if ($isActive -eq 1) {
+            if ($isNight -and $lux -ge $nightLux) { $triggerAlarm = $true }
+            if (-not $isNight -and $lux -ge $dayLux) { $triggerAlarm = $true }
+        }
+        
+        # Gestion de la durée de l'alarme
+        if ($triggerAlarm) {
+            if ($global:alarmStartTime -eq $null) {
+                $global:alarmStartTime = Get-Date
+                Write-Log "INFO" "Alarme declenchee. Duree prevue: $duration min."
+            } else {
+                $elapsed = (Get-Date) - $global:alarmStartTime
+                if ($elapsed.TotalMinutes -ge $duration) {
+                    $triggerAlarm = $false
+                }
+            }
+        } else {
+            $global:alarmStartTime = $null
+        }
+        
+        $global:triggerAlarm = $triggerAlarm
+        Write-Log "OK" "Enregistre sur le site : $lux lux (Buzzer: $buzzerState)"
+        return $triggerAlarm
+    } else {
+        Write-Log "ERROR" "Erreur API : $($response.error)"
+        return $global:triggerAlarm
+    }
 }
+
 
 # ============================================================
 # Format du message renvoy a la Tiva C (ASCII uniquement)
@@ -103,8 +104,8 @@ function Build-OledMessage($lux) {
 # ============================================================
 Write-Log "INFO" "=== SmartWake Serial Reader BIDIRECTIONNEL ==="
 Write-Log "INFO" "Port     : $portName @ $baudRate baud"
-Write-Log "INFO" "BDD      : $dbName @ $dbHost"
-Write-Log "INFO" "Mode     : Lecture lux + Renvoi messages OLED"
+Write-Log "INFO" "URL API  : $apiUrl"
+Write-Log "INFO" "Mode     : API HTTP + Renvoi messages OLED"
 Write-Host ("-" * 50)
 
 while ($true) {
@@ -143,12 +144,10 @@ while ($true) {
 
                 Write-Log "INFO" "Recu : $raw lux brut -> $lux lux | $status"
 
-                # 1. Enregistrer en base de donnees et maj actionneur
+                # 1. Enregistrer en base de donnees via API et maj actionneur
                 $trigger = Process-Measure $lux $status
                 if ($trigger) {
                     Write-Log "WARN" "Alarme declenchee pour $lux lux !"
-                } else {
-                    Write-Log "OK" "Enregistre en BDD : $lux lux"
                 }
 
                 # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
