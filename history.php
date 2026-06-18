@@ -25,7 +25,7 @@ $csrfToken = generateCsrfToken();
   <meta name="description" content="Historique complet des mesures de luminosité de SmartWake.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
   <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body>
@@ -170,7 +170,7 @@ $csrfToken = generateCsrfToken();
   </footer>
 
 </div><!-- /page-wrapper -->
-<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
+<script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 
 </body>
 </html>

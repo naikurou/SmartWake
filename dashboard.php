@@ -9,6 +9,12 @@ require_once __DIR__ . '/includes/functions.php';
 requireLogin();
 
 $latest    = getLatestMeasure();
+
+// Si le capteur n'a rien envoyé depuis plus de 15s, on considère qu'il est déconnecté
+if ($latest && isset($latest['seconds_ago']) && $latest['seconds_ago'] > 15) {
+    $latest = null;
+}
+
 $stats     = getTodayStats();
 $data24h   = getLast24HoursData();
 $data100   = getLast100Measures();
@@ -16,9 +22,9 @@ $data100   = getLast100Measures();
 $lux       = $latest ? (int)$latest['light_value'] : 0;
 $status    = $latest ? $latest['day_status']        : 'UNKNOWN';
 $timestamp = $latest ? $latest['created_at']        : null;
-$wake      = getWakeRecommendation($lux, $status);
-$level     = getLuxLevel($lux);
-$meta      = getLuxLevelMeta($level);
+$wake      = $latest ? getWakeRecommendation($lux, $status) : ['optimal' => false, 'action' => 'sleep', 'message' => 'Matériel non détecté', 'detail' => 'En attente de connexion du capteur Tiva C...'];
+$level     = $latest ? getLuxLevel($lux) : 'NIGHT_FULL';
+$meta      = $latest ? getLuxLevelMeta($level) : ['label' => 'Hors ligne', 'icon' => '🔌', 'css' => 'level-night-full', 'range' => ''];
 $luxPct    = min(round(($lux / 600) * 100), 100);
 $csrfToken = generateCsrfToken();
 ?>
@@ -31,7 +37,7 @@ $csrfToken = generateCsrfToken();
   <meta name="description" content="Surveillance en temps réel de la luminosité ambiante via capteur Tiva C.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
   <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body>
@@ -146,11 +152,13 @@ $csrfToken = generateCsrfToken();
               'alert'         => '⚠️',
             ][$wake['action'] ?? 'sleep'] ?? '😴' ?>
           </span>
-          <h2 id="wake-message" class="wake-title"><?= e($wake['message']) ?></h2>
-          <p id="wake-detail" class="wake-detail"><?= e($wake['detail']) ?></p>
+          <h2 id="wake-message" class="wake-title"><?= e($wake['message'] ?? '') ?></h2>
+          <p id="wake-detail" class="wake-detail"><?= e($wake['detail'] ?? '') ?></p>
         </div>
         <div class="wake-footer">
-          <?php if ($wake['optimal']): ?>
+          <?php if (!$latest): ?>
+            <span class="badge badge-night">Veuillez brancher le capteur</span>
+          <?php elseif ($wake['optimal']): ?>
             <span class="badge badge-success">✅ Conditions optimales</span>
           <?php else: ?>
             <span class="badge badge-night">💤 Pas encore</span>
@@ -374,6 +382,6 @@ function testBuzzer() {
         integrity="sha256-oVuCdcZBQCLlBt4H8D0lUV5J+LbGGJPULXgKpnXoUHU="
         crossorigin="anonymous"></script>
 <script>window.SMARTWAKE_BASE = '<?= BASE_URL ?>';</script>
-<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
+<script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 </body>
 </html>

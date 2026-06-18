@@ -38,7 +38,7 @@ $csrfToken = generateCsrfToken();
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+  <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
   <script>if(localStorage.getItem('smartwake-theme')==='light')document.documentElement.classList.add('light-mode');</script>
 </head>
 <body class="auth-body">
@@ -114,6 +114,6 @@ $csrfToken = generateCsrfToken();
     <p>SmartWake © <?= date('Y') ?> — Projet ISEP · Capteur Tiva C</p>
   </footer>
 
-<script src="<?= BASE_URL ?>assets/js/app.js" defer></script>
+<script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 </body>
 </html>

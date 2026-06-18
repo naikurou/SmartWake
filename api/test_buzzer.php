@@ -15,8 +15,8 @@ try {
     $stmtON = $pdo->prepare("INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', 1, 'groupe_ldr_test') ON DUPLICATE KEY UPDATE etat = 1, declenche_par = 'groupe_ldr_test', derniere_action = CURRENT_TIMESTAMP");
     $stmtON->execute();
     
-    // 2. Attend 1 seconde pour que le buzzer retentisse brièvement
-    sleep(1);
+    // 2. Attend 5 secondes pour que le buzzer retentisse
+    sleep(5);
     
     // 3. Éteint le buzzer (OFF)
     $stmtOFF = $pdo->prepare("INSERT INTO etats_actionneurs (composant, etat, declenche_par) VALUES ('buzzer', 0, 'groupe_ldr_test') ON DUPLICATE KEY UPDATE etat = 0, declenche_par = 'groupe_ldr_test', derniere_action = CURRENT_TIMESTAMP");
