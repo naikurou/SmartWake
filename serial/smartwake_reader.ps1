@@ -105,8 +105,10 @@ function Build-OledMessage($lux) {
 Write-Log "INFO" "=== SmartWake Serial Reader BIDIRECTIONNEL ==="
 Write-Log "INFO" "Port     : $portName @ $baudRate baud"
 Write-Log "INFO" "URL API  : $apiUrl"
-Write-Log "INFO" "Mode     : API HTTP + Renvoi messages OLED"
+Write-Log "INFO" "Mode     : API HTTP + Renvoi messages OLED (Toutes les 15s)"
 Write-Host ("-" * 50)
+
+$global:lastOledUpdate = (Get-Date).AddSeconds(-20)
 
 while ($true) {
     try {
@@ -150,10 +152,13 @@ while ($true) {
                     Write-Log "WARN" "Alarme declenchee pour $lux lux !"
                 }
 
-                # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED)
-                $msg = Build-OledMessage $lux
-                $port.WriteLine($msg)
-                Write-Log "INFO" "Envoye a la carte -> $msg"
+                # 2. Renvoyer le message vers la Tiva C (pour l'ecran OLED) toutes les 15 secondes
+                if ((Get-Date) - $global:lastOledUpdate -ge [timespan]::FromSeconds(15)) {
+                    $msg = Build-OledMessage $lux
+                    $port.WriteLine($msg)
+                    Write-Log "INFO" "Envoye a la carte -> $msg"
+                    $global:lastOledUpdate = Get-Date
+                }
 
             } catch [System.TimeoutException] {
                 # Timeout normal si aucune donnee n'est envoyee
