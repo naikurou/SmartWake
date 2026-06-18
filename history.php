@@ -26,12 +26,13 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script>
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('smartwake-theme', theme);
       document.querySelectorAll('.theme-toggle').forEach(btn => {
-        btn.textContent = theme === 'light' ? '🌙' : '☀️';
+        btn.innerHTML = theme === 'light' ? '<i class="ph-fill ph-moon"></i>' : '<i class="ph-fill ph-sun"></i>';
       });
     }
     function toggleTheme() {
@@ -50,7 +51,7 @@ $csrfToken = generateCsrfToken();
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="container navbar-inner">
       <a href="<?= BASE_URL ?>dashboard.php" class="navbar-brand" aria-label="SmartWake">
-        <span class="brand-icon" aria-hidden="true">🌅</span>
+        <span class="brand-icon" aria-hidden="true"><i class="ph-fill ph-sun-horizon" style="font-size: 1.5rem; color: #00A4EF;"></i></span>
         <span class="brand-text">Smart<span class="brand-accent">Wake</span></span>
       </a>
 
@@ -76,7 +77,9 @@ $csrfToken = generateCsrfToken();
           </a>
         </li>
         <li>
-          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">
+            <i class="ph-fill ph-sun"></i>
+          </button>
         </li>
       </ul>
     </div>

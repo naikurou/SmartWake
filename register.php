@@ -43,6 +43,7 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script>
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -65,7 +66,9 @@ $csrfToken = generateCsrfToken();
   <div class="auth-header-title">
     🎓 Projet ISEP — <span>Équipe SmartWake</span>
   </div>
-  <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+  <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">
+    <i class="ph-fill ph-sun"></i>
+  </button>
 </header>
 <div class="auth-wrapper">
 
@@ -81,7 +84,9 @@ $csrfToken = generateCsrfToken();
 
       <!-- Logo & Titre -->
       <div class="auth-logo">
-        <div class="auth-logo-icon" aria-hidden="true">🌅</div>
+        <div class="auth-logo-icon" aria-hidden="true">
+          <i class="ph-fill ph-sun-horizon" style="color: #00A4EF;"></i>
+        </div>
         <h1 class="auth-title">Créer un compte</h1>
         <p class="auth-subtitle">Rejoignez SmartWake et contrôlez votre réveil.</p>
       </div>
@@ -89,7 +94,7 @@ $csrfToken = generateCsrfToken();
       <!-- Messages -->
       <?php if ($error): ?>
         <div class="alert alert-danger" role="alert" aria-live="assertive">
-          <span aria-hidden="true">⚠️</span>
+          <span aria-hidden="true"><i class="ph-fill ph-warning-circle"></i></span>
           <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
         </div>
       <?php endif; ?>
@@ -108,7 +113,7 @@ $csrfToken = generateCsrfToken();
           <div class="form-group">
             <label class="form-label" for="username">Nom d'utilisateur</label>
             <div class="form-input-wrap">
-              <span class="form-input-icon" aria-hidden="true">👤</span>
+              <span class="form-input-icon" aria-hidden="true"><i class="ph-fill ph-user"></i></span>
               <input type="text" id="username" name="username" class="form-control"
                 placeholder="Votre nom" required aria-required="true" minlength="3"
                 value="<?= htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
@@ -118,7 +123,7 @@ $csrfToken = generateCsrfToken();
           <div class="form-group">
             <label class="form-label" for="email">Adresse email</label>
             <div class="form-input-wrap">
-              <span class="form-input-icon" aria-hidden="true">✉️</span>
+              <span class="form-input-icon" aria-hidden="true"><i class="ph-fill ph-envelope"></i></span>
               <input type="email" id="email" name="email" class="form-control"
                 placeholder="vous@exemple.com" autocomplete="email" required aria-required="true"
                 value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
@@ -128,7 +133,7 @@ $csrfToken = generateCsrfToken();
           <div class="form-group">
             <label class="form-label" for="password">Mot de passe</label>
             <div class="form-input-wrap">
-              <span class="form-input-icon" aria-hidden="true">🔑</span>
+              <span class="form-input-icon" aria-hidden="true"><i class="ph-fill ph-key"></i></span>
               <input type="password" id="password" name="password" class="form-control"
                 placeholder="Minimum 8 caractères" autocomplete="new-password" required aria-required="true" minlength="8">
             </div>
@@ -136,7 +141,7 @@ $csrfToken = generateCsrfToken();
 
           <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-register">
             S'inscrire
-            <span class="btn-arrow" aria-hidden="true">→</span>
+            <span class="btn-arrow" aria-hidden="true"><i class="ph-bold ph-arrow-right"></i></span>
           </button>
         </form>
 
@@ -153,7 +158,14 @@ $csrfToken = generateCsrfToken();
   </div>
 
   <footer class="auth-footer">
-    <p>SmartWake © <?= date('Y') ?> — Projet ISEP · Capteur LDR · TIVA EK123GXL · Energia & VSCode</p>
+    <p>SmartWake © <?= date('Y') ?></p>
+    <div class="auth-footer-links">
+      <a href="#">CGU</a>
+      <span class="separator">&middot;</span>
+      <a href="#">Mentions Légales</a>
+      <span class="separator">&middot;</span>
+      <a href="mailto:contact@smartwake.isep.fr">Contact</a>
+    </div>
   </footer>
 </div>
 

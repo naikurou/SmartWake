@@ -791,6 +791,23 @@ a:hover { opacity: 0.8; }
   font-size: 0.85rem;
   color: var(--text-muted);
 }
+.auth-footer-links {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.auth-footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.auth-footer-links a:hover {
+  color: var(--text-main);
+}
+.auth-footer-links .separator {
+  opacity: 0.5;
+}
 
 /* ── Alerts ── */
 .alert {

@@ -38,12 +38,13 @@ $csrfToken = generateCsrfToken();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css?v=<?= filemtime(__DIR__ . '/assets/css/style.css') ?>">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script>
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('smartwake-theme', theme);
       document.querySelectorAll('.theme-toggle').forEach(btn => {
-        btn.textContent = theme === 'light' ? '🌙' : '☀️';
+        btn.innerHTML = theme === 'light' ? '<i class="ph-fill ph-moon"></i>' : '<i class="ph-fill ph-sun"></i>';
       });
     }
     function toggleTheme() {
@@ -62,7 +63,7 @@ $csrfToken = generateCsrfToken();
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="container navbar-inner">
       <a href="<?= BASE_URL ?>dashboard.php" class="navbar-brand" aria-label="SmartWake">
-        <span class="brand-icon" aria-hidden="true">🌅</span>
+        <span class="brand-icon" aria-hidden="true"><i class="ph-fill ph-sun-horizon" style="font-size: 1.5rem; color: #00A4EF;"></i></span>
         <span class="brand-text">Smart<span class="brand-accent">Wake</span></span>
       </a>
 
@@ -85,7 +86,9 @@ $csrfToken = generateCsrfToken();
           <button class="nav-link btn-settings" aria-label="Paramètres d'alarme" title="Paramètres d'alarme" onclick="openSettingsModal()">⚙️ Paramètres</button>
         </li>
         <li>
-          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">☀️</button>
+          <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">
+            <i class="ph-fill ph-sun"></i>
+          </button>
         </li>
         <li>
           <a href="<?= BASE_URL ?>logout.php?token=<?= urlencode($csrfToken) ?>"
@@ -112,7 +115,7 @@ $csrfToken = generateCsrfToken();
         <div class="dash-hero-lux">
           <div id="lux-circle" class="lux-circle level-<?= strtolower(str_replace('_', '-', $level)) ?>"
                role="img" aria-label="Niveau de luminosité actuel">
-            <span class="lux-icon" aria-hidden="true"><?= $meta['icon'] ?></span>
+            <i class="ph-fill ph-<?= $meta['css'] === 'level-night-full' ? 'plug' : 'lightbulb' ?>" style="font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--text-main);"></i>
             <span class="lux-val" id="live-lux-hero"><?= e($lux) ?> lux</span>
             <span class="lux-label"><?= e($meta['label']) ?></span>
           </div>
@@ -130,7 +133,7 @@ $csrfToken = generateCsrfToken();
       <!-- Carte 1 : Luminosité -->
       <article class="card metric-card reveal" aria-label="Luminosité actuelle">
         <div class="card-header">
-          <span class="card-icon">💡</span>
+          <span class="card-icon"><i class="ph-fill ph-lightbulb"></i></span>
           <span class="card-label">Luminosité actuelle</span>
         </div>
         <p id="live-lux" class="metric-value" aria-live="polite"><?= e($lux) ?> <small>lux</small></p>
@@ -153,19 +156,19 @@ $csrfToken = generateCsrfToken();
                class="card metric-card wake-card <?= $wake['optimal'] ? 'optimal' : 'not-optimal' ?> action-<?= e($wake['action'] ?? 'sleep') ?> reveal"
                role="region" aria-label="Recommandation de réveil">
         <div class="card-header">
-          <span class="card-icon">⏰</span>
+          <span class="card-icon"><i class="ph-fill ph-alarm"></i></span>
           <span class="card-label">Réveil Intelligent</span>
         </div>
         <div class="wake-body">
           <span id="wake-icon" class="wake-icon" aria-hidden="true">
-            <?= [
-              'sleep'         => '😴',
-              'simulate_dawn' => '🌙',
-              'soft_alarm'    => '🌅',
-              'main_alarm'    => '🔔',
-              'day_mode'      => '☀️',
-              'alert'         => '⚠️',
-            ][$wake['action'] ?? 'sleep'] ?? '😴' ?>
+            <i class="ph-fill ph-<?= [
+              'sleep'         => 'moon',
+              'simulate_dawn' => 'moon-stars',
+              'soft_alarm'    => 'sun-horizon',
+              'main_alarm'    => 'bell',
+              'day_mode'      => 'sun',
+              'alert'         => 'warning',
+            ][$wake['action'] ?? 'sleep'] ?? 'moon' ?>"></i>
           </span>
           <h2 id="wake-message" class="wake-title"><?= e($wake['message'] ?? '') ?></h2>
           <p id="wake-detail" class="wake-detail"><?= e($wake['detail'] ?? '') ?></p>
@@ -184,7 +187,7 @@ $csrfToken = generateCsrfToken();
       <!-- Carte 3 : Dernière mesure -->
       <article class="card metric-card reveal" aria-label="Informations capteur">
         <div class="card-header">
-          <span class="card-icon">📡</span>
+          <span class="card-icon"><i class="ph-fill ph-clock-counter-clockwise"></i></span>
           <span class="card-label">Dernière mesure</span>
         </div>
         <p id="live-timestamp" class="metric-timestamp" aria-live="polite">
@@ -283,8 +286,8 @@ $csrfToken = generateCsrfToken();
 <div id="settings-modal" class="modal-overlay" style="display: none;">
   <div class="modal-content card">
     <div class="modal-header">
-      <h2>⚙️ Paramètres d'Alarme</h2>
-      <button class="modal-close" onclick="closeSettingsModal()">✖</button>
+      <h2><i class="ph-fill ph-gear"></i> Paramètres d'Alarme</h2>
+      <button class="modal-close" onclick="closeSettingsModal()"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="modal-body">
       <form id="settings-form">
@@ -303,9 +306,9 @@ $csrfToken = generateCsrfToken();
           <input type="number" id="day-lux" class="form-control" value="500" min="0">
         </div>
         <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-          <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Sauvegarder</button>
+          <button type="button" class="btn btn-primary" onclick="saveSettings()"><i class="ph-fill ph-floppy-disk"></i> Sauvegarder</button>
           <span style="color:var(--text-muted); margin: 0 0.5rem;">|</span>
-          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer()">🚨 Tester le Buzzer</button>
+          <button type="button" class="btn btn-outline" style="color:var(--text-main); border-color:var(--border-light);" onclick="testBuzzer()"><i class="ph-fill ph-siren"></i> Tester le Buzzer</button>
         </div>
         <p id="settings-msg" style="margin-top:0.5rem; font-size:0.9rem;"></p>
       </form>
