@@ -134,6 +134,7 @@ $csrfToken = generateCsrfToken();
 
     </div>
   </div>
+</div>
 
   <footer class="auth-footer">
     <p>SmartWake © <?= date('Y') ?></p>

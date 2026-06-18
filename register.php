@@ -156,6 +156,7 @@ $csrfToken = generateCsrfToken();
 
     </div>
   </div>
+</div>
 
   <footer class="auth-footer">
     <p>SmartWake © <?= date('Y') ?></p>
@@ -167,7 +168,6 @@ $csrfToken = generateCsrfToken();
       <a href="mailto:contact@smartwake.isep.fr">Contact</a>
     </div>
   </footer>
-</div>
 
 <script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
 </body>
