@@ -180,10 +180,15 @@ $csrfToken = generateCsrfToken();
 
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <span class="footer-brand">🌅 SmartWake</span>
-      <span class="footer-sep">·</span>
-      <span>Projet ISEP <?= date('Y') ?></span>
+    <div class="container footer-inner" style="flex-direction: column; gap: 0.5rem;">
+      <p style="margin: 0; color: var(--text-muted);">SmartWake © <?= date('Y') ?></p>
+      <div class="auth-footer-links" style="margin-top: 0;">
+        <a href="#">CGU</a>
+        <span class="separator">&middot;</span>
+        <a href="#">Mentions Légales</a>
+        <span class="separator">&middot;</span>
+        <a href="mailto:contact@smartwake.isep.fr">Contact</a>
+      </div>
     </div>
   </footer>
 
