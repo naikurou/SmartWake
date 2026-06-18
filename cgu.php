@@ -16,33 +16,40 @@ require_once __DIR__ . '/includes/functions.php';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 </head>
-<body style="min-height: 100vh; display: flex; flex-direction: column; background: var(--bg-main);">
-  <header style="padding: 1rem 2rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); backdrop-filter: blur(24px);">
-    <a href="<?= BASE_URL ?>" style="text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-      <i class="ph-fill ph-sun-horizon" style="color: #00A4EF;"></i> Smart Alarm
-    </a>
-    <a href="javascript:history.back()" class="btn btn-outline" style="padding: 0.5rem 1rem;">Retour</a>
-  </header>
+<body class="dashboard-body">
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="<?= BASE_URL ?>" class="navbar-brand">
+        <i class="ph-fill ph-sun-horizon" style="color: #00A4EF; font-size: 1.5rem;"></i>
+        Smart<span class="brand-accent"> Alarm</span>
+      </a>
+      <div class="navbar-actions">
+        <a href="javascript:history.back()" class="btn btn-outline" style="padding: 0.5rem 1rem;">Retour</a>
+      </div>
+    </div>
+  </nav>
 
-  <main style="flex: 1; max-width: 800px; width: 90%; margin: 2rem auto; padding: 2rem; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-light); box-shadow: var(--shadow-md);">
-    <h1 style="margin-bottom: 2rem; color: var(--text-main);">Conditions Générales d'Utilisation (CGU)</h1>
-    
-    <div style="color: var(--text-muted); line-height: 1.6;">
-      <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">1. Objet du Projet</h2>
-      <p>Les présentes CGU ont pour objet de définir les modalités de mise à disposition des services du site <strong>Smart Alarm</strong>, développé dans le cadre d'un projet étudiant à l'ISEP (Institut Supérieur d'Électronique de Paris).</p>
+  <main class="dash-container" style="max-width: 800px; margin-top: 2rem;">
+    <div class="dash-card">
+      <h1 class="dash-title" style="margin-bottom: 2rem;">Conditions Générales d'Utilisation (CGU)</h1>
+      
+      <div style="color: var(--text-muted); line-height: 1.6;">
+        <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">1. Objet du Projet</h2>
+        <p>Les présentes CGU ont pour objet de définir les modalités de mise à disposition des services du site <strong>Smart Alarm</strong>, développé dans le cadre d'un projet étudiant à l'ISEP (Institut Supérieur d'Électronique de Paris).</p>
 
-      <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">2. Accès aux Services</h2>
-      <p>Le service permet à l'utilisateur de configurer et visualiser les données d'un réveil intelligent connecté via un microcontrôleur TIVA C. L'accès nécessite la création d'un compte utilisateur personnel.</p>
+        <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">2. Accès aux Services</h2>
+        <p>Le service permet à l'utilisateur de configurer et visualiser les données d'un réveil intelligent connecté via un microcontrôleur TIVA C. L'accès nécessite la création d'un compte utilisateur personnel.</p>
 
-      <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">3. Données Personnelles</h2>
-      <p>Smart Alarm collecte uniquement l'adresse e-mail et le nom d'utilisateur à des fins d'authentification. Les données d'éclairage (capteurs LDR) ne sont rattachées à aucune donnée permettant une identification physique. Conformément au RGPD, vous disposez d'un droit de modification et de suppression de vos données via votre espace personnel.</p>
+        <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">3. Données Personnelles</h2>
+        <p>Smart Alarm collecte uniquement l'adresse e-mail et le nom d'utilisateur à des fins d'authentification. Les données d'éclairage (capteurs LDR) ne sont rattachées à aucune donnée permettant une identification physique. Conformément au RGPD, vous disposez d'un droit de modification et de suppression de vos données via votre espace personnel.</p>
 
-      <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">4. Limites de Responsabilité</h2>
-      <p>S'agissant d'un projet académique expérimental (POC), l'Équipe Smart Alarm décline toute responsabilité en cas de panne de l'alarme, de retard au travail, de non-déclenchement du buzzer ou de perte de données. Le matériel TIVA EK123GXL est utilisé à des fins strictement pédagogiques.</p>
+        <h2 style="color: var(--text-main); margin: 1.5rem 0 0.5rem; font-size: 1.25rem;">4. Limites de Responsabilité</h2>
+        <p>S'agissant d'un projet académique expérimental (POC), l'Équipe Smart Alarm décline toute responsabilité en cas de panne de l'alarme, de retard au travail, de non-déclenchement du buzzer ou de perte de données. Le matériel TIVA EK123GXL est utilisé à des fins strictement pédagogiques.</p>
+      </div>
     </div>
   </main>
   
-  <footer style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-light);">
+  <footer class="dash-container" style="text-align: center; margin-top: 2rem; padding-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem;">
     <p>Smart Alarm © <?= date('Y') ?></p>
   </footer>
 </body>
