@@ -17,15 +17,13 @@ require_once __DIR__ . '/includes/db.php';
   </script>
 </head>
 <body class="dashboard-body">
-  <nav class="dash-nav">
-    <div class="container dash-nav-inner">
-      <div class="dash-brand">
-        <a href="<?= BASE_URL ?>" class="brand-link">
-          <i class="ph-fill ph-sun-horizon" style="color: #00A4EF; font-size: 1.5rem;"></i>
-          Smart<span class="brand-accent"> Alarm</span>
-        </a>
-      </div>
-      <ul class="dash-nav-links">
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="<?= BASE_URL ?>" class="navbar-brand">
+        <span class="brand-icon"><i class="ph-fill ph-sun-horizon" style="font-size: 1.5rem; color: #00A4EF;"></i></span>
+        <span class="brand-text">Smart<span class="brand-accent"> Alarm</span></span>
+      </a>
+      <ul class="navbar-nav">
         <li>
           <a href="javascript:history.back()" class="btn btn-outline btn-sm">Retour</a>
         </li>
