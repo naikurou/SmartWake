@@ -88,7 +88,7 @@ $csrfToken = generateCsrfToken();
       <div class="dash-hero-inner" style="justify-content: flex-start;">
         <div class="dash-hero-text">
           <h1 class="dash-title">Historique des mesures</h1>
-          <p class="dash-subtitle">Explorez les <?= number_format($total, 0, ',', ' ') ?> relevés enregistrés par votre capteur Tiva C.</p>
+          <p class="dash-subtitle">Explorez les <?= number_format($total, 0, ',', ' ') ?> relevés enregistrés par votre carte TIVA EK123GXL (Capteur LDR).</p>
         </div>
       </div>
     </div>

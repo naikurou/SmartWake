@@ -107,7 +107,7 @@ $csrfToken = generateCsrfToken();
             <span>Temps réel — mise à jour toutes les 5s</span>
           </div>
           <h1 class="dash-title">Tableau de bord</h1>
-          <p class="dash-subtitle">Capteur de luminosité LDR · Tiva C TM4C123GH6PM · Base de données distante</p>
+          <p class="dash-subtitle">Capteur LDR · Microcontrôleur TIVA EK123GXL · Code sur Energia & VSCode</p>
         </div>
         <div class="dash-hero-lux">
           <div id="lux-circle" class="lux-circle level-<?= strtolower(str_replace('_', '-', $level)) ?>"
@@ -201,7 +201,7 @@ $csrfToken = generateCsrfToken();
           </div>
           <div class="sensor-info-row">
             <span class="sensor-info-label">Carte</span>
-            <span class="sensor-info-val">Tiva C TM4C123GH6PM</span>
+            <span class="sensor-info-val">TIVA EK123GXL</span>
           </div>
           <div class="sensor-info-row">
             <span class="sensor-info-label">Base de données</span>

@@ -148,7 +148,7 @@ $csrfToken = generateCsrfToken();
   </div>
 
   <footer class="auth-footer">
-    <p>SmartWake © <?= date('Y') ?> — Projet ISEP</p>
+    <p>SmartWake © <?= date('Y') ?> — Projet ISEP · Capteur LDR · TIVA EK123GXL · Energia & VSCode</p>
   </footer>
 </div>
 

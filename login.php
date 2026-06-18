@@ -126,7 +126,7 @@ $csrfToken = generateCsrfToken();
   </div>
 
   <footer class="auth-footer">
-    <p>SmartWake © <?= date('Y') ?> — Projet ISEP · Capteur Tiva C</p>
+    <p>SmartWake © <?= date('Y') ?> — Projet ISEP · Capteur LDR · TIVA EK123GXL · Energia & VSCode</p>
   </footer>
 
 <script src="<?= BASE_URL ?>assets/js/app.js?v=<?= filemtime(__DIR__ . '/assets/js/app.js') ?>" defer></script>
