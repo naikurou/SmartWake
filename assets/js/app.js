@@ -272,28 +272,7 @@
         }],
       },
       options: {
-        ...baseOptions(title),
-        plugins: {
-          ...baseOptions(title).plugins,
-          annotation: {
-            annotations: {
-              threshold: {
-                type: 'line',
-                yMin: 500, yMax: 500,
-                borderColor: 'rgba(251, 191, 36, 0.5)',
-                borderWidth: 1.5,
-                borderDash: [6, 3],
-                label: {
-                  display: true,
-                  content: 'Seuil JOUR/NUIT (500 lux)',
-                  color: 'rgba(251, 191, 36, 0.8)',
-                  backgroundColor: 'transparent',
-                  font: { size: 10 },
-                },
-              },
-            },
-          },
-        },
+        ...baseOptions(title)
       },
     });
   }
