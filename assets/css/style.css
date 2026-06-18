@@ -121,7 +121,7 @@ a:hover { opacity: 0.8; }
 }
 
 .brand-accent {
-  background: var(--copilot-gradient);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -149,7 +149,7 @@ a:hover { opacity: 0.8; }
 
 .nav-link.active {
   color: var(--text-main);
-  background: var(--copilot-gradient-dim);
+  background: var(--brand-gradient-dim);
 }
 
 .nav-user {
@@ -340,7 +340,7 @@ a:hover { opacity: 0.8; }
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1rem;
-  background: var(--copilot-gradient);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -365,7 +365,7 @@ a:hover { opacity: 0.8; }
 }
 .lux-bar-fill {
   height: 100%;
-  background: var(--copilot-gradient);
+  background: var(--brand-gradient);
   border-radius: var(--radius-full);
   transition: width 1s ease-in-out;
 }
@@ -526,11 +526,11 @@ a:hover { opacity: 0.8; }
   font-family: var(--font-family);
 }
 .btn-primary {
-  background: var(--text-main);
-  color: #000;
+  background: var(--brand-gradient);
+  color: #fff;
 }
 .btn-primary:hover {
-  background: #E5E5E5;
+  filter: brightness(1.1);
 }
 .btn-outline {
   background: transparent;
@@ -695,7 +695,7 @@ a:hover { opacity: 0.8; }
   position: absolute;
   top: 0; left: 20%; right: 20%;
   height: 1px;
-  background: var(--copilot-gradient);
+  background: var(--brand-gradient);
 }
 .auth-logo {
   text-align: center;
@@ -711,7 +711,7 @@ a:hover { opacity: 0.8; }
   margin-bottom: 0.25rem;
 }
 .auth-title-accent {
-  background: var(--copilot-gradient);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
