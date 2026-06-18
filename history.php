@@ -21,7 +21,7 @@ $csrfToken = generateCsrfToken();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Historique — SmartWake</title>
+  <title>Historique — Smart Alarm</title>
   <meta name="description" content="Historique complet des mesures de luminosité de SmartWake.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -50,9 +50,9 @@ $csrfToken = generateCsrfToken();
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" role="navigation" aria-label="Navigation principale">
     <div class="container navbar-inner">
-      <a href="<?= BASE_URL ?>dashboard.php" class="navbar-brand" aria-label="SmartWake">
+      <a href="<?= BASE_URL ?>dashboard.php" class="navbar-brand" aria-label="Smart Alarm">
         <span class="brand-icon" aria-hidden="true"><i class="ph-fill ph-sun-horizon" style="font-size: 1.5rem; color: #00A4EF;"></i></span>
-        <span class="brand-text">Smart<span class="brand-accent">Wake</span></span>
+        <span class="brand-text">Smart<span class="brand-accent"> Alarm</span></span>
       </a>
 
       <button class="navbar-toggle" id="navbar-toggle"
@@ -181,7 +181,7 @@ $csrfToken = generateCsrfToken();
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner" style="flex-direction: column; gap: 0.5rem;">
-      <p style="margin: 0; color: var(--text-muted);">SmartWake © <?= date('Y') ?></p>
+      <p style="margin: 0; color: var(--text-muted);">Smart Alarm © <?= date('Y') ?></p>
       <div class="auth-footer-links" style="margin-top: 0;">
         <a href="#">CGU</a>
         <span class="separator">&middot;</span>

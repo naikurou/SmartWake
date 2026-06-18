@@ -37,7 +37,7 @@ $csrfToken = generateCsrfToken();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription — SmartWake</title>
+  <title>Inscription — Smart Alarm</title>
   <meta name="description" content="Créez votre compte SmartWake.">
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +64,7 @@ $csrfToken = generateCsrfToken();
 <body class="auth-body">
 <header class="auth-header">
   <div class="auth-header-title">
-    <i class="ph-fill ph-graduation-cap" style="font-size: 1.25rem;"></i> Projet ISEP — <span>Équipe SmartWake</span>
+    <i class="ph-fill ph-graduation-cap" style="font-size: 1.25rem;"></i> Projet ISEP — <span>Équipe Smart Alarm</span>
   </div>
   <button class="theme-toggle" aria-label="Passer en mode clair" title="Changer le thème" onclick="toggleTheme()">
     <i class="ph-fill ph-sun"></i>
@@ -88,7 +88,7 @@ $csrfToken = generateCsrfToken();
           <i class="ph-fill ph-sun-horizon" style="color: #00A4EF;"></i>
         </div>
         <h1 class="auth-title">Créer un compte</h1>
-        <p class="auth-subtitle">Rejoignez SmartWake et contrôlez votre réveil.</p>
+        <p class="auth-subtitle">Rejoignez Smart Alarm et contrôlez votre réveil.</p>
       </div>
 
       <!-- Messages -->
@@ -159,7 +159,7 @@ $csrfToken = generateCsrfToken();
 </div>
 
   <footer class="auth-footer">
-    <p>SmartWake © <?= date('Y') ?></p>
+    <p>Smart Alarm © <?= date('Y') ?></p>
     <div class="auth-footer-links">
       <a href="#">CGU</a>
       <span class="separator">&middot;</span>
