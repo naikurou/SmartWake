@@ -7,17 +7,30 @@
 require_once __DIR__ . '/db.php';
 
 // ============================================================
-// Seuils de luminosité (lux) — configurable
+// Paramètres de luminosité dynamiques
 // ============================================================
-define('LUX_NIGHT_FULL',   1);    // < 1 lux   : Nuit complète
-define('LUX_NIGHT_DIM',   10);    // 1-10 lux  : Nuit avec faible éclairage
-define('LUX_DAWN',        50);    // 10-50 lux : Aube naissante
-define('LUX_MORNING',    200);    // 50-200 lux: Matin clair
-define('LUX_DAY',        500);    // 200-500   : Plein jour
-define('LUX_ALERT',      500);    // > 500 lux : Alerte lumière soudaine
-// Compat ascendante
-define('DAY_THRESHOLD',    200);
-define('IDEAL_WAKE_THRESHOLD', 50);
+
+/**
+ * Récupère les paramètres d'alarme depuis la base de données.
+ *
+ * @return array
+ */
+function getAlarmSettings(): array {
+    static $settings = null;
+    if ($settings === null) {
+        try {
+            $db = getDB();
+            $stmt = $db->query('SELECT night_lux_threshold, day_lux_threshold FROM alarm_settings ORDER BY id ASC LIMIT 1');
+            $settings = $stmt->fetch();
+            if (!$settings) {
+                $settings = ['night_lux_threshold' => 50, 'day_lux_threshold' => 500];
+            }
+        } catch (Exception $e) {
+            $settings = ['night_lux_threshold' => 50, 'day_lux_threshold' => 500];
+        }
+    }
+    return $settings;
+}
 
 // ============================================================
 // Fonctions capteur
@@ -30,12 +43,16 @@ define('IDEAL_WAKE_THRESHOLD', 50);
  * @return string Identifiant du niveau
  */
 function getLuxLevel(int $lux): string {
-    if ($lux < LUX_NIGHT_FULL)  return 'NIGHT_FULL';   // < 1 lux
-    if ($lux < LUX_NIGHT_DIM)   return 'NIGHT_DIM';    // 1-10 lux
-    if ($lux < LUX_DAWN)        return 'DAWN';          // 10-50 lux
-    if ($lux < LUX_MORNING)     return 'MORNING';       // 50-200 lux
-    if ($lux < LUX_ALERT)       return 'DAY';           // 200-500 lux
-    return 'ALERT';                                      // >= 500 lux
+    $settings = getAlarmSettings();
+    $nightThresh = (int)$settings['night_lux_threshold'];
+    $dayThresh   = (int)$settings['day_lux_threshold'];
+    
+    if ($lux < 1)                   return 'NIGHT_FULL';
+    if ($lux < 10)                  return 'NIGHT_DIM';
+    if ($lux < $nightThresh)        return 'DAWN';
+    if ($lux < $nightThresh + 150)  return 'MORNING';
+    if ($lux < $dayThresh)          return 'DAY';
+    return 'ALERT';
 }
 
 /**
@@ -63,7 +80,8 @@ function getLuxLevelMeta(string $level): array {
  * @return string
  */
 function getDayStatus(int $lux): string {
-    return $lux >= DAY_THRESHOLD ? 'DAY' : 'NIGHT';
+    $settings = getAlarmSettings();
+    return $lux >= (int)$settings['night_lux_threshold'] + 150 ? 'DAY' : 'NIGHT';
 }
 
 /**

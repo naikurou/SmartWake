@@ -13,18 +13,30 @@ $dbName    = "hangardb_axst62997"
 $mysqlExe  = "C:\xampp\mysql\bin\mysql.exe"
 $logFile   = "C:\xampp\htdocs\smartwake\logs\sensor.log"
 
-# Seuils (doivent correspondre a functions.php)
+# Seuils dynamiques
+$global:nightThresh = 50
+$global:dayThresh   = 500
+
+function Update-Thresholds() {
+    $sql = "SELECT night_lux_threshold, day_lux_threshold FROM alarm_settings ORDER BY id ASC LIMIT 1;"
+    $res = & $mysqlExe -h $dbHost -u $dbUser "-p$dbPass" $dbName -N -s -e $sql 2>&1
+    if ($LASTEXITCODE -eq 0 -and $res -match "(\d+)\s+(\d+)") {
+        $global:nightThresh = [int]$matches[1]
+        $global:dayThresh   = [int]$matches[2]
+    }
+}
+
 function Get-LuxLevel($lux) {
     if ($lux -lt 1)   { return @{ level="NIGHT_FULL"; label="Nuit complete";          action="Veille"        } }
     if ($lux -lt 10)  { return @{ level="NIGHT_DIM";  label="Nuit - faible eclairage"; action="Simul. aube"   } }
-    if ($lux -lt 50)  { return @{ level="DAWN";       label="Aube naissante";          action="Alarme douce"  } }
-    if ($lux -lt 200) { return @{ level="MORNING";    label="Matin clair";             action="Alarme princ." } }
-    if ($lux -lt 500) { return @{ level="DAY";        label="Plein jour";              action="Mode jour"     } }
+    if ($lux -lt $global:nightThresh)  { return @{ level="DAWN";       label="Aube naissante";          action="Alarme douce"  } }
+    if ($lux -lt ($global:nightThresh + 150)) { return @{ level="MORNING";    label="Matin clair";             action="Alarme princ." } }
+    if ($lux -lt $global:dayThresh) { return @{ level="DAY";        label="Plein jour";              action="Mode jour"     } }
     return              @{ level="ALERT";      label="Alerte lumiere!";        action="ALERTE!"       }
 }
 
 function Get-DayStatus($lux) {
-    if ($lux -ge 200) { return "JOUR" } else { return "NUIT" }
+    if ($lux -ge ($global:nightThresh + 150)) { return "JOUR" } else { return "NUIT" }
 }
 
 function Write-Log($level, $msg) {
@@ -79,7 +91,14 @@ try {
     # Petite pause pour laisser la carte s'initialiser
     Start-Sleep -Milliseconds 500
 
+    $lastUpdate = [DateTime]::MinValue
+
     while ($true) {
+        if ((Get-Date) - $lastUpdate -gt [TimeSpan]::FromSeconds(10)) {
+            Update-Thresholds
+            $lastUpdate = Get-Date
+        }
+
         try {
             $raw = $port.ReadLine().Trim()
 

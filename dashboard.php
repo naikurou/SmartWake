@@ -52,6 +52,7 @@ $csrfToken = generateCsrfToken();
       <ul class="navbar-nav" id="navbar-nav" role="list">
         <li><a href="/smartwake/dashboard.php" class="nav-link active" aria-current="page">Dashboard</a></li>
         <li><a href="/smartwake/history.php" class="nav-link">Historique</a></li>
+        <li><a href="/smartwake/settings.php" class="nav-link">Paramètres ⚙️</a></li>
         <li class="nav-separator"></li>
         <li>
           <span class="nav-user">

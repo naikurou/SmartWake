@@ -19,3 +19,21 @@ Stack trace:
 #1 C:\xampp\htdocs\smartwake\register.php(27): registerUser('nein', 'nein@gmail.com', 'neinnein')
 #2 {main}
   thrown in C:\xampp\htdocs\smartwake\includes\db.php on line 53
+[15-Jun-2026 15:18:50 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartwake\includes\auth.php:108
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(108): PDO->prepare('SELECT id, user...')
+#1 C:\xampp\htdocs\smartwake\login.php(17): loginUser('test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\auth.php on line 108
+[15-Jun-2026 15:19:00 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartwake\includes\auth.php:108
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(108): PDO->prepare('SELECT id, user...')
+#1 C:\xampp\htdocs\smartwake\login.php(17): loginUser('test@test.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\auth.php on line 108
+[15-Jun-2026 15:19:41 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hangardb_axst62997.users' doesn't exist in C:\xampp\htdocs\smartwake\includes\auth.php:75
+Stack trace:
+#0 C:\xampp\htdocs\smartwake\includes\auth.php(75): PDO->prepare('SELECT id FROM ...')
+#1 C:\xampp\htdocs\smartwake\register.php(19): registerUser('Nana', 'nini@nana.com', '12345678')
+#2 {main}
+  thrown in C:\xampp\htdocs\smartwake\includes\auth.php on line 75
